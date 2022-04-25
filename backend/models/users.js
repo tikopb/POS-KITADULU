@@ -15,9 +15,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.GameRPS ,{
-        foreignKey: 'userId'
-      })
     }
     
     static #encrypt = (password) => bcrypt.hashSync(password, 10)
@@ -34,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         id: this.id,
         username: this.username
       }
-      const secretKey = "binarWave10"
+      const secretKey = "pos-kita"
       const token = jwt.sign(payload, secretKey);
       return token;
     }
@@ -60,9 +57,6 @@ module.exports = (sequelize, DataTypes) => {
     username: DataTypes.STRING,
     name: DataTypes.STRING,
     password: DataTypes.STRING,
-    bio: DataTypes.STRING,
-    city: DataTypes.STRING,
-    total_score: DataTypes.INTEGER,
     isactive: DataTypes.STRING,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE

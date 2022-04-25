@@ -10,7 +10,7 @@ const options = {
 
   /* Harus sama seperti dengan apa yang kita masukkan sebagai parameter kedua dari jwt.sign di user_game Model.
      Inilah yang kita pakai untuk memverifikasi apakah tokennya dibuat oleh sistem kita */
-  secretOrKey: 'binarWave10',
+  secretOrKey: 'pos-kita',
   }
  
  passport.use(new JwtStrategy(options, async (payload, done) => {

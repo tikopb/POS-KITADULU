@@ -20,15 +20,6 @@ module.exports = {
       password:{
         type: Sequelize.STRING
       },
-      bio:{
-        type: Sequelize.STRING
-      }, 
-      city:{
-        type: Sequelize.STRING
-      },      
-      total_score:{
-        type: Sequelize.INTEGER 
-      },
       isactive:{
         type: Sequelize.BOOLEAN
       }, 

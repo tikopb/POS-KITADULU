@@ -47,30 +47,5 @@ module.exports = {
                 message: "token error"
             })
         }
-    },
-    updateProfile: async (req, res) => {
-        const {username, name, email, password, bio, city} = req.body
-        const hashPassword =  bcrypt.hashSync(password, 10);
-
-        try {
-            const user = await Users.update({
-                username: username,
-                password: hashPassword,
-                email: email,
-                name: name,
-                bio: bio,
-                city: city
-            },
-            {
-                where: {username: req.user.username}
-            })
-
-            res.status(200).json(user)
-        } catch (err) {
-            res.status(401).json({
-                error: err.message
-            })
-        }
-        
     }
 }

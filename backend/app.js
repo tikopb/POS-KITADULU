@@ -21,9 +21,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-// my own router
+// pos-kita router *start*
 app.use(session({
-  secret: "BinarAcademy",
+  secret: "pos-kita",
   resave: false,
   saveUninitialized: false
 }))
@@ -33,6 +33,7 @@ app.use(passport.initialize());
 
 const router = require('./routes');
 app.use(router);
+// pos-kita router *start*
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
