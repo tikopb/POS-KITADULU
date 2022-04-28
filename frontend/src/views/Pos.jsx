@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ButtonGroup, Col, Dropdown, DropdownButton, Row, Table } from 'react-bootstrap'
 import MyButton from '../components/MyButton'
 import MyInput from '../components/MyInput'
@@ -6,74 +6,27 @@ import MySelect from '../components/MySelect'
 import MainLayout from '../layouts/MainLayout'
 import { ArrowLeftCircleFill, ArrowRightCircleFill, PlusCircle, Save2Fill } from 'react-bootstrap-icons';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Pos() {
+  const alert = () => toast.warn("You Clicked Me!!!");
+
+  const [newProduct, setNewProduct] = useState("");
+  const handleChangeProduct = event => {
+    console.log(event.target.value);
+  }
+
+  const [newUOM, setNewUOM] = useState("");
+  const [newQty, setNewQty] = useState(0);
+
   return (
     <MainLayout>
-        {/* <Row className="g-0 h-25 mt-3">
-          <Col>
-            <Row className="px-3">
-              <Col className="col-sm-8">
-                <MyInput theType="text" theclassName="form-control" thePlaceholder="Search Product"/>
-              </Col>
-              <Col className="col-sm-2 g-0">
-              <MySelect theclassName="form-select">
-                <option selected>UOM</option>
-                <option value="1">PCS</option>
-                <option value="2">YDS</option>
-                <option value="3">MTR</option>
-              </MySelect>
-              </Col>
-              <Col className="col-sm-1 g-0">
-                <MyInput theType="text" theclassName="form-control" thePlaceholder="Qty"/>
-              </Col>
-              <Col className="col-sm-1 g-0">
-                <MyButton theType="button" theclassName="button btn-primary" theText="+"/>
-              </Col>
-            </Row>
-          </Col>
-          <Col>
-            2
-          </Col>
-        </Row>
-        <Row className="g-0 h-75">
-          <Col>
-            <div className="px-3">
-              <Table striped bordered hover size="sm">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td colSpan={2}>Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </div>
-          </Col>
-          <Col className="">
-            2
-          </Col>
-        </Row> */}
-
+      <ToastContainer
+      position="top-center"
+      autoClose={2000}
+      hideProgressBar={true}
+      />
         <Row className="h-100 g-0">
           <Col className="p-4">
             <div style={{ height: "90%" }}>
@@ -114,7 +67,7 @@ function Pos() {
                   </div>
                 </div>
                 <div className="col-2">
-                  <MyButton theType="button" theclassName="btn btn-primary form-control w-100" theText="Add"></MyButton>
+                  <MyButton theType="button" theclassName="btn btn-primary form-control w-100" theText="Add" onClick={alert}></MyButton>
                 </div>
               </form>
             </div>
@@ -207,7 +160,7 @@ function Pos() {
                       :
                     </div>
                     <div className="col text-end">
-                      0
+                      <MyInput theType="number" theClass/>
                     </div>
                   </div>
                   <div className="form-group row mb-3">

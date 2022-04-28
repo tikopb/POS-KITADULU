@@ -4,8 +4,8 @@ import "../css/main.css";
 
 function MyNavbar() {
   return (
-    <Navbar className="my-navbar d-flex justify-content-end">
-        <button type="button" className="btn-close px-5" aria-label="Close" />
+    <Navbar className="my-navbar d-flex justify-content-end min-h">
+        {/* <button type="button" className="btn-close px-5" aria-label="Close" /> */}
     </Navbar>
   )
 }
