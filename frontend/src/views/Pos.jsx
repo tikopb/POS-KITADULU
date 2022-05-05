@@ -15,6 +15,7 @@ function Pos() {
   const alertQty = () => toast.error(formErrors.newQty);
 
   const newData = { newProduct: "", newUom: "", newQty: 0 };
+  const [datas, setDatas] = useState([]);
   const [formData, setFormData] = useState(newData);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -26,17 +27,22 @@ function Pos() {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    console.log(e);
     setFormErrors(validate(formData));
     setIsSubmit(true);
   }
 
   useEffect(() => {
-    console.log(formErrors);
-    if(Object.keys(formErrors.length === 0 && isSubmit)) {
-      // berhasil
-      console.log(formData);
-    }    
+    if(Object.keys(formErrors).length === 0 && isSubmit) {
+      setDatas(
+        arr => [
+          ...arr,
+          formData
+        ]
+      )
+      console.log(datas);
+      ResetAllInput();
+      setIsSubmit(false);
+    }
   }, [formErrors]);
 
   const validate = (values) => {
@@ -57,8 +63,10 @@ function Pos() {
     return errors;
   }
 
-  const handleClickAdd = e => {
-    // if(newProduct === "") alertProduct();
+  const ResetAllInput = () => {
+    formData.newProduct = "";
+    formData.newUom = "";
+    formData.newQty = "";
   }
 
   return (
@@ -85,6 +93,16 @@ function Pos() {
                   <tr>
                   </tr>
                 </thead>
+                <tbody>
+                    {datas.filter(a => a.newProduct !== "" ).map(item => (
+                    <tr>
+                      <td>{item.newProduct}</td>
+                      <td>1000</td>
+                      <td>{item.newQty}</td>
+                      <td>{1000 * item.newQty}</td>
+                    </tr>
+                    ))}
+                </tbody>
               </Table>
             </div>
             <div style={{ height: "10%" }}>

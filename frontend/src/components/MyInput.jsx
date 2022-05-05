@@ -6,7 +6,7 @@ import "../css/login.css";
 const MyInput = props => {
   
   return (
-    <Form.Control name={props.theName} style={props.theStyle} className={props.theClass} type={props.theType} placeholder={props.thePlaceholder} value={props.theValue} onChange={props.onChange} />
+    <Form.Control id={props.theID} name={props.theName} style={props.theStyle} className={props.theClass} type={props.theType} placeholder={props.thePlaceholder} value={props.theValue} onChange={props.onChange} />
   )
 }
 
