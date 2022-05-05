@@ -20,7 +20,8 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pg": "^8.7.1",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "swagger-ui-express": "^4.3.0"
   },
   "description": "backend for pos-kita business",
   "main": "app.js",
