@@ -7,8 +7,12 @@ const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('./lib/passport');
 var cors = require('cors');
+const PORT = process.PORT || 5000;
 
 var app = express();
+// set alternative *port*
+app.listen(PORT, () => console.log(' server listening on port:' + PORT ))
+// set alternative *port*
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,6 +38,13 @@ app.use(passport.initialize());
 const router = require('./routes');
 app.use(router);
 // pos-kita router *start*
+
+//swagger-uidocumentation api *start*
+const swaggerJSON = require('./swagger.json')
+const swaggerUI = require('swagger-ui-express')
+
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJSON))
+//swagger-uidocumentation api *END*
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
