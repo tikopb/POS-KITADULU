@@ -1,24 +1,65 @@
-import React, { useState } from 'react'
-import { ButtonGroup, Col, Dropdown, DropdownButton, Row, Table } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Col, Dropdown, DropdownButton, Row, Table } from 'react-bootstrap'
 import MyButton from '../components/MyButton'
 import MyInput from '../components/MyInput'
-import MySelect from '../components/MySelect'
 import MainLayout from '../layouts/MainLayout'
 import { ArrowLeftCircleFill, ArrowRightCircleFill, PlusCircle, Save2Fill } from 'react-bootstrap-icons';
+import '../css/customToast.css'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Pos() {
-  const alert = () => toast.warn("You Clicked Me!!!");
+  const alertProduct = () => toast.error(formErrors.newProduct);
+  const alertUom = () => toast.error(formErrors.newUom);
+  const alertQty = () => toast.error(formErrors.newQty);
 
-  const [newProduct, setNewProduct] = useState("");
-  const handleChangeProduct = event => {
-    console.log(event.target.value);
+  const newData = { newProduct: "", newUom: "", newQty: 0 };
+  const [formData, setFormData] = useState(newData);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData({...formData, [name]: value})
   }
 
-  const [newUOM, setNewUOM] = useState("");
-  const [newQty, setNewQty] = useState(0);
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    console.log(e);
+    setFormErrors(validate(formData));
+    setIsSubmit(true);
+  }
+
+  useEffect(() => {
+    console.log(formErrors);
+    if(Object.keys(formErrors.length === 0 && isSubmit)) {
+      // berhasil
+      console.log(formData);
+    }    
+  }, [formErrors]);
+
+  const validate = (values) => {
+    const errors = {};    
+    if(!values.newProduct) {
+      errors.newProduct = "Product Is Required!"
+      alertProduct();
+    }
+    if(!values.newUom) {
+      errors.newUom = "UOM Is Required!"
+      alertUom();
+    }
+    if(!values.newQty) {
+      errors.newQty = "Qty Cannot Be 0!"
+      alertQty();
+    }
+
+    return errors;
+  }
+
+  const handleClickAdd = e => {
+    // if(newProduct === "") alertProduct();
+  }
 
   return (
     <MainLayout>
@@ -26,7 +67,7 @@ function Pos() {
       position="top-center"
       autoClose={2000}
       hideProgressBar={true}
-      />
+      />  
         <Row className="h-100 g-0">
           <Col className="p-4">
             <div style={{ height: "90%" }}>
@@ -47,27 +88,45 @@ function Pos() {
               </Table>
             </div>
             <div style={{ height: "10%" }}>
-              <form className="row">
+              <form className="row" onSubmit={handleSubmitForm}>
                 <div className="col-6">
-                  <MyInput theType="search" className="form-control" thePlaceholder="Search"/>
+                  <MyInput theName="newProduct" 
+                            theType="search" 
+                            theStyle={{ borderColor: formErrors.newProduct != null ? 'red':'' }}
+                            className="form-control" 
+                            thePlaceholder="Search" 
+                            theValue={formData.newProduct} 
+                            onChange={handleChange}/>
+                  { formErrors.newProduct != null &&
+                    <small style={{fontSize: "10px", color: "red"}}>{"*"+formErrors.newProduct}</small>
+                  }
                 </div>
                 <div className="col-2">
                   <div className="form-group">
-                    <select className="form-control">
+                    <select name="newUom" className="form-control" value={formData.newUom} onChange={handleChange}
+                      style={{ borderColor: formErrors.newUom != null ? 'red':'' }}>
                       <option>UOM</option>
                       <option>PCS</option>
                       <option>YDS</option>
                       <option>MTR</option>
                     </select>
                   </div>
+                  { formErrors.newUom != null &&
+                    <small style={{fontSize: "10px", color: "red"}}>{"*"+formErrors.newUom}</small>
+                  }
                 </div>
                 <div className="col-2">
                   <div className="form-group">
-                    <input type="number" className="form-control" placeholder="Qty"/>
+                    <MyInput theName="newQty" theType="number" theClassName="form-control" thePlaceholder="Qty" theValue={formData.newQty} onChange={handleChange} 
+                    theStyle={{ borderColor: formErrors.newQty != null ? 'red':'' }}
+                    />
+                    { formErrors.newQty != null &&
+                      <small style={{fontSize: "10px", color: "red"}}>{"*"+formErrors.newQty}</small>
+                    }
                   </div>
                 </div>
                 <div className="col-2">
-                  <MyButton theType="button" theclassName="btn btn-primary form-control w-100" theText="Add" onClick={alert}></MyButton>
+                  <MyButton theType="submit" theclassName="btn btn-primary form-control w-100" theText="Add"></MyButton>
                 </div>
               </form>
             </div>
