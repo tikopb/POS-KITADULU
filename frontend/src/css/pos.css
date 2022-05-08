@@ -1,0 +1,24 @@
+.Toastify__toast--error {
+    background-color: red;
+    color: white;
+}
+
+.Toastify__toast--error > svg {
+    background-color: white;
+}
+
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+button {
+    border-radius: 0!important;
+    background-color: #2196F3;    
+    box-shadow: 0 5px 5px #C3C3C3;
+}
+
+input, select {
+    border-radius: 0!important;
+    box-shadow: 0 5px 5px #C3C3C3;
+}
