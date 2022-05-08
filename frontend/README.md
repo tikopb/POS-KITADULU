@@ -1,3 +1,10 @@
+# From Author
+# Step to run Front End
+1. run npm install (delete package.json, package-lock.json and node_modules first for safety measures)
+2. run npm start
+
+#
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
