@@ -1,24 +1,29 @@
-.Toastify__toast--error {
+/* .Toastify__toast--error {
     background-color: red;
     color: white;
 }
 
 .Toastify__toast--error > svg {
     background-color: white;
-}
+} */
 
 ::-webkit-scrollbar {
     width: 0;  /* Remove scrollbar space */
     background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
-button {
+.pos-button {
     border-radius: 0!important;
-    background-color: #2196F3;    
+    background-color: #2196F3;
     box-shadow: 0 5px 5px #C3C3C3;
 }
 
-input, select {
+.pos-input {
+    border-radius: 0!important;
+    box-shadow: 0 5px 5px #C3C3C3;
+}
+
+.pos-select {
     border-radius: 0!important;
     box-shadow: 0 5px 5px #C3C3C3;
 }

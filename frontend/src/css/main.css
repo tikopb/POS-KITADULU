@@ -9,3 +9,7 @@
     color: white;
     text-align: center;
 }
+
+.input-validation-error {
+    border-color: red!important;
+}

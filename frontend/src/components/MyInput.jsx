@@ -1,21 +1,33 @@
 import React from 'react'
 import { Form } from 'react-bootstrap'
 import "../css/login.css";
-// import PropTypes from 'prop-types';
+import "../css/main.css"
+import PropTypes from 'prop-types';
 
-const MyInput = props => {
+const MyInput = React.forwardRef((props, ref) => {
   
   return (
-    <Form.Control id={props.theID} name={props.theName} style={props.theStyle} className={props.theClass} type={props.theType} placeholder={props.thePlaceholder} value={props.theValue} onChange={props.onChange} />
+    <input
+      id={props.theID} 
+      name={props.theName} 
+      style={props.theStyle} 
+      className={"form-control " + props.theClass} 
+      type={props.theType} 
+      placeholder={props.thePlaceholder} 
+      value={props.theValue} 
+      onChange={props.onChange}
+      ref={ref}
+      disabled={props.disabled}
+    />
   )
-}
+})
 
 // MyInput.propTypes = {
 //   isRequired: PropTypes.bool.isRequired
 // }
 
-// MyInput.defaultProps = {
-//   isRequired: false
-// }
+MyInput.defaultProps = {
+  theClass: ""
+}
 
 export default MyInput

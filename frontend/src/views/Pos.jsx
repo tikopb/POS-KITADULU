@@ -131,7 +131,7 @@ function Pos() {
                             theName="newProduct" 
                             theType="text"
                             theStyle={{ borderColor: formErrors.newProduct != null ? 'red':'', display:"inline" }}
-                            className="form-control" 
+                            theClass="form-control pos-input" 
                             thePlaceholder="Search"
                             onChange={handleChange} />
                   
@@ -141,7 +141,7 @@ function Pos() {
                 </div>
                 <div className="col-2">
                   <div className="form-group">
-                    <select name="newUom" className="form-control" onChange={handleChange} id="newUom"
+                    <select name="newUom" className="form-control pos-select" onChange={handleChange} id="newUom"
                       style={{ borderColor: formErrors.newUom != null ? 'red':'' }}>
                       <option>UOM</option>
                       <option>PCS</option>
@@ -155,7 +155,7 @@ function Pos() {
                 </div>
                 <div className="col-2">
                   <div className="form-group">
-                    <MyInput theID="newQty" theName="newQty" theType="number" theClassName="form-control" thePlaceholder="Qty" onChange={handleChange} 
+                    <MyInput theID="newQty" theName="newQty" theType="number" theClass="form-control pos-input" thePlaceholder="Qty" onChange={handleChange} 
                     theStyle={{ borderColor: formErrors.newQty != null ? 'red':'' }}
                     />
                     { formErrors.newQty != null &&
@@ -164,7 +164,7 @@ function Pos() {
                   </div>
                 </div>
                 <div className="col-2">
-                  <MyButton theType="submit" theclassName="btn btn-primary form-control" theStyle={{ width:"100%" }} theText="Add"></MyButton>
+                  <MyButton theType="submit" theClass="btn btn-primary form-control pos-button" theStyle={{ width:"100%" }} theText="Add"></MyButton>
                 </div>
               </form>
             </div>
@@ -290,7 +290,7 @@ function Pos() {
               </div>
             </div>
             <div style={{ height: "10%" }} className="pt-3">
-              <MyButton theType="button" theClass="btn w-100" theText="Settle"/>
+              <MyButton theType="button" theClass="btn w-100 pos-button" theText="Settle"/>
             </div>
           </Col>
         </Row>
