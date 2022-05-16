@@ -19,22 +19,22 @@ const RegisterModal = (props) => {
     });
 
     const {connectionError, setConnectionError} = useState('');
-    const {loading, setLoading} = useState(false);
+    const {loading, setLoading} = React.useState(false);
     
     const successRegister = () => toast.success("Register Success!")
     const failRegister = () => toast.error(connectionError);
 
     const onSubmit = (data) => {
         // e.preventDefault();
-        setLoading(true);
+        // setLoading(true);
         axios.post('http://localhost:5000/api/v1/auth/register', { username: data.username, password: data.password, email: data.email, name: data.name }).then(response => {
-        setLoading(false);
+        // setLoading(false);
         successRegister();
         setTimeout( () =>
             window.location.reload()
         , 2000);
         }).catch(error => {
-        setLoading(false);
+        // setLoading(false);
         if (error.response.status !== 200) {
             setConnectionError(error.response.data.err);
         }

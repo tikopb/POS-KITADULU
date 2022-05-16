@@ -1,6 +1,7 @@
 .my-navbar {
-    background-color: #0069C0;
+    /* background-color: #0069C0; */
     padding: 0!important;
+    min-height: 10%;
 }
 
 .my-footer {

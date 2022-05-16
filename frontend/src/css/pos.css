@@ -8,8 +8,10 @@
 } */
 
 ::-webkit-scrollbar {
-    width: 0;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
+    /* width: 0; */
+    /* Remove scrollbar space */
+    /* background: none;   */
+    /* Optional: just make scrollbar invisible */
 }
 
 .pos-button {

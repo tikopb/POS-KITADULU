@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form } from 'react-bootstrap';
 import MyInput from '../../components/MyInput';
-import MyButton from '../../components/MyButton'
+import MyButton from '../../components/MyButton';
 import MainLayout from '../../layouts/MainLayout';
 import axios from 'axios';
 import { setUserSession } from '../../utils/Common';

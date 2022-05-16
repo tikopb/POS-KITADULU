@@ -6,7 +6,7 @@ import ProtectedRoute from "../utils/ProtectedRoute";
 import Home from "../views/Home";
 import Login from "../views/Login/Login";
 import NotFound from "../views/NotFound";
-import Pos from "../views/Pos";
+import Pos from "../views/Pos/Pos";
 
 const Routers = () => {
   return (
