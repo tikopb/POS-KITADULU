@@ -5,12 +5,16 @@ import "../css/main.css"
 import PropTypes from 'prop-types';
 
 const MyInput = React.forwardRef((props, ref) => {
+  var buttonDefaultStyle = {
+    ...props.theStyle,
+    borderRadius: "10px"
+  }
   
   return (
     <input
       id={props.theID} 
       name={props.theName} 
-      style={props.theStyle} 
+      style={buttonDefaultStyle} 
       className={"form-control " + props.theClass} 
       type={props.theType} 
       placeholder={props.thePlaceholder} 

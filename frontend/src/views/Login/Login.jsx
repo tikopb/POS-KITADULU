@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router';
 import ErrorTextNotif from '../../components/ErrorTextNotif';
 import RegisterModal from './RegisterModal';
+import { Handbag } from 'react-bootstrap-icons';
+import ForgetPasswordModal from './ForgetPasswordModal';
 
 const Login = () => {
   const data = { username: "", password: "" };
@@ -21,6 +23,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [theError, setTheError] = useState("");
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
+  const [openForgetPasswordModal, setOpenForgetPasswordModal] = useState(false);
 
   const failLogin = () => toast.error(theError);
   const successLogin = () => toast.success("Success Login!");
@@ -61,11 +64,20 @@ const Login = () => {
     if(theError !== "") failLogin();
   }, [theError])
 
+  const handleForgetPassword = e => {
+    e.preventDefault();
+    setOpenForgetPasswordModal(true);
+  }
+
   return (
       <MainLayout>
         <RegisterModal
           show={openRegisterModal}
           onHide={() => setOpenRegisterModal(false)}
+        />
+        <ForgetPasswordModal
+          show={openForgetPasswordModal}
+          onHide={() => setOpenForgetPasswordModal(false)}
         />
 
         <ToastContainer
@@ -89,6 +101,11 @@ const Login = () => {
                 <ErrorTextNotif error={theError} />
               }
             </Form.Group>
+
+            <Form.Group style={{ textAlign: "center", marginBottom: "15px" }}>
+              <a onClick={handleForgetPassword} href="">Lupa Password?</a>
+            </Form.Group>             
+
             <MyButton theClass="btn loginButton float-right float-start" theType="submit" theText="Sign In" 
             disabled = {loading === true ? "disabled":"" } />
             <MyButton theClass="btn loginButton float-right float-end" theType="button" theText="Sign Up" onClick={ handleOpenRegisterModal }

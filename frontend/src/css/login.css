@@ -1,31 +1,53 @@
 .inputLogin {
-    background-color: #c5e3f0!important;
+    background-color: #2196f3!important;
     text-align: center;
-    color: black;
-    border: 3px solid #A0CFE6;
-    border-radius: 20px;
-    box-shadow: 0 5px 5px #C3C3C3;
+    color: white;
+    /* border: 3px solid #A0CFE6; */
+    border-radius: 15px;
+    /* box-shadow: 0 5px 5px #C3C3C3; */
 }
 
 .loginButton {
     min-width: 25%;
-    background-color: #133F52!important;
+    background-color: #035599!important;
     text-align: center;
     color: white;
-    border: 2px solid #80BFDE;
-    border-radius: 20px;
-    box-shadow: 0 5px 5px #C3C3C3;
+    /* border: 2px solid #80BFDE; */
+    border-radius: 8px;
+    /* box-shadow: 0 5px 5px #C3C3C3; */
 }
 
-.inputLogin::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #9eb6c0;
-    opacity: 1; /* Firefox */
+.inputLogin::placeholder { 
+    color: white;
+    opacity: 1; 
   }
   
-  .inputLogin::-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #9eb6c0;
+  .inputLogin::-ms-input-placeholder { 
+    color: white;
   }
   
-  .inputLogin::-ms-input-placeholder { /* Microsoft Edge */
-    color: #9eb6c0;
+  .inputLogin::-ms-input-placeholder { 
+    color: white;
+  }
+
+  .btn-close {
+    display: none;
+  }
+
+  .login-modal-form {
+    background-color: #2196f3;
+    color: white;
+  }
+  .my-login-modal {
+      width: 25%!important;
+      height: 70%!important;
+  }
+  .modal-header {
+    border: none;
+  }
+  .modal-footer {
+    border: none;
+  }
+  a {
+  text-decoration: none;
   }

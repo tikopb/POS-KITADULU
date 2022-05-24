@@ -7,14 +7,16 @@ import MyInput from '../../components/MyInput'
 import ErrorTextNotif from '../../components/ErrorTextNotif'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../../css/login.css'
 
 const RegisterModal = (props) => {
-    const {register, handleSubmit, formState: { errors }} = useForm({
+    const {register, handleSubmit, formState: { errors }, reset, watch } = useForm({
         defaultValues: {
             name: '',
             email: '',
             username: '',
-            password: ''
+            password: '',
+            confirmPassword: ''
         }
     });
 
@@ -47,30 +49,36 @@ const RegisterModal = (props) => {
     useEffect(() => {
         if(connectionError !== "") failRegister();
       }, [connectionError])
+    
+    useEffect(() => {
+        if(props.show) {
+            reset();
+        }
+    }, [props.show])
 
-  return (
-      
+  return (      
     <Modal
       {...props}
-      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+    //   size="sm"
+      dialogClassName="my-login-modal"
     >
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} className="login-modal-form">
             <ToastContainer
             position="top-center"
             autoClose={1000}
             hideProgressBar={true}
             /> 
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    Sign Up
+            <Modal.Header closeButton className="pb-0 mt-4">
+                <Modal.Title id="contained-modal-title-vcenter" style={{ width:"100%", textAlign:"center" }}>
+                    <h1 className="mb-0">SIGN UP</h1>
+                    <h6 style={{ fontWeight:"lighter" }}>Create New Account Here</h6>
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form.Group className="mb-3" controlId="name">
-                    <Form.Label>Name</Form.Label>
-                    <MyInput theType="text" thePlaceholder="Enter Name" theName="name" 
+                <Form.Group className="mb-1" controlId="name">
+                    <MyInput theType="text" thePlaceholder="Name" theName="name" 
                         theClass={ errors.name !== undefined ? 'input-validation-error':'' }
                         {...register("name", {
                             required: {
@@ -83,9 +91,8 @@ const RegisterModal = (props) => {
                         <ErrorTextNotif error={errors.name.message} />
                     }
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="email">
-                    <Form.Label>Email</Form.Label>
-                    <MyInput theType="email" thePlaceholder="Enter Email" theName="email" 
+                <Form.Group className="mb-1" controlId="email">
+                    <MyInput theType="email" thePlaceholder="Email" theName="email" 
                         theClass={ errors.email !== undefined ? 'input-validation-error':'' }
                         {...register("email", {
                             required: {
@@ -103,9 +110,8 @@ const RegisterModal = (props) => {
                         <ErrorTextNotif error={errors.email.message} />
                     }
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="username">
-                    <Form.Label>Username</Form.Label>
-                    <MyInput theType="text" thePlaceholder="Enter Username" theName="username" 
+                <Form.Group className="mb-1" controlId="username">
+                    <MyInput theType="text" thePlaceholder="Username" theName="username" 
                         theClass={ errors.username !== undefined ? 'input-validation-error':'' }
                         {...register("username", {
                             required: {
@@ -119,9 +125,8 @@ const RegisterModal = (props) => {
                         <ErrorTextNotif error={errors.username.message} />
                     }
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <MyInput theType="password" thePlaceholder="Enter Password" theName="password" 
+                <Form.Group className="mb-1" controlId="password">
+                    <MyInput theType="password" thePlaceholder="Password" theName="password" 
                         theClass={ errors.password !== undefined ? 'input-validation-error':'' }
                         {...register("password", {
                             required: {
@@ -137,6 +142,25 @@ const RegisterModal = (props) => {
                     />
                     { errors.password !== undefined && 
                         <ErrorTextNotif error={errors.password.message} />
+                    }
+                </Form.Group>
+                <Form.Group className="mb-1" controlId="password">
+                    <MyInput theType="password" thePlaceholder="Confirm Password" theName="confirmPassword" 
+                        theClass={ errors.confirmPassword !== undefined ? 'input-validation-error':'' }
+                        {...register("confirmPassword", {
+                            required: {
+                                value: true,
+                                message: "Please Confirm Your Password"
+                            },
+                            validate: (val) => {
+                                if(watch("password") !== val) 
+                                    return "Password Do Not Match!"
+                            }                                
+                        }) }
+                        disabled = {loading === true ? "disabled":"" }
+                    />
+                    { errors.password !== undefined && 
+                        <ErrorTextNotif error={errors.confirmPassword.message} />
                     }
                 </Form.Group>
             </Modal.Body>
