@@ -8,4 +8,8 @@ router.post("/api/v1/auth/register", controllers.auth.register);
 router.post("/api/v1/auth/login", controllers.auth.login);
 //login and register end 
 
+//Product start
+
+//Product end
+
 module.exports = router;
