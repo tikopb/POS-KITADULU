@@ -9,7 +9,8 @@ router.get("/api/v1/auth/whoami", restrict, controllers.auth.whoami)
 //auth controller end 
 
 //produt controller start
-router.post("/api/v1/product/CreateProduct", restrict,controllers.product.CreateProduct);
+router.get("/api/v1/product/GetProduct", restrict, controllers.product.GetProduct)
 //produt controller end
+
 
 module.exports = router;
