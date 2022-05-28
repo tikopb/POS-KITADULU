@@ -9,7 +9,7 @@ router.post("/api/v1/auth/login", controllers.auth.login);
 //login and register end 
 
 //Product start
-router.post("/api/v1/product/register", controllers.product.register);
+
 //Product end
 
 module.exports = router;

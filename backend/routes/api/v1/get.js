@@ -8,4 +8,8 @@ const restrict = require("../../middlewares/restrict")
 router.get("/api/v1/auth/whoami", restrict, controllers.auth.whoami)
 //auth controller end 
 
+//produt controller start
+router.post("/api/v1/product/CreateProduct", restrict,controllers.product.CreateProduct);
+//produt controller end
+
 module.exports = router;

@@ -2,7 +2,7 @@ let { Product } = require('../models');
 const bcrypt = require('bcrypt');
 
 module.exports = {
-    createproduct: async (req,res) => {
+    CreateProduct: async (req,res) => {
         const {name, description, org, client, uom_id, productCategories_id} = req.body
         Product.findAll({
             where: {
@@ -38,5 +38,8 @@ module.exports = {
                 }
             }            
         })
+    },
+    FindByValueOrName: async (req,res) => {
+        
     }
 }
