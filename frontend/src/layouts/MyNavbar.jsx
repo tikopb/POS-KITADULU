@@ -19,7 +19,7 @@ function MyNavbar() {
                 POS
               </Link>
             </Nav.Link>
-            <NavDropdown title="Menu" id="menu" className="mx-5">
+            <NavDropdown title="Menu" id="menu" className="mx-5 ">
               <NavDropdown.Item href="#">Sales Order</NavDropdown.Item>
               <NavDropdown.Item href="#">Receipt</NavDropdown.Item>
               <NavDropdown.Item href="#">Others.....</NavDropdown.Item>

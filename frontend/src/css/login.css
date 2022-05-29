@@ -40,7 +40,15 @@
   }
   .my-login-modal {
       width: 25%!important;
-      height: 70%!important;
+  }
+  .login-modal-form {
+      height: 30vw!important;
+  }
+  .modal-footer {
+    border-radius: 0;
+    bottom:0px;
+    position:absolute;
+    width:100%;
   }
   .modal-header {
     border: none;

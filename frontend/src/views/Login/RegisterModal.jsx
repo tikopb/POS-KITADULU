@@ -155,7 +155,7 @@ const RegisterModal = (props) => {
                             validate: (val) => {
                                 if(watch("password") !== val) 
                                     return "Password Do Not Match!"
-                            }                                
+                            }
                         }) }
                         disabled = {loading === true ? "disabled":"" }
                     />

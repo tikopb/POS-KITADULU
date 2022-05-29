@@ -4,7 +4,7 @@ import MyNavbar from '../layouts/MyNavbar'
 
 function Home() {
   return (
-    <MainLayout>
+  <MainLayout>
       <MyNavbar/>
       {/* Home */}
     </MainLayout>

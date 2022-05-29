@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Dropdown, DropdownButton, Row, Table } from 'react-bootstrap'
+import { Col, Dropdown, DropdownButton, Form, Row, Table } from 'react-bootstrap'
 import MyButton from '../../components/MyButton'
 import MyInput from '../../components/MyInput'
 import MainLayout from '../../layouts/MainLayout'
@@ -104,7 +104,7 @@ function Pos() {
             <div style={{ height: "12.5%" }}>
               <PosOptionButton />              
             </div>
-            <div style={{ height: "77.5%", fontWeight: "normal" }} className="pt-5 px-2 h5">
+            <div style={{ height: "67.5%", fontWeight: "normal" }} className="pt-5 px-2 h5">
               <form>
                 <div className="form-group row mb-5">
                   <div className="col-2">
@@ -203,8 +203,9 @@ function Pos() {
                 </div>
               </form>
             </div>
-            <div style={{ height: "10%" }} className="pt-3">
-              <MyButton theType="button" theClass="btn w-100 pos-button" theText="Settle"/>
+            <div style={{ height: "20%" }} className="pt-3">
+                <MyButton theType="button" theClass="btn btn-primary w-100 pos-button" theText="Settle"/>
+                <MyButton theType="button" theClass="btn btn-primary w-100 pos-button mt-3" theText="Print Ulang"/>
             </div>
           </Col>
         </Row>
