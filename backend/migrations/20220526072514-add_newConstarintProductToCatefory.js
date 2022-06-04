@@ -15,7 +15,7 @@ module.exports = {
           name: 'prd_prdct_contraint',
           references: { //Required field
             table: 'ProductCategories',
-            field: 'id'
+            field: 'ProductCategories_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'

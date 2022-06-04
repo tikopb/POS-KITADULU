@@ -10,7 +10,7 @@ module.exports = {
           name: 'lct_org_contraint',
           references: { //Required field
             table: 'Orgs',
-            field: 'id'
+            field: 'Org_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
@@ -23,7 +23,7 @@ module.exports = {
           name: 'lct_client_contraint',
           references: { //Required field
             table: 'Clients',
-            field: 'id'
+            field: 'Client_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
@@ -36,7 +36,7 @@ module.exports = {
           name: 'lct_whr_contraint',
           references: { //Required field
             table: 'Warehouses',
-            field: 'id'
+            field: 'Warehouse_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'

@@ -20,7 +20,7 @@ module.exports = {
           name: 'usr_org_contraint',
           references: { //Required field
             table: 'Orgs',
-            field: 'id'
+            field: 'Org_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
@@ -33,7 +33,7 @@ module.exports = {
           name: 'usr_client_contraint',
           references: { //Required field
             table: 'Clients',
-            field: 'id'
+            field: 'Client_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'

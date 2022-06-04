@@ -10,7 +10,7 @@ module.exports = {
           name: 'prd_org_contraint',
           references: { //Required field
             table: 'Orgs',
-            field: 'id'
+            field: 'Org_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
@@ -23,7 +23,7 @@ module.exports = {
           name: 'prd_client_contraint',
           references: { //Required field
             table: 'Clients',
-            field: 'id'
+            field: 'Client_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
@@ -36,7 +36,7 @@ module.exports = {
           name: 'prd_uom_contraint',
           references: { //Required field
             table: 'Uoms',
-            field: 'id'
+            field: 'Uom_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
