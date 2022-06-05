@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Org.init({
+    org_id: DataTypes.INTEGER,
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     isactive: DataTypes.BOOLEAN,
