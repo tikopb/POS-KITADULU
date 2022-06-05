@@ -32,5 +32,8 @@
     "pos-kita-backend"
   ],
   "author": "kita-dulu-project",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
 }
