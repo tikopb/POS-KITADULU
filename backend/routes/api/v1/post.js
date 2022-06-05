@@ -8,6 +8,10 @@ router.post("/api/v1/auth/register", controllers.auth.register);
 router.post("/api/v1/auth/login", controllers.auth.login);
 //login and register end 
 
+//organization and client
+
+//organization and client end 
+
 //Product start
 router.post("/api/v1/product/createProduct", restrict ,controllers.product.CreateProduct);
 router.post("/api/v1/product/updateProduct", restrict ,controllers.product.UpdateProduct);

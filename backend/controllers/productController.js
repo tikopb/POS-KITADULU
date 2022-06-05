@@ -86,7 +86,7 @@ module.exports = {
     },
     UpdateProduct: async (req,res) => {
         const {name, barcode, org, client, uom_id, productCategories_id} = req.body
-        const valueProduct = await GetProduct(name, barcode, org, client)
+        let valueProduct = await GetProduct(name, barcode, org, client)
         valueProduct.set({
             name: name,
             barcode: barcode,

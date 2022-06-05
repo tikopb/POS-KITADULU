@@ -3,6 +3,7 @@ const { Op } = require("sequelize");
 
 module.exports = {
     GetOrganization(orgId, clientId){
+        // use not for api
         const objReturn = org.findOne({
             where: {
                 org_id: orgId,
@@ -10,7 +11,6 @@ module.exports = {
                 isactive: true
             }
         })
-        //user_game.length !== null && data.get('isAdmin')
         return objReturn
     }
 }
