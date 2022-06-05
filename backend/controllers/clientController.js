@@ -2,8 +2,8 @@ let { org, client } = require('../models');
 const { Op } = require("sequelize");
 
 module.exports = {
-    CreateClient: async (req,res) => {
-        const {name, description} = req.body
+    CreateClientAndOrganization: async (req,res) => {
+        const {name, description, adress} = req.body
         client.findAll({
             where: {
                 name: name
@@ -18,13 +18,20 @@ module.exports = {
             }
             else{
                 try {
-                    let client = client.register({
+                    let client = await client.create({
                         name: name,
                         description: description,
                         isactive: true
+                    }).then( clientData => {
+                        let organization = await org.create({
+                            name: name,
+                            description: description,
+                            client_id: clientData.client_id,
+                            adress: adress
+                        })
                     })
                     res.status(200).json({
-                        msg: 'client registered'
+                        msg: 'client and registered'
                     })
                 } catch (err) {
                     res.status(401).json({
@@ -43,7 +50,6 @@ module.exports = {
                 description: description,
                 isactive: isactive
             })
-
             await valueClient.save()
             res.status(200).json({
                 msg: 'client updated'

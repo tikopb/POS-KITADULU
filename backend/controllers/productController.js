@@ -64,7 +64,7 @@ module.exports = {
                 })
             }else{
                 try {
-                    const prd = Product.register({
+                    const prd = Product.create({
                         name: name,
                         description: description,
                         isActve: true,

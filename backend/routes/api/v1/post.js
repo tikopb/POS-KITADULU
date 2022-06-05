@@ -9,7 +9,8 @@ router.post("/api/v1/auth/login", controllers.auth.login);
 //login and register end 
 
 //organization and client
-
+router.post("/api/v1/org/get", controllers.org.GetOrganization);
+router.post("/api/v1/client/register", controllers.client.CreateClientAndOrganization);
 //organization and client end 
 
 //Product start

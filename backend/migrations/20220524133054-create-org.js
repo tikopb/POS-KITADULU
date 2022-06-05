@@ -28,6 +28,10 @@ module.exports = {
       client_id: {
         allowNull: false,
         type:Sequelize.INTEGER
+      },
+      adress: {
+        allowNull: true,
+        type: Sequelize.STRING
       }
     });
   },
