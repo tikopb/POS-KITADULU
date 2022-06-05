@@ -1,28 +1,27 @@
 let { Product } = require('../models');
 const { Op } = require("sequelize");
+let { org } = require('./orgController')
 
 function GetProduct(nama, barcode, org_id, client_id) {
-    const product = Product.findAll({
+    const orgV = org.GetOrganization(org_id, client_id)
+    let product = null;
+    product = Product.findAll({
         where: {
             [Op.or]: [
                 {
-                    org_id: org, client_id: client, name: nama
+                    org_id: orgV.org_id, client_id: orgV.client_id, name: nama
                 },
                 {
-                    org_id: org, client_id: client, barcode: barcode
+                    org_id: orgV.org_id, client_id: orgV.client_id, barcode: barcode
                 }
             ]
         }
     })
-    if(product == null || product.length === 0 ){   
-            return 'Product Not Found'
-    }else{
-        return product
-    }
+    return product
 }
 
 module.exports = {
-    GetProduct: async (req,res) => {
+    Get: async (req,res) => {
         /*
             DOD:
                 1 Getting product by value (name) or by barcode with org client instance
