@@ -44,7 +44,7 @@ const PosTableInput = (props) => {
         </div>
         </div>
         <div className="col-2">
-        <MyButton theType="submit" theClass="btn btn-primary form-control pos-button" theStyle={{ width:"100%" }} theText="Add"></MyButton>
+            <MyButton theType="submit" theClass="btn btn-primary form-control pos-button" theStyle={{ width:"100%" }} theText="Add" />
         </div>
     </form>
   )

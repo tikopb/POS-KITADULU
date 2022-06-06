@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PosTable from './PosTable'
 import PosTableInput from './PosTableInput'
 import PosOptionButton from './PosOptionButton'
+import SearchProductModal from './Modals/SearchProductModal'
 
 function Pos() {
   const alertProduct = () => toast.error(formErrors.newProduct);
@@ -23,12 +24,15 @@ function Pos() {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const [showSearchModal, setShowSearchModal] = useState(false);
+
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData({...formData, [name]: value})
   }
 
   const handleSubmitForm = (e) => {
+    setShowSearchModal(true);
     e.preventDefault();
     setFormErrors(validate(formData));
     if(Object.keys(formErrors).length === 0) {
@@ -86,6 +90,11 @@ function Pos() {
 
   return (
     <MainLayout>
+      <SearchProductModal 
+        show={showSearchModal}
+        handleClose={() => setShowSearchModal(false)}
+      />
+
       <ToastContainer
       position="top-center"
       autoClose={1000}
@@ -97,12 +106,14 @@ function Pos() {
               <PosTable datas={datas} deleteRow={deleteRow}/>
             </div>
             <div style={{ height: "10%" }}>
-              <PosTableInput handleSubmitForm={handleSubmitForm} handleChange={handleChange} formErrors={formErrors} />              
+              <PosTableInput handleSubmitForm={handleSubmitForm} handleChange={handleChange} formErrors={formErrors} 
+                openSearchProductModal={() => setShowSearchModal(true)}
+              />
             </div>
           </Col>
           <Col className="p-4">
             <div style={{ height: "12.5%" }}>
-              <PosOptionButton />              
+              <PosOptionButton />
             </div>
             <div style={{ height: "67.5%", fontWeight: "normal" }} className="pt-5 px-2 h5">
               <form>

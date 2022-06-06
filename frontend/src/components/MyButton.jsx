@@ -3,13 +3,16 @@ import React from 'react'
 
 const MyButton = props => {
   return (
-    <btn className={props.theClass} 
-        style={props.theStyle} 
-        type={props.theType} 
-        onClick={props.onClick}
-        disabled={props.disabled}>
-        {props.theText}
-    </btn>
+    <>
+      <button className={props.theClass} 
+          style={props.theStyle} 
+          type={props.theType} 
+          onClick={props.onClick}
+          disabled={props.disabled}
+      >
+          {props.theText}
+      </button>
+    </>
   )
 }
 

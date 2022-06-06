@@ -5,7 +5,7 @@ import { TrashFill } from 'react-bootstrap-icons';
 
 const PosTable = (props) => {
   return (
-    <div style={{ overflowY:"scroll", display:"block", height:"585.28px" }}>
+    <div style={{ overflowY:"scroll", display:"block", height:"100%" }}>
                 <Table borderless style={{ marginBottom:"0" }}>
                   <thead style={{ position:"sticky", top:"0" }}>
                     <tr>

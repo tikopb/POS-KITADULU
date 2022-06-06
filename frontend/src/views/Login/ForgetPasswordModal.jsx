@@ -68,7 +68,7 @@ const ForgetPasswordModal = (props) => {
 
                 </Modal.Body>
                 <Modal.Footer className="justify-content-center" style={{ marginTop:"auto" }}>
-                    <MyButton theClass="loginButton" theText="Send" onClick={handleSendButton}></MyButton>
+                    <MyButton theClass="loginButton btn" theText="Send" onClick={handleSendButton}></MyButton>
                 </Modal.Footer>
             </Form>
         </Modal>

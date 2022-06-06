@@ -15,8 +15,15 @@ import ErrorTextNotif from '../../components/ErrorTextNotif';
 import RegisterModal from './RegisterModal';
 import { Handbag } from 'react-bootstrap-icons';
 import ForgetPasswordModal from './ForgetPasswordModal';
+import { useForm } from 'react-hook-form';
 
 const Login = () => {
+  const {register, handleSubmit, formState: { errors }, reset } = useForm({
+    defaultValues: {
+        username: '',
+        password: ''
+    }
+});
   const data = { username: "", password: "" };
   const [formData, setFormData] = useState(data);
 
@@ -36,9 +43,8 @@ const Login = () => {
     console.log(formData.username);
   }
 
-  const handleLogin = (e) => {
+  const onLogin = (e) => {
     e.preventDefault();
-    setTheError("");
     setLoading(true);
     axios.post('http://localhost:5000/api/v1/auth/login', { username: formData.username, password: formData.password }).then(response => {
       // setLoading(false);
@@ -61,8 +67,13 @@ const Login = () => {
   }
 
   useEffect(() => {
+    if(errors.username !== undefined)
+      setTheError(errors.username.message);
+    else if(errors.password !== undefined)
+      setTheError(errors.password.message);
+    
     if(theError !== "") failLogin();
-  }, [theError])
+  }, [errors.username, errors.password])
 
   const handleForgetPassword = e => {
     e.preventDefault();
@@ -86,19 +97,46 @@ const Login = () => {
         hideProgressBar={true}
         />  
         <div className="h-100 d-flex justify-content-center align-items-center">
-          <Form className="w-25" onSubmit={handleLogin}>
+          <Form className="w-25" onSubmit={handleSubmit(onLogin)}>
             <Form.Group className="mb-4">
-              <MyInput theClass={theError.includes('User') ? "form-control-lg inputLogin input-validation-error":"form-control-lg inputLogin"} theType="text" thePlaceholder="Username" onChange={handleChange} theName="username"
-              disabled = {loading === true ? "disabled":"" } />
-              { theError.includes('User') &&
+              <MyInput 
+                theClass={errors.username !== undefined ? 
+                  "form-control-lg inputLogin input-validation-error":"form-control-lg inputLogin"} 
+                theType="text" thePlaceholder="Username" 
+                // onChange={handleChange} 
+                theName="username"
+                disabled = {loading === true ? "disabled":"" } 
+                {...register("username", {
+                  required: {
+                    value: true,
+                    message: "Username is required!"
+                  }
+                }) }/>
+              {/* { theError.includes('User') &&
                 <ErrorTextNotif error={theError} />
+              } */}
+              { errors.username !== undefined && 
+                <ErrorTextNotif error={errors.username.message} />
               }
             </Form.Group>
             <Form.Group className="mb-4">          
-              <MyInput theClass={theError.includes('password') ? " form-control-lg inputLogin input-validation-error":"form-control-lg inputLogin"} theType="password" thePlaceholder="Password" onChange={handleChange} theName="password"
-              disabled = {loading === true ? "disabled":"" } />
-              { theError.includes('password') &&
+              <MyInput theClass={errors.password !== undefined ? 
+                " form-control-lg inputLogin input-validation-error":"form-control-lg inputLogin"} 
+                theType="password" thePlaceholder="Password" 
+                // onChange={handleChange} 
+                theName="password"
+                disabled = {loading === true ? "disabled":"" } 
+                {...register("password", {
+                  required: {
+                      value: true,
+                      message: "Password is required!"
+                  }
+                }) }/>
+              {/* { theError.includes('password') &&
                 <ErrorTextNotif error={theError} />
+              } */}
+              { errors.password !== undefined && 
+                <ErrorTextNotif error={errors.password.message} />
               }
             </Form.Group>
 

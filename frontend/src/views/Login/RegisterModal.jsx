@@ -62,7 +62,8 @@ const RegisterModal = (props) => {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     //   size="sm"
-      dialogClassName="my-login-modal"
+        dialogClassName="my-login-modal"
+        contentClassName="my-login-modal-height"
     >
         <Form onSubmit={handleSubmit(onSubmit)} className="login-modal-form">
             <ToastContainer
@@ -78,6 +79,9 @@ const RegisterModal = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <Form.Group className="mb-1" controlId="name">
+                    { errors.name !== undefined && 
+                        <ErrorTextNotif error={errors.name.message} />
+                    }
                     <MyInput theType="text" thePlaceholder="Name" theName="name" 
                         theClass={ errors.name !== undefined ? 'input-validation-error':'' }
                         {...register("name", {
@@ -87,30 +91,30 @@ const RegisterModal = (props) => {
                             }
                         }) }
                     />
-                    { errors.name !== undefined && 
-                        <ErrorTextNotif error={errors.name.message} />
-                    }
                 </Form.Group>
                 <Form.Group className="mb-1" controlId="email">
+                    { errors.email !== undefined && 
+                        <ErrorTextNotif error={errors.email.message} />
+                    }
                     <MyInput theType="email" thePlaceholder="Email" theName="email" 
                         theClass={ errors.email !== undefined ? 'input-validation-error':'' }
                         {...register("email", {
                             required: {
                                 value: true,
                                 message: "Email is required!"
+                            },
+                            pattern : {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: "Invalid email!!!"
                             }
-                            // pattern : {
-                            //     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            //     message: "Invalid email!!!"
-                            // }
                         }) }
                         disabled = {loading === true ? "disabled":"" }
                     />
-                    { errors.email !== undefined && 
-                        <ErrorTextNotif error={errors.email.message} />
-                    }
                 </Form.Group>
                 <Form.Group className="mb-1" controlId="username">
+                    { errors.username !== undefined && 
+                        <ErrorTextNotif error={errors.username.message} />
+                    }
                     <MyInput theType="text" thePlaceholder="Username" theName="username" 
                         theClass={ errors.username !== undefined ? 'input-validation-error':'' }
                         {...register("username", {
@@ -121,11 +125,11 @@ const RegisterModal = (props) => {
                         }) }
                         disabled = {loading === true ? "disabled":"" }
                     />
-                    { errors.username !== undefined && 
-                        <ErrorTextNotif error={errors.username.message} />
-                    }
                 </Form.Group>
                 <Form.Group className="mb-1" controlId="password">
+                    { errors.password !== undefined && 
+                        <ErrorTextNotif error={errors.password.message} />
+                    }
                     <MyInput theType="password" thePlaceholder="Password" theName="password" 
                         theClass={ errors.password !== undefined ? 'input-validation-error':'' }
                         {...register("password", {
@@ -140,11 +144,11 @@ const RegisterModal = (props) => {
                         }) }
                         disabled = {loading === true ? "disabled":"" }
                     />
-                    { errors.password !== undefined && 
-                        <ErrorTextNotif error={errors.password.message} />
-                    }
                 </Form.Group>
                 <Form.Group className="mb-1" controlId="password">
+                    { errors.password !== undefined && 
+                        <ErrorTextNotif error={errors.confirmPassword.message} />
+                    }
                     <MyInput theType="password" thePlaceholder="Confirm Password" theName="confirmPassword" 
                         theClass={ errors.confirmPassword !== undefined ? 'input-validation-error':'' }
                         {...register("confirmPassword", {
@@ -159,15 +163,12 @@ const RegisterModal = (props) => {
                         }) }
                         disabled = {loading === true ? "disabled":"" }
                     />
-                    { errors.password !== undefined && 
-                        <ErrorTextNotif error={errors.confirmPassword.message} />
-                    }
                 </Form.Group>
             </Modal.Body>
             <Modal.Footer>
-                <MyButton theClass="loginButton" theText="Register"
+                <MyButton theClass="btn loginButton" theText="Register"
                 disabled = {loading === true ? "disabled":"" }></MyButton>
-                <MyButton theClass="loginButton" onClick={props.onHide} theText="Cancel"
+                <MyButton theClass="btn loginButton" onClick={props.onHide} theText="Cancel"
                 disabled = {loading === true ? "disabled":"" }></MyButton>
             </Modal.Footer>
         </Form>

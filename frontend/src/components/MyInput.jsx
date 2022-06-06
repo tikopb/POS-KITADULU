@@ -5,24 +5,26 @@ import "../css/main.css"
 import PropTypes from 'prop-types';
 
 const MyInput = React.forwardRef((props, ref) => {
-  var buttonDefaultStyle = {
+  var inputDefaultStyle = {
     ...props.theStyle,
     borderRadius: "10px"
   }
   
   return (
-    <input
-      id={props.theID} 
-      name={props.theName} 
-      style={buttonDefaultStyle} 
-      className={"form-control " + props.theClass} 
-      type={props.theType} 
-      placeholder={props.thePlaceholder} 
-      value={props.theValue} 
-      onChange={props.onChange}
-      ref={ref}
-      disabled={props.disabled}
-    />
+    <>
+      <input
+        id={props.theID} 
+        name={props.theName} 
+        style={inputDefaultStyle} 
+        className={"form-control " + props.theClass} 
+        type={props.theType} 
+        placeholder={props.thePlaceholder} 
+        value={props.theValue} 
+        onChange={props.onChange}
+        ref={ref}
+        disabled={props.disabled}
+      />
+    </>
   )
 })
 

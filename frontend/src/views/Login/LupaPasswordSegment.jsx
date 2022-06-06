@@ -1,23 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import MyInput from '../../components/MyInput'
 
 const LupaPasswordSegment = (props) => {
-    console.log(props)
+    const [email, setEmail] = useState("");
+
+    const handleChangeEmail = e => {
+        setEmail(e.target.value);
+        console.log(email);
+    }
+
     if(props.inputEmail) {
         return (
             <>
                 <div style={{ width:"100%", textAlign:"center" }}>
                     <h6 style={{ fontWeight:"lighter" }}>Input Your Email Here</h6>
                 </div>
-                <MyInput thePlaceholder="Email"/>
-                <Form.Check 
-                    type={"checkbox"}
-                    id={`default-checkbox`}
-                    label={`Send verification code to my email`}
-                    className="mt-5 mx-3"
-                    style={{ fontWeight:"lighter" }}
-                />
+                <MyInput theType="email" thePlaceholder="Email" onChange={ handleChangeEmail }/>
             </>
         )
     }
@@ -27,6 +26,7 @@ const LupaPasswordSegment = (props) => {
                 <div style={{ width:"100%", textAlign:"center" }}>
                     <h6 style={{ fontWeight:"lighter" }}>Input Your Verification Code Here</h6>
                 </div>
+                <MyInput thePlaceholder={ email } disabled="true" theClass="mb-2"/>
                 <MyInput thePlaceholder="Verification Code"/>
             </>
         )

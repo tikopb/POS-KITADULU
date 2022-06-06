@@ -37,12 +37,16 @@
   .login-modal-form {
     background-color: #2196f3;
     color: white;
+    border-radius: 10px;
   }
   .my-login-modal {
-      width: 25%!important;
+      width: 26%!important;
   }
   .login-modal-form {
-      height: 30vw!important;
+      height: 40vw!important;
+  }
+  .my-login-modal-height {
+    border-radius: 15px;
   }
   .modal-footer {
     border-radius: 0;
