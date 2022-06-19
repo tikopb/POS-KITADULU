@@ -6,6 +6,7 @@ const restrict = require("../../middlewares/restrict")
 //login and register
 router.post("/api/v1/auth/register", controllers.auth.register);
 router.post("/api/v1/auth/login", controllers.auth.login);
+router.post("/api/v1/auth/updateClient", restrict, controllers.auth.UpdateClient);
 //login and register end 
 
 //Product start
