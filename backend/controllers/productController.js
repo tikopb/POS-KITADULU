@@ -3,16 +3,16 @@ const { Op } = require("sequelize");
 let { org } = require('./orgController')
 
 function GetProduct(nama, barcode, org_id, client_id) {
-    const orgV = org.GetOrganization(org_id, client_id)
+    const orgM = org.GetOrganization(org_id, client_id)
     let product = null;
     product = Product.findAll({
         where: {
             [Op.or]: [
                 {
-                    org_id: orgV.org_id, client_id: orgV.client_id, name: nama
+                    org_id: orgM.org_id, client_id: orgM.client_id, name: nama
                 },
                 {
-                    org_id: orgV.org_id, client_id: orgV.client_id, barcode: barcode
+                    org_id: orgM.org_id, client_id: orgM.client_id, barcode: barcode
                 }
             ]
         }
