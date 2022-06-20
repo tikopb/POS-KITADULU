@@ -14,11 +14,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Org.init({
-    org_id: DataTypes.INTEGER,
+    org_id:{
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     isactive: DataTypes.BOOLEAN,
-    client_id: DataTypes.INTEGER
+    client_id: DataTypes.INTEGER,
+    adress: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Org',

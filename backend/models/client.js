@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Client.init({
+    Client_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     isactive: DataTypes.BOOLEAN

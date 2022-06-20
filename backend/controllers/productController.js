@@ -3,16 +3,16 @@ const { Op } = require("sequelize");
 let { org } = require('./orgController')
 
 function GetProduct(nama, barcode, org_id, client_id) {
-    const orgV = org.GetOrganization(org_id, client_id)
+    const orgM = org.GetOrganization(org_id, client_id)
     let product = null;
     product = Product.findAll({
         where: {
             [Op.or]: [
                 {
-                    org_id: orgV.org_id, client_id: orgV.client_id, name: nama
+                    org_id: orgM.org_id, client_id: orgM.client_id, name: nama
                 },
                 {
-                    org_id: orgV.org_id, client_id: orgV.client_id, barcode: barcode
+                    org_id: orgM.org_id, client_id: orgM.client_id, barcode: barcode
                 }
             ]
         }
@@ -64,7 +64,7 @@ module.exports = {
                 })
             }else{
                 try {
-                    const prd = Product.register({
+                    const prd = Product.create({
                         name: name,
                         description: description,
                         isActve: true,
@@ -86,7 +86,7 @@ module.exports = {
     },
     UpdateProduct: async (req,res) => {
         const {name, barcode, org, client, uom_id, productCategories_id} = req.body
-        const valueProduct = await GetProduct(name, barcode, org, client)
+        let valueProduct = await GetProduct(name, barcode, org, client)
         valueProduct.set({
             name: name,
             barcode: barcode,
