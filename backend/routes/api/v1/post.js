@@ -14,6 +14,10 @@ router.post("/api/v1/org/get", controllers.org.GetOrganization);
 router.post("/api/v1/client/register", controllers.client.CreateClientAndOrganization);
 //organization and client end 
 
+//product category start
+router.post("/api/v1/productCategory/create" , controllers.productCategories.Create);
+//product category end
+
 //Product start
 router.post("/api/v1/product/createProduct", restrict ,controllers.product.CreateProduct);
 router.post("/api/v1/product/updateProduct", restrict ,controllers.product.UpdateProduct);
