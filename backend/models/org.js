@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     isactive: DataTypes.BOOLEAN,
-    client_id: DataTypes.INTEGER
+    client_id: DataTypes.INTEGER,
+    adress: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Org',
