@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "postgres",
+    "password": "Password123",
     "database": "poskita",
     "host": "localhost",
     "dialect": "postgres"
