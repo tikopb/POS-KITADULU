@@ -57,8 +57,10 @@ const Login = () => {
       setLoading(false);
       if (error.response.status !== 200) {
         setTheError(error.response.data.err);
+
       }
       else setTheError("Something went wrong. Please try again later.");
+      failLogin();
     });
   }
 
@@ -72,7 +74,7 @@ const Login = () => {
     else if(errors.password !== undefined)
       setTheError(errors.password.message);
     
-    if(theError !== "") failLogin();
+    // if(theError !== "") failLogin();
   }, [errors.username, errors.password])
 
   const handleForgetPassword = e => {
@@ -95,7 +97,7 @@ const Login = () => {
         position="top-center"
         autoClose={1000}
         hideProgressBar={true}
-        />  
+        />
         <div className="h-100 d-flex justify-content-center align-items-center">
           <Form className="w-25" onSubmit={handleSubmit(onLogin)}>
             <Form.Group className="mb-4">
