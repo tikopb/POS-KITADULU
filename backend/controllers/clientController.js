@@ -18,7 +18,7 @@ module.exports = {
             }
             else{
                 try {
-                    let client = await client.create({
+                    let client = client.create({
                         name: name,
                         description: description,
                         isactive: true
