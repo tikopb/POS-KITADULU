@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Org.init({
-    org_id:{
+    Org_id:{
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
