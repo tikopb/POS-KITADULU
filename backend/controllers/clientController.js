@@ -3,15 +3,13 @@ const { Op } = require("sequelize");
 
 module.exports = {
     CreateClientAndOrganization: async (req,res) => {
-        const {name, description, adress} = req.body
+        const {nameClient, description, adress} = req.body
         client.findAll({
             where: {
-                name: name
+                name: nameClient 
             }
-        })
-        .then(function (clientExist) {
+        }).then(function (clientExist) {
             if(clientExist.length > 0 ){
-                console.log('client exist')
                 res.status(500).json({
                     msg: 'Client Exist'
                 })
@@ -28,10 +26,12 @@ module.exports = {
                             description: description,
                             client_id: clientData.client_id,
                             adress: adress
+                        }).then( orgData => {
+                            res.status(200).json({
+                                orgData,
+                                msg: 'Data Created Successfully'
+                            })
                         })
-                    })
-                    res.status(200).json({
-                        msg: 'client and registered'
                     })
                 } catch (err) {
                     res.status(401).json({
@@ -43,7 +43,7 @@ module.exports = {
     },
     UpdateClient: async (req,res) => {
         const {clientid, name, description, isactive} = req.body
-        let valueClient = client.findByPk(clientid);
+        let valueClient = client.findByPk(clientid)
         try {
             valueClient.set({
                 name: name,
