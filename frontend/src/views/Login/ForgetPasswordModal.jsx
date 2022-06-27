@@ -3,7 +3,7 @@ import { Form, Modal } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
 import MyButton from '../../components/MyButton'
 import MyInput from '../../components/MyInput'
-import LupaPasswordSegment from './LupaPasswordSegment'
+import LupaPasswordSegment from './ForgetPasswordSegment'
 
 const ForgetPasswordModal = (props) => {
     const [isInputEmail, setIsInputEmail] = useState(true);

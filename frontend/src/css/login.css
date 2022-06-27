@@ -1,7 +1,7 @@
 .inputLogin {
-    background-color: #2196f3!important;
+    /* background-color: #2196f3!important; */
     text-align: center;
-    color: white;
+    color: black;
     /* border: 3px solid #A0CFE6; */
     border-radius: 15px;
     /* box-shadow: 0 5px 5px #C3C3C3; */
@@ -11,23 +11,23 @@
     min-width: 25%;
     background-color: #035599!important;
     text-align: center;
-    color: white;
+    color: white!important;
     /* border: 2px solid #80BFDE; */
     border-radius: 8px;
     /* box-shadow: 0 5px 5px #C3C3C3; */
 }
 
 .inputLogin::placeholder { 
-    color: white;
-    opacity: 1; 
+    /* color: white; */
+    opacity: 0.5; 
   }
   
   .inputLogin::-ms-input-placeholder { 
-    color: white;
+    /* color: white; */
   }
   
   .inputLogin::-ms-input-placeholder { 
-    color: white;
+    /* color: white; */
   }
 
   .btn-close {
@@ -62,4 +62,9 @@
   }
   a {
   text-decoration: none;
+  }
+
+  .my-register-forget-password {
+    background-color: #2196F3;
+    color: white;
   }

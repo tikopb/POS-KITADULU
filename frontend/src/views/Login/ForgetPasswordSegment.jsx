@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import MyInput from '../../components/MyInput'
 
-const LupaPasswordSegment = (props) => {
+const ForgetPasswordSegment = (props) => {
     const [email, setEmail] = useState("");
 
     const handleChangeEmail = e => {
@@ -14,9 +14,13 @@ const LupaPasswordSegment = (props) => {
         return (
             <>
                 <div style={{ width:"100%", textAlign:"center" }}>
-                    <h6 style={{ fontWeight:"lighter" }}>Input Your Email Here</h6>
+                    <h6 style={{ fontWeight:"lighter" }}>Masukkan Email Anda Disini</h6>
                 </div>
                 <MyInput theType="email" thePlaceholder="Email" onChange={ handleChangeEmail }/>
+                
+                <Form.Group style={{ textAlign: "center", margin: "20px 0" }}>
+                    <div>Kami akan mengirim kode verifikasi ke email anda</div>
+                </Form.Group>
             </>
         )
     }
@@ -24,7 +28,7 @@ const LupaPasswordSegment = (props) => {
         return (
             <>
                 <div style={{ width:"100%", textAlign:"center" }}>
-                    <h6 style={{ fontWeight:"lighter" }}>Input Your Verification Code Here</h6>
+                    <h6 style={{ fontWeight:"lighter" }}>Masukkan Kode Verifikasi Anda Disini</h6>
                 </div>
                 <MyInput thePlaceholder={ email } disabled="true" theClass="mb-2"/>
                 <MyInput thePlaceholder="Verification Code"/>
@@ -35,7 +39,7 @@ const LupaPasswordSegment = (props) => {
         return (
             <>
                 <div style={{ width:"100%", textAlign:"center" }}>
-                    <h6 style={{ fontWeight:"lighter" }}>Input Your New Password Here</h6>
+                    <h6 style={{ fontWeight:"lighter" }}>Masukkan Password Baru Anda Disini</h6>
                 </div>
                 <Form.Group className="mb-1">
                     <MyInput theType="password" thePlaceholder="Password"/>
@@ -48,4 +52,4 @@ const LupaPasswordSegment = (props) => {
     }
 }
 
-export default LupaPasswordSegment
+export default ForgetPasswordSegment

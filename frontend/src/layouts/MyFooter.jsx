@@ -3,7 +3,11 @@ import "../css/main.css";
 
 function MyFooter() {
   return (
-    <footer className="mt-auto my-footer">@Powered By Kita-Dulu-Aja</footer>
+    <footer className="mt-auto my-footer" 
+      // style={{ borderTop: "10px solid white" }}
+    >
+        @Powered By WIST
+    </footer>
   )
 }
 

@@ -79,7 +79,8 @@ const Login = () => {
 
   const handleForgetPassword = e => {
     e.preventDefault();
-    setOpenForgetPasswordModal(true);
+    // setOpenForgetPasswordModal(true);
+    navigate("/login/forgetpassword")
   }
 
   return (
