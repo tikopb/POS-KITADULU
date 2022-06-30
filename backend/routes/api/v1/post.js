@@ -11,7 +11,6 @@ router.post("/api/v1/auth/updateClient", restrict, controllers.auth.UpdateClient
 //login and register end 
 
 //organization and client
-router.post("/api/v1/org/get", controllers.org.GetOrganization);
 router.post("/api/v1/client/register", controllers.client.CreateClientAndOrganization);
 //organization and client end 
 
