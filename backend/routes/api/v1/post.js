@@ -2,6 +2,7 @@ const router = require("express").Router()
 
 const controllers = require("../../../controllers")
 const restrict = require("../../middlewares/restrict")
+const apiV = "V1"
 
 //login and register
 router.post("/api/v1/auth/register", controllers.auth.register);
@@ -16,6 +17,7 @@ router.post("/api/v1/client/register", controllers.client.CreateClientAndOrganiz
 
 //product category start
 router.post("/api/v1/productCategory/create" , controllers.productCategories.Create);
+router.post("/api/"+apiV+"/productCategory/getAll" , controllers.productCategories.GetAll);
 //product category end
 
 //Product start

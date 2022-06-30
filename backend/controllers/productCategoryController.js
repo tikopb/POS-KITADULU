@@ -1,25 +1,10 @@
 let { ProductCategory, Org } = require('../models')
 
-function GetOrganization(org_id, client_id){
-    return Org.findOne({
-        where: {
-            Org_id: org_id,
-            client_id: client_id,
-            isactive: true
-        }
-    }).then(data => {
-        if(data != null){
-            return data
-        }else{
-            return null
-        }
-    })
-}
-
 module.exports = {
     GetAll: async(req,res) => {
         const {org_id, client_id} = req.body
-        const orgM = await GetOrganization(org_id, client_id)
+        //const orgM = await GetOrganization(org_id, client_id)
+        const orgM = await Org.GetOrganization(org_id, client_id)
         ProductCategory.findAll({
             where: {
                 org_id: orgM.Org_id,
@@ -28,6 +13,7 @@ module.exports = {
         }).then(function (productCategory) {
             if(productCategory.length > 0 ){
                 res.status(200).json({
+                    msg: 'data get succsess',
                     orgM,
                     productCategory 
                 })

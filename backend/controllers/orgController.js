@@ -1,21 +1,7 @@
-let { org } = require('../models');
+let { Org } = require('../models');
 const { Op } = require("sequelize");
 
 module.exports = {
-    GetOrganization(orgId, clientId){
-        // use for not api
-        org.findOne({
-            where: {
-                org_id: orgId,
-                client_id: clientId,
-                isactive: true
-            }
-        }).then(data => {
-            if(data != null){
-                return data
-            }
-        })
-    },
     GenerateOrganization: async(req, res) => {
         const {name, description, address, client_id} = req.body;
         org.findOne({

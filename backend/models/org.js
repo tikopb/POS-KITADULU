@@ -12,6 +12,23 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    static GetOrganization(org_id, client_id){
+      return Org.findOne({
+          where: {
+              Org_id: org_id,
+              client_id: client_id,
+              isactive: true
+          }
+      }).then(data => {
+          if(data != null){
+              return data
+          }else{
+              return null
+          }
+      })
+    }
+
   }
   Org.init({
     Org_id:{
