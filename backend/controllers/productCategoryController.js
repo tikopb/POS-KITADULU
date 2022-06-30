@@ -8,7 +8,8 @@ module.exports = {
         ProductCategory.findAll({
             where: {
                 org_id: orgM.Org_id,
-                client_id: orgM.client_id
+                client_id: orgM.client_id,
+                isactive: true
             }
         }).then(function (productCategory) {
             if(productCategory.length > 0 ){
