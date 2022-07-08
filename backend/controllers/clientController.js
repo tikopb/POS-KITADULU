@@ -17,12 +17,12 @@ module.exports = {
             else{
                 try {
                     let client = client.create({
-                        name: name,
+                        name: nameClient,
                         description: description,
                         isactive: true
                     }).then( clientData => {
-                        let organization = await org.create({
-                            name: name,
+                        let organization = org.create({
+                            name: nameClient,
                             description: description,
                             client_id: clientData.client_id,
                             adress: adress
