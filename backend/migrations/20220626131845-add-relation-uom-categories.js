@@ -44,7 +44,7 @@ module.exports = {
       ),
       queryInterface.addConstraint(
         'UomConvertions',{
-          fields: ['client_id'],
+          fields: ['uom_id'],
           type: 'foreign key',
           name: 'UomCon_uom_contraint',
           references: { //Required field
@@ -55,7 +55,6 @@ module.exports = {
           onUpdate: 'cascade'
         }
       )
-      
     ])
   },
 

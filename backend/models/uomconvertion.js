@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     org_id: DataTypes.INTEGER,
     client_id:DataTypes.INTEGER,
     Product_id:DataTypes.INTEGER,
-    uom_id:DataTypes.INTEGER
+    uom_id:DataTypes.INTEGER,
+    qtyConvertion:DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'UomConvertion',
