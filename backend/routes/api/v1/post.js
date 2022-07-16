@@ -25,4 +25,11 @@ router.post("/api/v1/product/updateProduct", restrict ,controllers.product.Updat
 router.post("/api/v1/product/deleteProduct", restrict ,controllers.product.DeleteProduct);
 //Product end
 
+//uom convertion
+router.post("/api/v1/uomconvertion/getAll", restrict ,controllers.uomConvertion.GetAllBasePropduct);
+router.post("/api/v1/uomconvertion/create", restrict ,controllers.uomConvertion.Create);
+router.post("/api/v1/uomconvertion/update", restrict ,controllers.uomConvertion.Update);
+router.post("/api/v1/uomconvertion/delete", restrict ,controllers.uomConvertion.Delete);
+//uom convertion end
+
 module.exports = router;

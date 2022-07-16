@@ -14,7 +14,21 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   UomConvertion.init({
-    name: DataTypes.STRING
+    UomConvertion_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    name: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    isactive: DataTypes.BOOLEAN,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
+    org_id: DataTypes.INTEGER,
+    client_id:DataTypes.INTEGER,
+    Product_id:DataTypes.INTEGER,
+    uom_id:DataTypes.INTEGER,
+    qtyConvertion:DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'UomConvertion',
