@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
     
-    static GetClient (client_id){
+    static GetClient(client_id){
       return Client.findOne({
           where: {
               Client_id: client_id,

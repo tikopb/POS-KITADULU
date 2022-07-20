@@ -19,9 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     
     static #encrypt = (password) => bcrypt.hashSync(password, 10)
     
-    static register = ({username, password, email, name}) => { 
+    static register = ({username, password, email, name, client_id, org_id}) => { 
       const encryptedPassword = this.#encrypt(password);
-      return this.create({ username:username, password: encryptedPassword, email:email, name:name });
+      return this.create({ username:username, password: encryptedPassword, 
+        email:email, name:name,  client_id:client_id, org_id:org_id });
     }
     
     checkpassword = password => bcrypt.compareSync(password, this.password);
