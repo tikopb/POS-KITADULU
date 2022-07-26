@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
               return null
           }
       })
-    }v
+    }
   }
   Client.init({
     Client_id: {
