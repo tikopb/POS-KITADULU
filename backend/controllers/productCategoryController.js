@@ -1,4 +1,4 @@
-let { ProductCategory, client, org } = require('../models');
+let { ProductCategory, Client, org } = require('../models');
 
 module.exports = {
     Create: async(req,res) => {
@@ -18,18 +18,16 @@ module.exports = {
     },
     GetAll: async(req,res) => {
         const {client_id} = req.body
-        const orgM = await client.GetClient(client_id)
+        const clientM = await Client.GetClient(client_id)
         ProductCategory.findAll({
             where: {
-                org_id: orgM.Org_id,
-                client_id: orgM.client_id,
+                client_id: clientM.Client_id,
                 isactive: true
             }
         }).then(function (productCategory) {
             if(productCategory.length > 0 ){
                 res.status(200).json({
                     msg: 'data get succsess',
-                    orgM,
                     productCategory 
                 })
             }else{

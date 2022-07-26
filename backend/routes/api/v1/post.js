@@ -2,7 +2,7 @@ const router = require("express").Router()
 
 const controllers = require("../../../controllers")
 const restrict = require("../../middlewares/restrict")
-const apiV = "V1"
+const apiV = "v1"
 
 //login and register
 router.post("/api/v1/auth/register", controllers.auth.register);
