@@ -40,6 +40,10 @@ module.exports = {
       uom_id:{
         allowNull:false,
         type:Sequelize.INTEGER
+      },
+      qtyConvertion:{
+        allowNull:false,
+        type:Sequelize.INTEGER
       }
     });
   },

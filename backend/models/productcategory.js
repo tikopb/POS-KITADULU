@@ -14,14 +14,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ProductCategory.init({
-    ProductCategory_id: {
+    ProductCategories_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
-    isactive: DataTypes.BOOLEAN
+    isactive: DataTypes.BOOLEAN,
+    org_id: DataTypes.INTEGER,
+    client_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ProductCategory',

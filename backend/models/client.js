@@ -12,6 +12,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+    
+    static GetClient(client_id){
+      return Client.findOne({
+          where: {
+              Client_id: client_id,
+              isactive: true
+          }
+      }).then(data => {
+          if(data != null){
+              return data
+          }else{
+              return null
+          }
+      })
+    }
   }
   Client.init({
     Client_id: {
