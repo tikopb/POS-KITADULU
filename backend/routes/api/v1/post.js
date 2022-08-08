@@ -16,7 +16,7 @@ router.post("/api/v1/client/register", controllers.client.CreateClientAndOrganiz
 
 //product category start
 router.post("/api/v1/productCategory/create" , controllers.productCategories.Create);
-router.post("/api/"+apiV+"/productCategory/getAll" , controllers.productCategories.GetAll);
+router.post("/api/v1/productCategory/getAll" , controllers.productCategories.GetAll);
 //product category end
 
 //Product start
@@ -24,6 +24,14 @@ router.post("/api/v1/product/createProduct", restrict ,controllers.product.Creat
 router.post("/api/v1/product/updateProduct", restrict ,controllers.product.UpdateProduct);
 router.post("/api/v1/product/deleteProduct", restrict ,controllers.product.DeleteProduct);
 //Product end
+
+//uom start
+router.post("/api/v1/uomconvertion/getById", restrict ,controllers.uom.Get);
+router.post("/api/v1/uomconvertion/getAll", restrict ,controllers.uom.GetAll);
+router.post("/api/v1/uomconvertion/create", restrict ,controllers.uom.Create);
+router.post("/api/v1/uomconvertion/update", restrict ,controllers.uom.Update);
+router.post("/api/v1/uomconvertion/delete", restrict ,controllers.uom.Delete);
+//uom end
 
 //uom convertion
 router.post("/api/v1/uomconvertion/getAll", restrict ,controllers.uomConvertion.GetAllBasePropduct);
