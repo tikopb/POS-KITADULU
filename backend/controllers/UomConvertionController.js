@@ -18,7 +18,7 @@ module.exports = {
     },
     Create: async(req, res) => {
         const { client_id, Product_id, uom_id, qtyConvertion} = req.body
-        let product = Product.findByPk(Product_id);
+        let product = await Product.findByPk(Product_id);
         uomconvertion.create({
             name: product.name,
             product_id: product.product_id,
