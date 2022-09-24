@@ -20,17 +20,18 @@ router.post("/api/v1/productCategory/getAll" , controllers.productCategories.Get
 //product category end
 
 //Product start
-router.post("/api/v1/product/createProduct", restrict ,controllers.product.CreateProduct);
-router.post("/api/v1/product/updateProduct", restrict ,controllers.product.UpdateProduct);
-router.post("/api/v1/product/deleteProduct", restrict ,controllers.product.DeleteProduct);
+router.post("/api/v1/product/createProduct", controllers.product.CreateProduct);
+router.post("/api/v1/product/updateProduct", controllers.product.UpdateProduct);
+router.post("/api/v1/product/deleteProduct", controllers.product.DeleteProduct);
+router.post("/api/v1/product/getAllProductForPOSJoin", controllers.product.getAllProductForPOSJoin);
 //Product end
 
 //uom start
-router.post("/api/v1/uomconvertion/getById", restrict ,controllers.uom.Get);
-router.post("/api/v1/uomconvertion/getAll", restrict ,controllers.uom.GetAll);
-router.post("/api/v1/uomconvertion/create", restrict ,controllers.uom.Create);
-router.post("/api/v1/uomconvertion/update", restrict ,controllers.uom.Update);
-router.post("/api/v1/uomconvertion/delete", restrict ,controllers.uom.Delete);
+router.post("/api/v1/uom/getById", restrict ,controllers.uom.Get);
+router.post("/api/v1/uom/getAll", restrict ,controllers.uom.GetAll);
+router.post("/api/v1/uom/create",controllers.uom.Create);
+router.post("/api/v1/uom/update", restrict ,controllers.uom.Update);
+router.post("/api/v1/uom/delete", restrict ,controllers.uom.Delete);
 //uom end
 
 //uom convertion

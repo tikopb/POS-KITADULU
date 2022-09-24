@@ -117,5 +117,19 @@ module.exports = {
                 msg: err.message
             })
         }
+    },
+    getAllProductForPOSJoin: async (req,res) => {
+        const clientM = await Client.GetClient(client_id)
+        Product.findAll({
+            where: {
+                client_id: clientM.Client_id,
+                isactive: true
+            }
+        }).then(function (productDat) {
+            res.status(200).json({
+                productDat,
+                msg: "Product Get Succsess"
+            })
+        })
     }
 }
