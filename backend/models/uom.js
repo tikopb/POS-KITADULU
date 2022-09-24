@@ -21,7 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
-    isactive: DataTypes.BOOLEAN
+    isactive: DataTypes.BOOLEAN,
+    org_id: DataTypes.INTEGER,
+    client_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Uom',

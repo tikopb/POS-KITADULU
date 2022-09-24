@@ -22,9 +22,10 @@ module.exports = {
         })
     },
     Create: async(req,res) => {
-        const {client_id, name, description, isactive} = req.body
-        Uom.Create({
+        const {client_id, name, description, org_id} = req.body
+        Uom.create({
             client_id: client_id,
+            org_id: org_id,
             name: name,
             description: description,
             isactive: true

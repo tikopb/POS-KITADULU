@@ -1,18 +1,22 @@
-let { Product } = require('../models');
+let { Product, Org, Client } = require('../models');
 const { Op } = require("sequelize");
-let { org } = require('./orgController')
+
 
 function GetProduct(nama, barcode, org_id, client_id) {
-    const orgM = org.GetOrganization(org_id, client_id)
+    const clientM = Client.GetClient(client_id)
     let product = null;
     product = Product.findAll({
         where: {
             [Op.or]: [
                 {
-                    org_id: orgM.org_id, client_id: orgM.client_id, name: nama
+                    org_id: clientM.org_id, 
+                    client_id: clientM.client_id, 
+                    name: nama
                 },
                 {
-                    org_id: orgM.org_id, client_id: orgM.client_id, barcode: barcode
+                    org_id: clientM.org_id, 
+                    client_id: clientM.client_id, 
+                    barcode: barcode
                 }
             ]
         }
@@ -117,5 +121,19 @@ module.exports = {
                 msg: err.message
             })
         }
+    },
+    getAllProductForPOSJoin: async (req,res) => {
+        const clientM = await Client.GetClient(client_id)
+        Product.findAll({
+            where: {
+                client_id: clientM.Client_id,
+                isactive: true
+            }
+        }).then(function (productDat) {
+            res.status(200).json({
+                productDat,
+                msg: "Product Get Succsess"
+            })
+        })
     }
 }
