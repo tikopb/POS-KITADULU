@@ -52,17 +52,15 @@ module.exports = {
                 2 if found product then bring back erorr when product is already exist
                 3 if not found then create product if point 2 is true then bring information into json
         */
-        const {name, description, org, client, uom_id, productCategories_id} = req.body
+        const {name, description, org_id, client_id, uom_id, productCategories_id} = req.body
         Product.findAll({
             where: {
                 name: name,
-                org_id: org,
-                client_id: client
+                client_id: client_id
             }
         })
         .then(function (productExist) {
             if(productExist.length > 0){
-                console.log('Product Already Exist!')
                 res.status(500).json({
                     msg: 'Product Already Exist!'
                 })
@@ -71,11 +69,11 @@ module.exports = {
                     const prd = Product.create({
                         name: name,
                         description: description,
-                        isActve: true,
-                        org_id: org,
-                        client_id: client,
+                        isactive: true,
+                        org_id: org_id,
+                        client_id: client_id,
                         uom_id: uom_id,
-                        productCategories_id: productCategories_id
+                        ProductCategories_id: productCategories_id
                     })
                     res.status(200).json({
                         msg:'Product Registered!'
@@ -123,15 +121,15 @@ module.exports = {
         }
     },
     getAllProductForPOSJoin: async (req,res) => {
-        const clientM = await Client.GetClient(client_id)
+        const clientM = await Client.GetClient(req.body.client_id)
         Product.findAll({
             where: {
                 client_id: clientM.Client_id,
                 isactive: true
             }
-        }).then(function (productDat) {
+        }).then(function (productData) {
             res.status(200).json({
-                productDat,
+                productData,
                 msg: "Product Get Succsess"
             })
         })
