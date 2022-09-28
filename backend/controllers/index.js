@@ -4,7 +4,8 @@ var org = require('./orgController');
 var client = require('./clientController');
 var productCategories = require('./productCategoryController');
 var uomConvertion = require('./UomConvertionController');
+var uom = require('./uomController');
 
 module.exports = {
-    auth, product, org, client, productCategories, uomConvertion
+    auth, product, org, client, productCategories, uomConvertion, uom
 }

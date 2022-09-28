@@ -36,5 +36,39 @@ module.exports = {
                 })
             }
         })
+    }, 
+    Update: async(req,res) => {
+        const {ProductCategories_id, name, description, isactive} = req.body
+        let data = await ProductCategory.findByPk(ProductCategories_id)
+        data.Update({
+            name: name,
+            description: description,
+            isactive: isactive
+        })
+        try {
+            await data.save()
+            res.status(200).json({
+                data, 
+                msg: 'data Updated'
+            })
+        } catch (err){
+            res.status(401).json({
+                msg: err.message
+            })
+        }
+    },
+    Delete: async(req,res) => {
+        const{ProductCategories_id} = req.body
+        let data = await ProductCategory.findByPk(ProductCategories_id)
+        try {
+            await data.destroy()
+            res.status(200).json({
+                msg: 'data deleted'
+            })
+        } catch(err){
+            res.status(401).json({
+                msg: err.message
+            })
+        }
     }
 }

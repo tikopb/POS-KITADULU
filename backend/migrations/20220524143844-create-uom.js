@@ -27,7 +27,6 @@ module.exports = {
           type: Sequelize.DATE
         },
         org_id:{
-          allowNull:false,
           type:Sequelize.INTEGER
         },
         client_id:{
