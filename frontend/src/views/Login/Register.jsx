@@ -8,6 +8,7 @@ import ErrorTextNotif from '../../components/ErrorTextNotif'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../css/login.css'
+import MainLayout from '../../layouts/MainLayout'
 
 const Register = () => {
     const {register, handleSubmit, formState: { errors }, reset, watch } = useForm({
@@ -51,29 +52,32 @@ const Register = () => {
       }, [connectionError])
 
   return (
-    <Modal
-      {...props}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    //   size="sm"
-        dialogClassName="my-login-modal"
-        contentClassName="my-login-modal-height"
-    >
+    // <Modal
+    //   {...props}
+    //   aria-labelledby="contained-modal-title-vcenter"
+    //   centered
+    // //   size="sm"
+    //     dialogClassName="my-login-modal"
+    //     contentClassName="my-login-modal-height"
+    // >
+    <MainLayout>
+        <div className="d-flex justify-content-center align-items-center my-register-forget-password"
+            style={{ height: "99%" }}
+        >
         <Form onSubmit={handleSubmit(onSubmit)} className="login-modal-form">
             <ToastContainer
             position="top-center"
             autoClose={1000}
             hideProgressBar={true}
             /> 
-            <Modal.Header closeButton className="pb-0 mt-4">
+            <Modal.Header closeButton className="pb-0 mt-4 mb-4">
                 <Modal.Title id="contained-modal-title-vcenter" style={{ width:"100%", textAlign:"center" }}>
-                    <h1 className="mb-0">SIGN UP</h1>
-                    <h6 style={{ fontWeight:"lighter" }}>Create New Account Here</h6>
+                    <h1 className="mb-0">Registrasi</h1>
+                    <h6 style={{ fontWeight:"lighter" }}>Buat Akun Baru Anda Disini</h6>
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <Form.Group className="mb-1" controlId="name">
-                    { errors.name !== undefined && 
+            <Form.Group className="mb-1" controlId="name">
+            { errors.name !== undefined && 
                         <ErrorTextNotif error={errors.name.message} />
                     }
                     <MyInput theType="text" thePlaceholder="Name" theName="name" 
@@ -154,19 +158,16 @@ const Register = () => {
                                 if(watch("password") !== val) 
                                     return "Password Do Not Match!"
                             }
-                        }) }
+                            }) 
+                        }
                         disabled = {loading === true ? "disabled":"" }
                     />
                 </Form.Group>
-            </Modal.Body>
-            <Modal.Footer>
-                <MyButton theClass="btn loginButton" theText="Register"
-                disabled = {loading === true ? "disabled":"" }></MyButton>
-                <MyButton theClass="btn loginButton" onClick={props.onHide} theText="Cancel"
-                disabled = {loading === true ? "disabled":"" }></MyButton>
-            </Modal.Footer>
+                
         </Form>
-    </Modal>
+        </div>
+    </MainLayout>
+    // </Modal>
   )
 }
 

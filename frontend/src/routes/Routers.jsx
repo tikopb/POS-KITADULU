@@ -20,7 +20,7 @@ const Routers = () => {
           <Route path="/login/forgetpassword" exact element={<ForgetPassword/>}/>
           <Route path="/login/register" exact element={<Register/>}/>
         </Route>
-        <Route element={<ProtectedRoute />} >          
+        <Route element={<ProtectedRoute />} >
           <Route path="/pos" exact element={<Pos/>}/>
           <Route path="/dashboard" exact element={<Home/>}/>
         </Route>

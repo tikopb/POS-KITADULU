@@ -83,16 +83,22 @@ const Login = () => {
     navigate("/login/forgetpassword")
   }
 
+  const handleRegister = e => {
+    e.preventDefault();
+    // setOpenForgetPasswordModal(true);
+    navigate("/login/register")
+  }
+
   return (
       <MainLayout>
-        <RegisterModal
+        {/* <RegisterModal
           show={openRegisterModal}
           onHide={() => setOpenRegisterModal(false)}
         />
         <ForgetPasswordModal
           show={openForgetPasswordModal}
           onHide={() => setOpenForgetPasswordModal(false)}
-        />
+        /> */}
 
         <ToastContainer
         position="top-center"
@@ -145,11 +151,11 @@ const Login = () => {
 
             <Form.Group style={{ textAlign: "center", marginBottom: "15px" }}>
               <a onClick={handleForgetPassword} href="">Lupa Password?</a>
-            </Form.Group>             
-
+            </Form.Group>
+            
             <MyButton theClass="btn loginButton float-right float-start" theType="submit" theText="Sign In" 
             disabled = {loading === true ? "disabled":"" } />
-            <MyButton theClass="btn loginButton float-right float-end" theType="button" theText="Sign Up" onClick={ handleOpenRegisterModal }
+            <MyButton theClass="btn loginButton float-right float-end" theType="button" theText="Sign Up" onClick={ handleRegister }
             disabled = {loading === true ? "disabled":"" } />
           </Form>
         </div>
