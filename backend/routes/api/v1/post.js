@@ -7,7 +7,7 @@ const apiV = "v1"
 //login and register
 router.post("/api/v1/auth/register", controllers.auth.register);
 router.post("/api/v1/auth/login", controllers.auth.login);
-router.post("/api/v1/auth/updateClient", restrict, controllers.auth.UpdateClient);
+router.post("/api/v1/auth/whoami",restrict, controllers.auth.whoami);
 //login and register end 
 
 //organization and client

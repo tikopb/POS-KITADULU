@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         id: this.id,
         username: this.username
       }
-      const secretKey = "pos-kita"
+      const secretKey = "posKita"
       const token = jwt.sign(payload, secretKey);
       return token;
     }

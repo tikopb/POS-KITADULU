@@ -27,13 +27,16 @@ app.use(cors());
 
 // pos-kita router *start*
 app.use(session({
-  secret: "pos-kita",
+  secret: "posKita",
   resave: false,
   saveUninitialized: false
 }))
 
 app.use(flash());
-app.use(passport.initialize());
+
+//passport identivide (start)
+app.use(passport.initialize())
+//passport identivide (end)* 
 
 const router = require('./routes');
 app.use(router);
