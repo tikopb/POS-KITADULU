@@ -1,44 +1,38 @@
-let { org, client } = require('../models');
-const { Op } = require("sequelize");
+let { Org, Client } = require('../models');
+const { Op, or } = require("sequelize");
 
 module.exports = {
     CreateClientAndOrganization: async (req,res) => {
         const {nameClient, description, adress} = req.body
-        client.findAll({
+        Client.findAll({
             where: {
                 name: nameClient 
             }
-        }).then(function (clientExist) {
-            if(clientExist.length > 0 ){
+        }).then(function(ClientData){
+            if(ClientData.length > 0){
                 res.status(500).json({
-                    msg: 'Client Exist'
+                    msg: 'client already exist'
                 })
             }
-            else{
-                try {
-                    let client = client.create({
-                        name: nameClient,
-                        description: description,
-                        isactive: true
-                    }).then( clientData => {
-                        let organization = org.create({
-                            name: nameClient,
-                            description: description,
-                            client_id: clientData.client_id,
-                            adress: adress
-                        }).then( orgData => {
-                            res.status(200).json({
-                                orgData,
-                                msg: 'Data Created Successfully'
-                            })
-                        })
+            Client.create({
+                name: nameClient,
+                description: description,
+                isactive: true
+            }).then(function(ClientCreated){
+                Org.create({
+                    name: ClientCreated.name,
+                    description: ClientCreated.description,
+                    isactive: true,
+                    adress: adress,
+                    client_id: ClientCreated.Client_id
+                }).then(function(orgCreated){
+                    res.status(200).json({
+                        ClientCreated,
+                        orgCreated,
+                        msg: "data sucsessfull generated"
                     })
-                } catch (err) {
-                    res.status(401).json({
-                        msg: err.message
-                    })
-                }
-            }
+                })
+            })
         })
     },
     UpdateClient: async (req,res) => {
