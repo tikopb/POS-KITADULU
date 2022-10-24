@@ -12,6 +12,8 @@ router.post("/api/v1/auth/whoami",restrict, controllers.auth.whoami);
 
 //organization and client
 router.post("/api/v1/client/CreateClientAndOrganization", controllers.client.CreateClientAndOrganization);
+router.post("/api/v1/client/UpdateClient", controllers.client.UpdateClient);
+router.post("/api/v1/organization/UpdateOrganization", controllers.org.UpdateOrganization);
 //organization and client end 
 
 //product category start

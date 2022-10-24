@@ -36,13 +36,14 @@ module.exports = {
         }
     },
     UpdateOrganization: async(req,res) => {
-        const {name, description, address, org_id} = req.body;
+        const {name, description, address, org_id, isactive} = req.body;
         let orgData = client.findByPk(org_id)
         try {
             orgData.set({
                 name: name,
                 description: description,
-                address: address
+                address: address,
+                isactive: isactive
             })
             await orgData.save()
             res.status(200).json({
