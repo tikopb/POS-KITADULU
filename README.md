@@ -1,16 +1,23 @@
 # POS-KITADULU
 
-repositiory for all app on pos-kitadulu
+repositiory for all app on Wist POS this repository will handling function of backend and frontend with separated folder. 
 
-# running backend for first-time
+# Requirement
+- NODE 14 up or newer 
+- Postgresql 10 up or newer
 
-**_RUN " NPM INSTALL " FIRST_**
+# Backend
+Run `NPM INSYALL` first
+## Migrate DB
+1. generate database run on terminal
+`npx sequelize DB:Create` 
+2. migrate the database
+`npx sequelize DB:Create`
 
-## migrate db
+## Run the backend
+1. From the root folder
+`cd backend`
+2.run on terminal 
+`npm start`
 
-1.npx sequelize db:create -> use for create schema 
-2. npx sequelize db:migrate -> use for migrate all table
-
-## run node
-
-- npm start
+# Frontend
