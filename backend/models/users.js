@@ -37,11 +37,19 @@ module.exports = (sequelize, DataTypes) => {
       return token;
     }
 
-    
-    static authenticate = async ({ username, password }) => {
+    /**
+     * use to get authenticate with username or email
+     * @param {username, email, passsword} param
+     * @returns users data
+     */
+    static authenticate = async ({ username, email, password }) => {
       try {
-        const user = await this.findOne({ where: { username }})
-        if (!user) return Promise.reject("User not found!")
+        let user = await this.findOne({ where: { username }})
+        if (!user) {
+          user = await this.findOne({ where: { email }})
+        }
+        else 
+        return Promise.reject("User not found!")
 
         const isPasswordValid = user.checkpassword(password)
         if (!isPasswordValid) return Promise.reject("Wrong password")
