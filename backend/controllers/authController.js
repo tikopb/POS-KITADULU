@@ -41,9 +41,12 @@ module.exports = {
             ));
     },
     whoami: (req, res) => {
-        const currentUser = req.body;
+        const currentUser = req.user;
+        console.log(currentUser)
         try {
-            res.status(200).json(currentUser)
+            res.status(200).json(
+                currentUser 
+            )
         } catch (err) {
             res.status(400).json({
                 message: "token error"

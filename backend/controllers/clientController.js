@@ -37,14 +37,14 @@ module.exports = {
     },
     UpdateClient: async (req,res) => {
         const {clientid, name, description, isactive} = req.body
-        let valueClient = client.findByPk(clientid)
+        let ClientData = Client.findByPk(clientid)
         try {
-            valueClient.set({
+            ClientData.set({
                 name: name,
                 description: description,
                 isactive: isactive
             })
-            await valueClient.save()
+            await ClientData.save()
             res.status(200).json({
                 msg: 'client updated'
             })
