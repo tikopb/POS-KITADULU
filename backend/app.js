@@ -36,6 +36,7 @@ app.use(flash());
 
 //passport identivide (start)
 app.use(passport.initialize())
+app.use(passport.session());
 //passport identivide (end)* 
 
 const router = require('./routes');
