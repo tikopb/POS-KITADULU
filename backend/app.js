@@ -7,7 +7,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('./lib/passport');
 var cors = require('cors');
-const PORT = process.PORT || 5000;
+const PORT = process.PORT || 4000;
 
 var app = express();
 // set alternative *port*
