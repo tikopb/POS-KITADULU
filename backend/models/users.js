@@ -45,11 +45,12 @@ module.exports = (sequelize, DataTypes) => {
     static authenticate = async ({ username, email, password }) => {
       try {
         let user = await this.findOne({ where: { username }})
-        if (!user) {
+        if (user == null) {
           user = await this.findOne({ where: { email }})
         }
-        else 
-        return Promise.reject("User not found!")
+        if(user == null){
+          return Promise.reject("user not found")
+        }
 
         const isPasswordValid = user.checkpassword(password)
         if (!isPasswordValid) return Promise.reject("Wrong password")

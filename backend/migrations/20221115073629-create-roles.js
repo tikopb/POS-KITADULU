@@ -31,7 +31,10 @@ module.exports = {
       },
       isactive: {
         type: Sequelize.BOOLEAN
-      }
+      },
+      isadmin: {
+        type: Sequelize.BOOLEAN
+      },
     });
   },
   async down(queryInterface, Sequelize) {
