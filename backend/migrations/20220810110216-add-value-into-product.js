@@ -12,7 +12,7 @@ module.exports = {
           type: Sequelize.STRING
         }
       ),
-      queryInterface.addConstraint('Products', {
+      await queryInterface.addConstraint('Products', {
         fields: ['value', 'client_id'],
         type: 'unique',
         name: 'unique_value_product_const'
