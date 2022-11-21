@@ -9,7 +9,8 @@ function format(Users){
         username,
         token: Users.generateToken(),
         client_id: Users.client_id,
-        org_id: Users.org_id
+        org_id: Users.org_id,
+        role_id: Users.role_id
     }
 }
 
@@ -23,7 +24,8 @@ module.exports = {
         })
         .catch((err) => next(
             res.status(500).json({
-                "err": `${err.toString()}`
+                "err": `${err.toString()}`,
+                "msg": 'failed to create'
             })
         ));
     },

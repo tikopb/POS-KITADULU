@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Menus', [
+    return await queryInterface.bulkInsert('Menus', [
       {menu_id:1,Name: "Master",url_path: "/master", createdAt: new Date(), updatedAt: new Date()},
       {menu_id:2,Name: "Product",url_path: "/master/product", ParentMenu_id:1,  createdAt: new Date(), updatedAt: new Date()},
       {menu_id:3,Name: "Business partner",url_path: "/master/BusinessPartner", ParentMenu_id:1,  createdAt: new Date(), updatedAt: new Date()},
