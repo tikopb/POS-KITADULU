@@ -22,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     org_id: DataTypes.INTEGER,
     client_id: DataTypes.INTEGER,
     Menu_id: DataTypes.INTEGER,
-    isactive: DataTypes.BOOLEAN,
-    isadmin: DataTypes.BOOLEAN
+    isactive: DataTypes.BOOLEAN  
   }, {
     sequelize,
     modelName: 'RolesMenu',

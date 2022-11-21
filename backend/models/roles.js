@@ -22,10 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     org_id: DataTypes.INTEGER,
     client_id: DataTypes.INTEGER,
     createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-    Name: DataTypes.TEXT,
+    updatedAt: DataTypes.DATE,    
     description: DataTypes.TEXT,
-    isactive: DataTypes.BOOLEAN
+    isactive: DataTypes.BOOLEAN,
+    isadmin: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Roles',
