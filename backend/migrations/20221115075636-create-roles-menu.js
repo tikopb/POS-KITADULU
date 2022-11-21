@@ -30,9 +30,6 @@ module.exports = {
       isactive: {
         type: Sequelize.BOOLEAN
       },
-      isadmin: {
-        type: Sequelize.BOOLEAN
-      },
       role_id: {
         type: Sequelize.INTEGER
       },
