@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   menu.init({
-    menu_id: {
+    Menu_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true

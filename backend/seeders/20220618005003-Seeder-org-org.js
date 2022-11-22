@@ -2,13 +2,14 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Orgs', [{
+    return await queryInterface.bulkInsert('Orgs', [{
       name: 'Kita-Dulu',
       description: 'first org on system for testing',
       createdAt: new Date(),
       updatedAt: new Date(),
       isactive: true,
-      client_id:'1'
+      client_id:1,
+      Org_id: 1
     }]);
   },
 

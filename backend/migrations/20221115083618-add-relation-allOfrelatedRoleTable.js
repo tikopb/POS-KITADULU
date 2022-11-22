@@ -130,6 +130,7 @@ module.exports = {
     queryInterface.removeConstraint('RolesMenus','roleMenu_org_const'),
     queryInterface.removeConstraint('RolesMenus','roleMenu_client_const'),
     queryInterface.removeConstraint('RolesMenus','roleMenu_role_const'),
+    queryInterface.removeConstraint('RolesMenus','roleMenu_Menu_const'),
     queryInterface.removeConstraint('Menus','Menu_org_const'),
     queryInterface.removeConstraint('Menus','Menu_client_const'),
     queryInterface.removeConstraint('Menus','Parent_menu_const')

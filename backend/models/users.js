@@ -19,10 +19,26 @@ module.exports = (sequelize, DataTypes) => {
     
     static #encrypt = (password) => bcrypt.hashSync(password, 10)
     
-    static register = ({username, password, email, name, client_id, org_id}) => { 
+    /**
+     * Register validate function, make encrypt password when register user is hited
+     * 1. validation first there is no same user (user mase be unique)!
+     * 2. if existing then return null and mesage with erorr
+     * @param {username, password, email, name, client_id, org_id, role_id} mandatory 
+     * @returns Create the users
+     */
+    static register = async ({username, password, email, name, client_id, org_id, role_id}) => { 
       const encryptedPassword = this.#encrypt(password);
-      return this.create({ username:username, password: encryptedPassword, 
-        email:email, name:name,  client_id:client_id, org_id:org_id });
+
+      //validation on user must be unique
+      let user = await this.findOne({ where: { username }})
+      if (user != null) {
+        return Promise.reject("user is exist")
+      }
+
+      return Promise.resolve(
+        this.create({ username:username, password: encryptedPassword, 
+          email:email, name:name, client_id:client_id, org_id:org_id, role_id:role_id})
+      )
     }
     
     checkpassword = password => bcrypt.compareSync(password, this.password);
@@ -76,7 +92,8 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
     client_id: DataTypes.INTEGER,
-    org_id: DataTypes.INTEGER
+    org_id: DataTypes.INTEGER,
+    role_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Users',
