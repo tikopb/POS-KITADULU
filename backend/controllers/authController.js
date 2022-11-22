@@ -1,76 +1,62 @@
-let { Users, Roles } = require('../models');
-const bcrypt = require('bcrypt');
+let { Users, refreshToken } = require("../models");
+const bcrypt = require("bcrypt");
 
+module.exports = {
+  register: (req, res, next) => {
+    Users.register(req.body)
+      .then((Users) => {
+        res.status(200).json(format(Users));
+      })
+      .catch((err) =>
+        next(
+          res.status(500).json({
+            err: `${err.toString()}`,
+          }),
+        ),
+      );
+  },
+  login: (req, res, next) => {
+    Users.authenticate(req.body)
+      .then(async (Users) => {
+        const { User_id, username } = Users;
+        const token = Users.generateToken(Users);
 
-function format(Users){
-    const { User_id, username } = Users
-    return{ 
-        User_id,
-        username,
-        token: Users.generateToken(),
-        client_id: Users.client_id,
-        org_id: Users.org_id,
-        role_id: Users.role_id 
+        await refreshToken.create({
+          userId: User_id,
+          refreshToken: token.refreshToken,
+        });
+
+        res.cookie("jwt", token.refreshToken, {
+          httpOnly: true,
+          maxAge: 24 * 60 * 60 * 1000, // ini jadinya 1 hari,
+        });
+
+        res.json({
+          user: {
+            userId: Users.User_id,
+            email: Users.email,
+            username: Users.username,
+            name: Users.name,
+            orgId: Users.org_id,
+            roleId: Users.role_id,
+          },
+          accessToken: token.accessToken,
+        });
+      })
+      .catch((err) =>
+        next(
+          res.status(500).json({
+            err: `${err.toString()}`,
+          }),
+        ),
+      );
+  },
+  whoami: (req, res) => {
+    const currentUser = req.user;
+    try {
+      res.status(200).json(currentUser);
+    } catch (err) {
+      res.sendStatus(403);
     }
-}
-
-/**
- * Geeting isAdmin validation
- * @param {role_id} mandatory 
- * @returns isAdmin: boolean
- */
-async function GetIsAdminValidation(role_id) {
-    const role = await Roles.findByPk(role_id)
-    return Promise.resolve(
-        role.isadmin
-    )
-} 
-
-module.exports = { 
-    register: (req, res, next) => {
-        Users.register(req.body)
-        .then(Users => {
-            res.status(200).json(
-                format(Users)       
-            )
-        })
-        .catch((err) => next(
-            res.status(500).json({
-                "err": `${err.toString()}`,
-                "msg": 'failed to create'
-            })
-        ));
-    },
-    login: async(req, res, next) => { 
-        try {
-            let user = await Users.authenticate(req.body)
-            let isAdmins = await GetIsAdminValidation(user.role_id)
-            res.status(200).json({
-                "user_id": user.User_id,
-                "username": user.username,
-                "token": user.generateToken(),
-                "client_id": user.client_id,
-                "org_id": user.org_id,
-                "role_id": user.role_id,
-                "isAdmin": isAdmins
-            })
-        } catch (err) {
-            res.status(500).json({
-                "err": `${err.toString()}`
-            })
-        }
-    },
-    whoami: (req, res) => {
-        const currentUser = req.user;
-        console.log(currentUser)
-        try {
-            res.status(200).json(
-                currentUser 
-            )
-        } catch (err) {
-            res.status(400).json({
-                message: "token error"
-            })
-        }
-    }
-}
+  },
+};
