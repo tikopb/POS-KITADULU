@@ -51,27 +51,18 @@ router.post("/api/v1/uom/update", restrict, controllers.uom.Update);
 router.post("/api/v1/uom/delete", restrict, controllers.uom.Delete);
 //uom end
 
-//uom convertion
-router.post(
-  "/api/v1/uomconvertion/getAll",
-  restrict,
-  controllers.uomConvertion.GetAllBasePropduct,
-);
-router.post(
-  "/api/v1/uomconvertion/create",
-  restrict,
-  controllers.uomConvertion.Create,
-);
-router.post(
-  "/api/v1/uomconvertion/update",
-  restrict,
-  controllers.uomConvertion.Update,
-);
-router.post(
-  "/api/v1/uomconvertion/delete",
-  restrict,
-  controllers.uomConvertion.Delete,
-);
+//uom convertion start
+router.post("/api/v1/uomconvertion/getAll", restrict ,controllers.uomConvertion.GetAllBasePropduct);
+router.post("/api/v1/uomconvertion/create", restrict ,controllers.uomConvertion.Create);
+router.post("/api/v1/uomconvertion/update", restrict ,controllers.uomConvertion.Update);
+router.post("/api/v1/uomconvertion/delete", restrict ,controllers.uomConvertion.Delete);
 //uom convertion end
+
+//OrgAccsessController start
+router.post("/api/v1/orgaccsess/create", restrict ,controllers.OrgAccsessController.Generate);
+router.post("/api/v1/orgaccsess/getAll", restrict ,controllers.OrgAccsessController.GetAll);
+router.post("/api/v1/orgaccsess/update", restrict ,controllers.uomConvertion.Update);
+router.post("/api/v1/orgaccsess/delete", restrict ,controllers.uomConvertion.Delete);
+//OrgAccsessController end
 
 module.exports = router;
