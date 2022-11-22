@@ -1,10 +1,9 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
@@ -16,42 +15,69 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-    
-    static #encrypt = (password) => bcrypt.hashSync(password, 10)
-    
+
+    static #encrypt = (password) => bcrypt.hashSync(password, 10);
+
     /**
      * Register validate function, make encrypt password when register user is hited
      * 1. validation first there is no same user (user mase be unique)!
      * 2. if existing then return null and mesage with erorr
-     * @param {username, password, email, name, client_id, org_id, role_id} mandatory 
+     * @param {username, password, email, name, client_id, org_id, role_id} mandatory
      * @returns Create the users
      */
-    static register = async ({username, password, email, name, client_id, org_id, role_id}) => { 
+    static register = async ({
+      username,
+      password,
+      email,
+      name,
+      client_id,
+      org_id,
+      role_id,
+    }) => {
       const encryptedPassword = this.#encrypt(password);
 
       //validation on user must be unique
-      let user = await this.findOne({ where: { username }})
+      let user = await this.findOne({ where: { username } });
       if (user != null) {
-        return Promise.reject("user is exist")
+        return Promise.reject("user is exist");
       }
 
       return Promise.resolve(
-        this.create({ username:username, password: encryptedPassword, 
-          email:email, name:name, client_id:client_id, org_id:org_id, role_id:role_id})
-      )
-    }
-    
-    checkpassword = password => bcrypt.compareSync(password, this.password);
-  
-    generateToken = () => {
+        this.create({
+          username: username,
+          password: encryptedPassword,
+          email: email,
+          name: name,
+          client_id: client_id,
+          org_id: org_id,
+          role_id: role_id,
+        }),
+      );
+    };
+
+    checkpassword = (password) => bcrypt.compareSync(password, this.password);
+
+    generateToken = (userInformation) => {
       const payload = {
         id: this.id,
-        username: this.username
-      }
-      const secretKey = "posKita"
-      const token = jwt.sign(payload, secretKey);
-      return token;
-    }
+        user: {
+          userId: userInformation.User_id,
+          email: userInformation.email,
+          username: userInformation.username,
+          name: userInformation.name,
+          orgId: userInformation.org_id,
+          roleId: userInformation.role_id,
+        },
+      };
+      const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "60s",
+      });
+      const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: "1d",
+      });
+
+      return { refreshToken, accessToken };
+    };
 
     /**
      * use to get authenticate with username or email
@@ -60,43 +86,45 @@ module.exports = (sequelize, DataTypes) => {
      */
     static authenticate = async ({ username, email, password }) => {
       try {
-        let user = await this.findOne({ where: { username }})
+        let user = await this.findOne({ where: { username } });
         if (user == null) {
-          user = await this.findOne({ where: { email }})
+          user = await this.findOne({ where: { email } });
         }
-        if(user == null){
-          return Promise.reject("user not found")
+        if (user == null) {
+          return Promise.reject("user not found");
         }
 
-        const isPasswordValid = user.checkpassword(password)
-        if (!isPasswordValid) return Promise.reject("Wrong password")
+        const isPasswordValid = user.checkpassword(password);
+        if (!isPasswordValid) return Promise.reject("Wrong password");
 
-        return Promise.resolve(user)
+        return Promise.resolve(user);
+      } catch (err) {
+        return Promise.reject(err);
       }
-      catch(err) {
-        return Promise.reject(err)
-      }
-    }
-  };
-  Users.init({
-    User_id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+    };
+  }
+  Users.init(
+    {
+      User_id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      email: DataTypes.STRING,
+      username: DataTypes.STRING,
+      name: DataTypes.STRING,
+      password: DataTypes.STRING,
+      isactive: DataTypes.STRING,
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
+      client_id: DataTypes.INTEGER,
+      org_id: DataTypes.INTEGER,
+      role_id: DataTypes.INTEGER,
     },
-    email: DataTypes.STRING,
-    username: DataTypes.STRING,
-    name: DataTypes.STRING,
-    password: DataTypes.STRING,
-    isactive: DataTypes.STRING,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-    client_id: DataTypes.INTEGER,
-    org_id: DataTypes.INTEGER,
-    role_id: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Users',
-  });
+    {
+      sequelize,
+      modelName: "Users",
+    },
+  );
   return Users;
 };
