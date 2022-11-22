@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     isactive: DataTypes.BOOLEAN,
     org_id: DataTypes.INTEGER,
     client_id: DataTypes.INTEGER,
-    isactive: DataTypes.BOOLEAN,
     user_id: DataTypes.INTEGER
   }, {
     sequelize,
