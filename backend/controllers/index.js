@@ -1,12 +1,21 @@
-var auth = require('./authController');
-var product = require('./productController');
-var org = require('./orgController');
-var client = require('./clientController');
-var productCategories = require('./productCategoryController');
-var uomConvertion = require('./UomConvertionController');
-var uom = require('./uomController');
-var OrgAccsessController = require('./OrgAccsessController')
+const auth = require("./authController");
+const product = require("./productController");
+const org = require("./orgController");
+const client = require("./clientController");
+const productCategories = require("./productCategoryController");
+const uomConvertion = require("./UomConvertionController");
+const uom = require("./uomController");
+const OrgAccsessController = require("./OrgAccsessController");
+const refreshController = require("./refreshTokenController");
 
 module.exports = {
-    auth, product, org, client, productCategories, uomConvertion, uom, OrgAccsessController
-}
+  auth,
+  product,
+  org,
+  client,
+  productCategories,
+  uomConvertion,
+  uom,
+  OrgAccsessController,
+  refreshController,
+};

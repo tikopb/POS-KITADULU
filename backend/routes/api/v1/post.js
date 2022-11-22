@@ -8,6 +8,7 @@ const apiV = "v1";
 router.post("/api/v1/auth/register", controllers.auth.register);
 router.post("/api/v1/auth/login", controllers.auth.login);
 router.post("/api/v1/auth/whoami", restrict, controllers.auth.whoami);
+router.post("/api/v1/auth/logout", controllers.auth.logout);
 //login and register end
 
 //organization and client
@@ -52,17 +53,49 @@ router.post("/api/v1/uom/delete", restrict, controllers.uom.Delete);
 //uom end
 
 //uom convertion start
-router.post("/api/v1/uomconvertion/getAll", restrict ,controllers.uomConvertion.GetAllBasePropduct);
-router.post("/api/v1/uomconvertion/create", restrict ,controllers.uomConvertion.Create);
-router.post("/api/v1/uomconvertion/update", restrict ,controllers.uomConvertion.Update);
-router.post("/api/v1/uomconvertion/delete", restrict ,controllers.uomConvertion.Delete);
+router.post(
+  "/api/v1/uomconvertion/getAll",
+  restrict,
+  controllers.uomConvertion.GetAllBasePropduct,
+);
+router.post(
+  "/api/v1/uomconvertion/create",
+  restrict,
+  controllers.uomConvertion.Create,
+);
+router.post(
+  "/api/v1/uomconvertion/update",
+  restrict,
+  controllers.uomConvertion.Update,
+);
+router.post(
+  "/api/v1/uomconvertion/delete",
+  restrict,
+  controllers.uomConvertion.Delete,
+);
 //uom convertion end
 
 //OrgAccsessController start
-router.post("/api/v1/orgaccsess/create", restrict ,controllers.OrgAccsessController.Generate);
-router.post("/api/v1/orgaccsess/getAll", restrict ,controllers.OrgAccsessController.GetAll);
-router.post("/api/v1/orgaccsess/update", restrict ,controllers.uomConvertion.Update);
-router.post("/api/v1/orgaccsess/delete", restrict ,controllers.uomConvertion.Delete);
+router.post(
+  "/api/v1/orgaccsess/create",
+  restrict,
+  controllers.OrgAccsessController.Generate,
+);
+router.post(
+  "/api/v1/orgaccsess/getAll",
+  restrict,
+  controllers.OrgAccsessController.GetAll,
+);
+router.post(
+  "/api/v1/orgaccsess/update",
+  restrict,
+  controllers.uomConvertion.Update,
+);
+router.post(
+  "/api/v1/orgaccsess/delete",
+  restrict,
+  controllers.uomConvertion.Delete,
+);
 //OrgAccsessController end
 
 module.exports = router;

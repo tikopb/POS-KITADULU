@@ -6,6 +6,10 @@ const restrict = require("../../middlewares/restrict");
 
 //auth controller
 router.get("/api/v1/auth/whoami", restrict, controllers.auth.whoami);
+router.get(
+  "/api/v1/refresh-token",
+  controllers.refreshController.handleRefreshToken,
+);
 //auth controller end
 
 //product category start

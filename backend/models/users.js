@@ -59,7 +59,6 @@ module.exports = (sequelize, DataTypes) => {
 
     generateToken = (userInformation) => {
       const payload = {
-        id: this.id,
         user: {
           userId: userInformation.User_id,
           email: userInformation.email,
