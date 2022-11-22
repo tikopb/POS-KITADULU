@@ -12,8 +12,6 @@ const verifyJWT = (req, res, next) => {
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
     if (err) return res.sendStatus(403);
     req.user = decode.user;
-    console.log("asd", decode);
-
     next();
   });
 };
