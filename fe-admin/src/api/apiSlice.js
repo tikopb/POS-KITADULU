@@ -5,17 +5,14 @@ const baseUrl = "http://localhost:4000";
 
 const baseQuery = fetchBaseQuery({
   baseUrl,
-  //credentials: "include",
-  // mode: "cors",
+  credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
 
-    headers.set("Access-Control-Allow-Origin", "*");
     headers.set("content-type", "application/json");
-    headers.set("Access-Control-Allow-Credentials", "true");
     return headers;
   },
 });
