@@ -45,7 +45,7 @@ module.exports = {
 
           res.clearCookie("jwt", {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "none",
           });
         }
@@ -57,7 +57,7 @@ module.exports = {
 
         res.cookie("jwt", token.refreshToken, {
           httpOnly: true,
-          secure: false,
+          secure: true,
           sameSite: "none",
           maxAge: 24 * 60 * 60 * 1000, // ini jadinya 1 hari,
         });
@@ -101,7 +101,7 @@ module.exports = {
     if (!userFound) {
       res.clearCookie("jwt", {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "none",
       });
 
@@ -114,7 +114,7 @@ module.exports = {
 
     res.clearCookie("jwt", {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "none",
     });
 

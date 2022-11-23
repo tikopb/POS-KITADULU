@@ -68,6 +68,7 @@ module.exports = (sequelize, DataTypes) => {
           roleId: userInformation.role_id,
         },
       };
+      
       const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: "60s",
       });

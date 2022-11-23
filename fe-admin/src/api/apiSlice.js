@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../features/auth/authSlice";
+import env from "react-dotenv";
 
-const baseUrl = "http://localhost:4000";
+const baseUrl = env.API_URL;
 
 const baseQuery = fetchBaseQuery({
   baseUrl,
@@ -20,21 +21,24 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.originalStatus === 403) {
-    console.log("sending refresh token");
-    // send refresh token to get new access token
-    const refreshResult = await baseQuery("/refresh", api, extraOptions);
-    console.log(refreshResult);
-    if (refreshResult?.data) {
-      const user = api.getState().auth.user;
-      // store the new token
-      api.dispatch(setCredentials({ ...refreshResult.data, user }));
-      // retry the original query with new access token
-      result = await baseQuery(args, api, extraOptions);
-    } else {
-      api.dispatch(logOut());
-    }
+  //if (result?.error?.originalStatus === 403) {
+  // send refresh token to get new access token
+  const refreshResult = await baseQuery(
+    "/api/v1/refresh-token",
+    api,
+    extraOptions,
+  );
+
+  if (refreshResult?.data) {
+    const user = api.getState().auth.user;
+    // store the new token
+    api.dispatch(setCredentials(refreshResult.data));
+    // retry the original query with new access token
+    result = await baseQuery(args, api, extraOptions);
+  } else {
+    api.dispatch(logOut());
   }
+  //}
 
   return result;
 };

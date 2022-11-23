@@ -1,13 +1,13 @@
 import axios from "axios";
-
-export const baseUrl = "http://localhost:4000";
+import env from "react-dotenv";
+const BASE_URL = env.API_URL;
 
 export default axios.create({
-  baseURL: baseUrl,
+  baseURL: BASE_URL,
 });
 
 export const axiosPrivate = axios.create({
-  baseURL: baseUrl,
+  baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });

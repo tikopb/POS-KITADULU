@@ -1,9 +1,9 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectedCurToken } from "./authSlice";
+import { selectedCurToken } from "../features/auth/authSlice";
 
 const ProtectedRoute = () => {
-  let token = useSelector(selectedCurToken);
+  const token = useSelector(selectedCurToken);
   const location = useLocation();
 
   return token ? (

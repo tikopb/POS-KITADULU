@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import imageLogin from "../../images/login-image.svg";
 import FormText from "../../components/FormText";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "../../features/auth/authSlice";
-import { useLoginMutation } from "../../features/auth/authApiSlice";
+//import { setCredentials } from "../../features/auth/authSlice";
+//import { useLoginMutation } from "../../features/auth/authApiSlice";
+import { loginHandlerSlice } from "../../store/authSlice";
 
 export const Index = () => {
   const navigate = useNavigate();
@@ -14,8 +15,9 @@ export const Index = () => {
   const [usernameState, setUsernameState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [login, { isLoading }] = useLoginMutation();
+  //const [login, { isLoading }] = useLoginMutation();
 
   useEffect(() => {
     //let isAuth = false; //JSON.parse(localStorage.getItem("user"));
@@ -33,17 +35,22 @@ export const Index = () => {
   const loginHandler = async (e) => {
     e.preventDefault();
     try {
-      const userData = await login({
-        username: usernameState,
-        password: passwordState,
-      }).unwrap();
-
-      dispatch(setCredentials({ ...userData, usernameState }));
-      setUsernameState("");
-      setPasswordState("");
-
-      navigate("/");
-    } catch (error) {}
+      setIsLoading(true);
+      dispatch(
+        loginHandlerSlice({ username: usernameState, password: passwordState }),
+      )
+        .then(() => {
+          setUsernameState("");
+          setPasswordState("");
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const usernameHandler = (e) => setUsernameState(e.target.value);

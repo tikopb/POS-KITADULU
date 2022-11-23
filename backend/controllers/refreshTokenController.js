@@ -15,7 +15,7 @@ const handleRefreshToken = async (req, res) => {
 
   res.clearCookie("jwt", {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "none",
   });
 
@@ -35,19 +35,19 @@ const handleRefreshToken = async (req, res) => {
           });
 
         // delete all refresh token store on db
-        await refreshToken.destroy({ where: { userId: decoded.userId } });
+        await refreshToken.destroy({ where: { userId: decoded.user.userId } });
       },
     );
   }
-
-  await refreshToken.destroy({
-    where: { userId: userFound.userId, refreshToken: refreshTokenData },
-  });
 
   jwt.verify(
     refreshTokenData,
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decoded) => {
+      await refreshToken.destroy({
+        where: { userId: decoded.user.userId, refreshToken: refreshTokenData },
+      });
+
       const payload = {
         user: {
           userId: decoded.user.userId,
@@ -69,7 +69,8 @@ const handleRefreshToken = async (req, res) => {
         });
       }
 
-      if (err || userFound.userId !== decoded.user.userId) {
+      console.log(userFound?.userId, decoded.user.userId);
+      if (err || userFound?.userId !== decoded.user.userId) {
         return res.status(403).json({
           message: "token / user not same",
           code: "403",
@@ -92,6 +93,8 @@ const handleRefreshToken = async (req, res) => {
         },
       );
 
+      console.log("===newRefreshToken==");
+      console.log(newRefreshToken);
       await refreshToken.create({
         userId: decoded.user.userId,
         refreshToken: newRefreshToken,
@@ -99,12 +102,22 @@ const handleRefreshToken = async (req, res) => {
 
       res.cookie("jwt", newRefreshToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000,
       });
 
-      res.json({ newAccessToken });
+      res.json({
+        user: {
+          userId: decoded.user.userId,
+          email: decoded.user.email,
+          username: decoded.user.username,
+          name: decoded.user.name,
+          orgId: decoded.user.orgId,
+          roleId: decoded.user.roleId,
+        },
+        accessToken: newAccessToken,
+      });
     },
   );
 };

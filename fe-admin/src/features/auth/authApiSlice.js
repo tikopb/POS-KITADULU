@@ -5,12 +5,18 @@ export const authApiSlice = apiSlice.injectEndpoints({
     login: builder.mutation({
       query: (credentials) => ({
         url: "/api/v1/auth/login",
-        method: "post",
+        method: "POST",
         body: { ...credentials },
+      }),
+    }),
+    refreshToken: builder.query({
+      query: () => ({
+        url: "/api/v1/refresh-token",
+        method: "GET",
       }),
     }),
   }),
 });
 
 //useLoginMutation didapatkan daru use= wajib  login = ikutin yg ada di endpoint mutation = wajib
-export const { useLoginMutation } = authApiSlice;
+export const { useLoginMutation, useRefreshTokenQuery } = authApiSlice;
