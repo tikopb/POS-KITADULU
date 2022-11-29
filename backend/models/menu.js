@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     client_id: DataTypes.INTEGER,
     Name: DataTypes.TEXT,
     url_path: DataTypes.TEXT,
-    parentmenu_id: DataTypes.INTEGER
+    parentmenu_id: DataTypes.INTEGER,
+    sequence: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'menu',
