@@ -28,6 +28,7 @@ module.exports = {
       {Menu_id:22, role_id: 1, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
       {Menu_id:23, role_id: 1, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
       {Menu_id:24, role_id: 1, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
+      {Menu_id:25, role_id: 1, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
       {Menu_id:1, role_id: 2, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
       {Menu_id:2, role_id: 2, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
       {Menu_id:3, role_id: 2, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
@@ -51,7 +52,9 @@ module.exports = {
       {Menu_id:21, role_id: 2, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
       {Menu_id:22, role_id: 2, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
       {Menu_id:23, role_id: 2, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
-      {Menu_id:24, role_id: 3, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true }
+      {Menu_id:24, role_id: 2, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
+      {Menu_id:25, role_id: 2, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true },
+      {Menu_id:25, role_id: 3, org_id: 1, client_id:1, createdAt: new Date(), updatedAt: new Date(), isactive: true }
     ]);
   },
 
