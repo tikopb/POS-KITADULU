@@ -104,22 +104,26 @@ module.exports = (sequelize, DataTypes) => {
       }
     };
 
-    //GetMenuAuth = async ({role_id}) => {
-    GetMenuAuth = async (role_id) => {
+    /**
+     * Get Menu auth base on role 
+     * @param {*} role_id 
+     * @returns 
+     */
+    GetMenuAuth = async function (role_id) {
       let list = await sequelize.query('select rm."Menu_id" , m."Name" , m."ParentMenu_id" , null as children from "RolesMenus" rm  join "Menus" m on rm."Menu_id"  = m.menu_id  where rm.role_id = ? order by sequence ',
-      { 
+        {
           replacements: [role_id],
-          type: QueryTypes.SELECT 
-      });
+          type: QueryTypes.SELECT
+        });
       var map = {}, node, roots = [], i;
       for (i = 0; i < list.length; i += 1) {
         map[list[i].Menu_id] = i; // initialize the map
         list[i].children = []; // initialize the children
       }
-      
+
       for (i = 0; i < list.length; i += 1) {
         node = list[i];
-        if (node.ParentMenu_id !== "0" && node.ParentMenu_id !== null  ) {
+        if (node.ParentMenu_id !== "0" && node.ParentMenu_id !== null) {
           // if you have dangling branches check that map[node.parentId] exists
           list[map[node.ParentMenu_id]].children.push(node);
         } else {
@@ -128,6 +132,20 @@ module.exports = (sequelize, DataTypes) => {
       }
       return roots;
     }
+
+    /**
+     * Getting User org acsess for pos
+     * @param {*} user_id 
+     * @returns 
+     */
+    GetUserOrgAcsess = async function (user_id) {
+      let accsess = await sequelize.query('select * from "OrgAccsesses" oa join "Orgs" o on oa.org_id = o."Org_id" where user_id = ?',
+      {
+        replacements: [user_id],
+        type: QueryTypes.SELECT
+      });
+      return accsess;
+    };
 
   }
   Users.init(
