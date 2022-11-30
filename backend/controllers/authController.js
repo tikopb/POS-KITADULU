@@ -65,6 +65,7 @@ module.exports = {
         });
         
         const menuAcsess = await Users.GetMenuAuth(Users.role_id);
+        const orgAccsess = await Users.GetUserOrgAcsess(Users.User_id);
         res.json({
           user: {
             userId: Users.User_id,
@@ -76,6 +77,7 @@ module.exports = {
           },
           menu: menuAcsess,
           accessToken: token.accessToken,
+          org: orgAccsess
         });
       })
       .catch((err) =>
