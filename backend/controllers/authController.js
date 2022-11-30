@@ -3,37 +3,6 @@ const bcrypt = require("bcrypt");
 const { QueryTypes } = require('sequelize');
 const db = require("../models");
 
-async function GetMenu(role_id) {
-  let list = await GetAllMenu(role_id)
-  var map = {}, node, roots = [], i;
-  for (i = 0; i < list.length; i += 1) {
-    map[list[i].Menu_id] = i; // initialize the map
-    list[i].children = []; // initialize the children
-  }
-  
-  for (i = 0; i < list.length; i += 1) {
-    node = list[i];
-    if (node.ParentMenu_id !== "0" && node.ParentMenu_id !== null  ) {
-      // if you have dangling branches check that map[node.parentId] exists
-      list[map[node.ParentMenu_id]].children.push(node);
-    } else {
-      roots.push(node);
-    }
-  }
-
-  return roots;
-}
-
-async function GetAllMenu (role_idP) { 
- // await sequelize.query("SELECT * FROM `users`", { type: QueryTypes.SELECT });
- const MenuList = await db.sequelize.query('select rm."Menu_id" , m."Name" , m."ParentMenu_id" , null as children from "RolesMenus" rm  join "Menus" m on rm."Menu_id"  = m.menu_id  where rm.role_id = ? order by sequence ',
-  { 
-      replacements: [role_idP],
-      type: QueryTypes.SELECT 
-  });
-  return MenuList;
-}
-
 module.exports = {
   register: (req, res, next) => {
     Users.register(req.body)
@@ -94,8 +63,8 @@ module.exports = {
           sameSite: "none",
           maxAge: 24 * 60 * 60 * 1000, // ini jadinya 1 hari,
         });
-
-        let menuAcsess = await GetMenu(Users.role_id)
+        
+        const menuAcsess = await Users.GetMenuAuth(Users.role_id);
         res.json({
           user: {
             userId: Users.User_id,
