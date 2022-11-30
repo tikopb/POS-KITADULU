@@ -1,6 +1,6 @@
 let { Users, refreshToken, Menu } = require("../models");
 const bcrypt = require("bcrypt");
-const { QueryTypes } = require('sequelize');
+const { QueryTypes } = require("sequelize");
 const db = require("../models");
 
 module.exports = {
@@ -75,18 +75,16 @@ module.exports = {
             orgId: Users.org_id,
             roleId: Users.role_id,
           },
-          menu: menuAcsess,
+          menu: menuAccess,
           accessToken: token.accessToken,
           org: orgAccsess
         });
       })
-      .catch((err) =>
-        next(
-          res.status(500).json({
-            err: `${err.toString()}`,
-          }),
-        ),
-      );
+      .catch((err) => {
+        res.status(500).json({
+          err: `${err.toString()}`,
+        });
+      });
   },
   whoami: (req, res) => {
     const currentUser = req.user;
