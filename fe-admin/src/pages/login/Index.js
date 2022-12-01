@@ -1,29 +1,32 @@
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import imageLogin from "../../images/login-image.svg";
+import imageLogin from "../../images/login-image.png";
 import FormText from "../../components/FormText";
-import { useDispatch } from "react-redux";
-//import { setCredentials } from "../../features/auth/authSlice";
-//import { useLoginMutation } from "../../features/auth/authApiSlice";
-import { loginHandlerSlice } from "../../store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectedCurToken,
+  apiFetchCredential,
+  selectedCurLoading,
+} from "../../store/authSlice";
 
-export const Index = () => {
+const Index = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const usernameRef = useRef();
   const passRef = useRef();
-  const [usernameState, setUsernameState] = useState("");
-  const [passwordState, setPasswordState] = useState("");
+  const [usernameState, setUsernameState] = useState("Lisa");
+  const [passwordState, setPasswordState] = useState("kiduPos");
   const [errorMsg, setErrorMsg] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const token = useSelector(selectedCurToken);
+  const isLoading = useSelector(selectedCurLoading);
 
   //const [login, { isLoading }] = useLoginMutation();
 
   useEffect(() => {
-    //let isAuth = false; //JSON.parse(localStorage.getItem("user"));
-    //if (isAuth) {
-    //  navigate("/");
-    // }
+    let isAuth = token ? true : false; //JSON.parse(localStorage.getItem("user"));
+    if (isAuth) {
+      navigate("/");
+    }
 
     usernameRef.current.focus();
   }, []);
@@ -34,23 +37,15 @@ export const Index = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
+    const data = { username: usernameState, password: passwordState };
     try {
-      setIsLoading(true);
-      dispatch(
-        loginHandlerSlice({ username: usernameState, password: passwordState }),
-      )
-        .then(() => {
-          setUsernameState("");
-          setPasswordState("");
-          navigate("/");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
+      // console.log(loginHandlerSlice);
+      dispatch(apiFetchCredential(data)).then((_) => {
+        setUsernameState("");
+        setPasswordState("");
+        navigate("/");
+      });
+    } catch (error) {}
   };
 
   const usernameHandler = (e) => setUsernameState(e.target.value);
@@ -59,7 +54,7 @@ export const Index = () => {
   return (
     <div className="container mx-auto">
       <div className="p-10 grid overflow-hidden rounded-lg min-h-[calc(100vh_-_40px_*_2)] grid-cols-[auto] lg:grid-cols-2 font-roboto">
-        <div className="lg:flex lg:justify-center hidden">
+        <div className="lg:flex lg:justify-center hidden bg-gradient-to-r from-[#99AAE5] to-[#29DDDD] rounded-[15px]">
           <img src={imageLogin} alt="login" className="w-[80%]" />
         </div>
         <div className="flex flex-col justify-center  md:pl-14 xl:pl-[150px]">
@@ -100,7 +95,7 @@ export const Index = () => {
               {!isLoading && (
                 <button
                   type="submit"
-                  className="border-none bg-gradient-to-r from-cyan-500 to-blue-500 text-white btn uppercase text-lg cursor-pointer">
+                  className="border-none bg-gradient-to-r from-[#99AAE5] to-[#29DDDD] text-white btn uppercase text-lg cursor-pointer">
                   Sign In
                 </button>
               )}
@@ -111,3 +106,5 @@ export const Index = () => {
     </div>
   );
 };
+
+export default Index;

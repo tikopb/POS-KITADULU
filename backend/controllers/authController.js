@@ -1,6 +1,6 @@
 let { Users, refreshToken, Menu } = require("../models");
 const bcrypt = require("bcrypt");
-const { QueryTypes } = require('sequelize');
+const { QueryTypes } = require("sequelize");
 const db = require("../models");
 
 module.exports = {
@@ -63,9 +63,9 @@ module.exports = {
           sameSite: "none",
           maxAge: 24 * 60 * 60 * 1000, // ini jadinya 1 hari,
         });
-        
-        const menuAcsess = await Users.GetMenuAuth(Users.role_id);
-        const orgAccsess = await Users.GetUserOrgAcsess(Users.User_id);
+
+        const menuAccess = await Users.GetMenuAuth(Users.role_id);
+        const orgAccess = await Users.GetUserOrgAccess(Users.User_id);
         res.json({
           user: {
             userId: Users.User_id,
@@ -75,18 +75,16 @@ module.exports = {
             orgId: Users.org_id,
             roleId: Users.role_id,
           },
-          menu: menuAcsess,
+          menu: menuAccess,
           accessToken: token.accessToken,
-          org: orgAccsess
+          org: orgAccess,
         });
       })
-      .catch((err) =>
-        next(
-          res.status(500).json({
-            err: `${err.toString()}`,
-          }),
-        ),
-      );
+      .catch((err) => {
+        res.status(500).json({
+          err: `${err.toString()}`,
+        });
+      });
   },
   whoami: (req, res) => {
     const currentUser = req.user;

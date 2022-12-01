@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { refreshToken } = require("../models");
+const { refreshToken, Users } = require("../models");
 require("dotenv").config();
 
 const handleRefreshToken = async (req, res) => {
@@ -44,10 +44,6 @@ const handleRefreshToken = async (req, res) => {
     refreshTokenData,
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decoded) => {
-      await refreshToken.destroy({
-        where: { userId: decoded.user.userId, refreshToken: refreshTokenData },
-      });
-
       const payload = {
         user: {
           userId: decoded.user.userId,
@@ -69,7 +65,6 @@ const handleRefreshToken = async (req, res) => {
         });
       }
 
-      console.log(userFound?.userId, decoded.user.userId);
       if (err || userFound?.userId !== decoded.user.userId) {
         return res.status(403).json({
           message: "token / user not same",
@@ -93,8 +88,6 @@ const handleRefreshToken = async (req, res) => {
         },
       );
 
-      console.log("===newRefreshToken==");
-      console.log(newRefreshToken);
       await refreshToken.create({
         userId: decoded.user.userId,
         refreshToken: newRefreshToken,
@@ -107,6 +100,17 @@ const handleRefreshToken = async (req, res) => {
         maxAge: 24 * 60 * 60 * 1000,
       });
 
+      const currUser = await Users.findOne({
+        where: { User_id: decoded.user.userId },
+      });
+
+      const menuAccess = await currUser.GetMenuAuth(currUser.roleId);
+      const orgAccess = await currUser.GetUserOrgAccess(currUser.id);
+
+      await refreshToken.destroy({
+        where: { userId: decoded.user.userId, refreshToken: refreshTokenData },
+      });
+
       res.json({
         user: {
           userId: decoded.user.userId,
@@ -116,6 +120,8 @@ const handleRefreshToken = async (req, res) => {
           orgId: decoded.user.orgId,
           roleId: decoded.user.roleId,
         },
+        menu: menuAccess,
+        org: orgAccess,
         accessToken: newAccessToken,
       });
     },

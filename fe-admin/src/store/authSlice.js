@@ -1,31 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "../api/axios";
+import { apiCallBegin } from "./apiConfig";
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { user: null, token: null },
+  initialState: {
+    user: null,
+    token: null,
+    loading: false,
+    error: null,
+    menu: [],
+    org: [],
+  },
   reducers: {
-    setCredentials: {
-      reducer(state, action) {
-        const { userData, token } = action.payload;
+    apiRequested: (state, action) => {
+      state.loading = true;
+    },
+    apiRequestFailed: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.error;
+    },
+    setCredentials: (state, action) => {
+      const { user, accessToken, menu, org } = action.payload;
 
-        state.user = userData;
-        state.token = token;
-      },
-      prepare(data) {
-        return {
-          payload: {
-            userData: {
-              userId: data.user.userId,
-              username: data.user.username,
-              name: data.user.name,
-              roleId: data.user.roleId,
-              orgId: data.user.orgId,
-            },
-            token: data.accessToken,
-          },
-        };
-      },
+      state.user = user;
+      state.token = accessToken;
+      state.menu = menu;
+      state.org = org;
+      state.loading = false;
     },
     logOut: (state, action) => {
       state.user = null;
@@ -34,30 +35,21 @@ const authSlice = createSlice({
   },
 });
 
-export const loginHandlerSlice = (data) => {
-  return async (dispatch) => {
-    const fetchData = async () => {
-      const response = await axios.post("/api/v1/auth/login", data, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-
-      return response;
-    };
-
-    try {
-      const response = await fetchData();
-      if (response?.data) {
-        const responseData = response.data;
-        dispatch(authSlice.actions.setCredentials(responseData));
-      }
-    } catch (error) {
-      //error
-    }
-  };
-};
-
 export const selectedCurUser = (state) => state.auth.user;
 export const selectedCurToken = (state) => state.auth.token;
-export const { setCredentials, logOut } = authSlice.actions;
+export const selectedCurLoading = (state) => state.auth.loading;
+export const { apiRequested, apiRequestFailed, setCredentials, logOut } =
+  authSlice.actions;
 export default authSlice.reducer;
+
+//action creators
+
+export const apiFetchCredential = (data) =>
+  apiCallBegin({
+    url: "/api/v1/auth/login",
+    method: "POST",
+    data,
+    onStart: apiRequested.type,
+    onSuccess: setCredentials.type,
+    onError: apiRequestFailed.type,
+  });
