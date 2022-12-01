@@ -11,18 +11,17 @@ const LoginPage = React.lazy(() => import("./pages/login/Index"));
 function App() {
   return (
     <Routes>
-      <Route
-        path="/login"
-        element={
-          <React.Suspense fallback={<LoaderIndicator />}>
-            <LoginPage />
-          </React.Suspense>
-        }
-      />
-
       <Route path="/" element={<Layout />}>
         <Route element={<PersistLogin />}>
           {/* public routes */}
+          <Route
+            path="/login"
+            element={
+              <React.Suspense fallback={<LoaderIndicator />}>
+                <LoginPage />
+              </React.Suspense>
+            }
+          />
 
           {/* protected routes */}
 

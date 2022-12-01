@@ -3,38 +3,30 @@ import { apiCallBegin } from "./apiConfig";
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { user: null, token: null, loading: false, error: null },
+  initialState: {
+    user: null,
+    token: null,
+    loading: false,
+    error: null,
+    menu: [],
+    org: [],
+  },
   reducers: {
     apiRequested: (state, action) => {
-      console.log(action, "asdasd");
       state.loading = true;
     },
     apiRequestFailed: (state, action) => {
       state.loading = false;
       state.error = action.payload.error;
     },
-    setCredentials: {
-      reducer(state, action) {
-        const { userData, token } = action.payload;
+    setCredentials: (state, action) => {
+      const { user, accessToken, menu, org } = action.payload;
 
-        state.user = userData;
-        state.token = token;
-        state.loading = false;
-      },
-      prepare(data) {
-        return {
-          payload: {
-            userData: {
-              userId: data.user.userId,
-              username: data.user.username,
-              name: data.user.name,
-              roleId: data.user.roleId,
-              orgId: data.user.orgId,
-            },
-            token: data.accessToken,
-          },
-        };
-      },
+      state.user = user;
+      state.token = accessToken;
+      state.menu = menu;
+      state.org = org;
+      state.loading = false;
     },
     logOut: (state, action) => {
       state.user = null;

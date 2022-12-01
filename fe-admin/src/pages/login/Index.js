@@ -14,7 +14,7 @@ const Index = () => {
   const dispatch = useDispatch();
   const usernameRef = useRef();
   const passRef = useRef();
-  const [usernameState, setUsernameState] = useState("lisa");
+  const [usernameState, setUsernameState] = useState("Lisa");
   const [passwordState, setPasswordState] = useState("kiduPos");
   const [errorMsg, setErrorMsg] = useState("");
   const token = useSelector(selectedCurToken);
@@ -40,16 +40,11 @@ const Index = () => {
     const data = { username: usernameState, password: passwordState };
     try {
       // console.log(loginHandlerSlice);
-      dispatch(
-        apiFetchCredential({
-          url: "/api/v1/auth/login",
-          method: "POST",
-          data,
-          onStart: "auth/apiRequested",
-          onSuccess: "auth/setCredentials",
-          onError: "auth/apiRequestFailed",
-        }),
-      );
+      dispatch(apiFetchCredential(data)).then((_) => {
+        setUsernameState("");
+        setPasswordState("");
+        navigate("/");
+      });
     } catch (error) {}
   };
 

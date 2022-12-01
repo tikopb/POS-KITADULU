@@ -44,10 +44,6 @@ const handleRefreshToken = async (req, res) => {
     refreshTokenData,
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decoded) => {
-      await refreshToken.destroy({
-        where: { userId: decoded.user.userId, refreshToken: refreshTokenData },
-      });
-
       const payload = {
         user: {
           userId: decoded.user.userId,
@@ -104,8 +100,17 @@ const handleRefreshToken = async (req, res) => {
         maxAge: 24 * 60 * 60 * 1000,
       });
 
-      const menuAccess = await Users.GetMenuAuth(decoded.user.roleId);
-      const orgAccess = await Users.GetUserOrgAccess(Users.User_id);
+      const currUser = await Users.findOne({
+        where: { User_id: decoded.user.userId },
+      });
+
+      const menuAccess = await currUser.GetMenuAuth(currUser.roleId);
+      const orgAccess = await currUser.GetUserOrgAccess(currUser.id);
+
+      await refreshToken.destroy({
+        where: { userId: decoded.user.userId, refreshToken: refreshTokenData },
+      });
+
       res.json({
         user: {
           userId: decoded.user.userId,
