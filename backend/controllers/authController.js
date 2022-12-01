@@ -64,7 +64,7 @@ module.exports = {
           maxAge: 24 * 60 * 60 * 1000, // ini jadinya 1 hari,
         });
         
-        const menuAcsess = await Users.GetMenuAuth(Users.role_id);
+        const menuAccess = await Users.GetMenuAuth(Users.role_id);
         const orgAccsess = await Users.GetUserOrgAcsess(Users.User_id);
         res.json({
           user: {
