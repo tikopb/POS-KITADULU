@@ -1,11 +1,10 @@
 "use strict";
 const { Model } = require("sequelize");
-const { QueryTypes } = require('sequelize');
+const { QueryTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var validator = require("email-validator");
 require("dotenv").config();
-
 
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
@@ -70,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
           roleId: userInformation.role_id,
         },
       };
-      
+
       const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: "60s",
       });
@@ -88,13 +87,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static authenticate = async ({ username, password }) => {
       try {
-        let user = null
-        if (!validator.validate(username)){ //if true then check with email
+        let user = null;
+        if (!validator.validate(username)) {
+          //if true then check with email
           user = await this.findOne({ where: { username: username } });
-        }else{
+        } else {
           user = await this.findOne({ where: { email: username } });
         }
-       
+
         if (user == null) {
           return Promise.reject("user not found");
         }
@@ -109,17 +109,22 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     /**
-     * Get Menu auth base on role 
-     * @param {*} role_id 
-     * @returns 
+     * Get Menu auth base on role
+     * @param {*} role_id
+     * @returns
      */
     GetMenuAuth = async function (role_id) {
-      let list = await sequelize.query('select rm."Menu_id" , m."Name" , m."ParentMenu_id" , null as children from "RolesMenus" rm  join "Menus" m on rm."Menu_id"  = m.menu_id  where rm.role_id = ? order by sequence ',
+      let list = await sequelize.query(
+        'select rm."Menu_id" , m."Name" , m."ParentMenu_id" , null as children from "RolesMenus" rm  join "Menus" m on rm."Menu_id"  = m.menu_id  where rm.role_id = ? order by sequence ',
         {
           replacements: [role_id],
-          type: QueryTypes.SELECT
-        });
-      var map = {}, node, roots = [], i;
+          type: QueryTypes.SELECT,
+        },
+      );
+      var map = {},
+        node,
+        roots = [],
+        i;
       for (i = 0; i < list.length; i += 1) {
         map[list[i].Menu_id] = i; // initialize the map
         list[i].children = []; // initialize the children
@@ -135,22 +140,23 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
       return roots;
-    }
+    };
 
     /**
      * Getting User org acsess for pos
-     * @param {*} user_id 
-     * @returns 
+     * @param {*} user_id
+     * @returns
      */
-    GetUserOrgAcsess = async function (user_id) {
-      let accsess = await sequelize.query('select * from "OrgAccsesses" oa join "Orgs" o on oa.org_id = o."Org_id" where user_id = ?',
-      {
-        replacements: [user_id],
-        type: QueryTypes.SELECT
-      });
+    GetUserOrgAccess = async function (user_id) {
+      let accsess = await sequelize.query(
+        'select * from "OrgAccsesses" oa join "Orgs" o on oa.org_id = o."Org_id" where user_id = ?',
+        {
+          replacements: [user_id],
+          type: QueryTypes.SELECT,
+        },
+      );
       return accsess;
     };
-
   }
   Users.init(
     {

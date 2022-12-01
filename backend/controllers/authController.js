@@ -63,9 +63,9 @@ module.exports = {
           sameSite: "none",
           maxAge: 24 * 60 * 60 * 1000, // ini jadinya 1 hari,
         });
-        
+
         const menuAccess = await Users.GetMenuAuth(Users.role_id);
-        const orgAccsess = await Users.GetUserOrgAcsess(Users.User_id);
+        const orgAccess = await Users.GetUserOrgAccess(Users.User_id);
         res.json({
           user: {
             userId: Users.User_id,
@@ -77,7 +77,7 @@ module.exports = {
           },
           menu: menuAccess,
           accessToken: token.accessToken,
-          org: orgAccsess
+          org: orgAccess,
         });
       })
       .catch((err) => {

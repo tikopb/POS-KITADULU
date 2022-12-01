@@ -104,7 +104,8 @@ const handleRefreshToken = async (req, res) => {
         maxAge: 24 * 60 * 60 * 1000,
       });
 
-      let menuAccess = await Users.GetMenu(decoded.user.roleId);
+      const menuAccess = await Users.GetMenuAuth(decoded.user.roleId);
+      const orgAccess = await Users.GetUserOrgAccess(Users.User_id);
       res.json({
         user: {
           userId: decoded.user.userId,
@@ -115,6 +116,7 @@ const handleRefreshToken = async (req, res) => {
           roleId: decoded.user.roleId,
         },
         menu: menuAccess,
+        org: orgAccess,
         accessToken: newAccessToken,
       });
     },
