@@ -87,6 +87,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static authenticate = async ({ username, email, password }) => {
       try {
+        if(username == null){
+          username = email
+        }
         let user = await this.findOne({ where: { username } });
         if (user == null) {
           user = await this.findOne({ where: { email } });
