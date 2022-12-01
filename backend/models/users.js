@@ -3,6 +3,7 @@ const { Model } = require("sequelize");
 const { QueryTypes } = require('sequelize');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+var validator = require("email-validator");
 require("dotenv").config();
 
 
@@ -85,15 +86,15 @@ module.exports = (sequelize, DataTypes) => {
      * @param {username, email, passsword} param
      * @returns users data
      */
-    static authenticate = async ({ username, email, password }) => {
+    static authenticate = async ({ username, password }) => {
       try {
-        if(username == null){
-          username = email
+        let user = null
+        if (!validator.validate(username)){ //if true then check with email
+          user = await this.findOne({ where: { username: username } });
+        }else{
+          user = await this.findOne({ where: { email: username } });
         }
-        let user = await this.findOne({ where: { username } });
-        if (user == null) {
-          user = await this.findOne({ where: { email } });
-        }
+       
         if (user == null) {
           return Promise.reject("user not found");
         }
