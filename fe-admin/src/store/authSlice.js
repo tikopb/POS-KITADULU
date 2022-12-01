@@ -1,16 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "../api/axios";
+import { apiCallBegin } from "./apiConfig";
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { user: null, token: null },
+  initialState: { user: null, token: null, loading: false, error: null },
   reducers: {
+    apiRequested: (state, action) => {
+      console.log(action, "asdasd");
+      state.loading = true;
+    },
+    apiRequestFailed: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.error;
+    },
     setCredentials: {
       reducer(state, action) {
         const { userData, token } = action.payload;
 
         state.user = userData;
         state.token = token;
+        state.loading = false;
       },
       prepare(data) {
         return {
@@ -34,30 +43,21 @@ const authSlice = createSlice({
   },
 });
 
-export const loginHandlerSlice = (data) => {
-  return async (dispatch) => {
-    const fetchData = async () => {
-      const response = await axios.post("/api/v1/auth/login", data, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-
-      return response;
-    };
-
-    try {
-      const response = await fetchData();
-      if (response?.data) {
-        const responseData = response.data;
-        dispatch(authSlice.actions.setCredentials(responseData));
-      }
-    } catch (error) {
-      //error
-    }
-  };
-};
-
 export const selectedCurUser = (state) => state.auth.user;
 export const selectedCurToken = (state) => state.auth.token;
-export const { setCredentials, logOut } = authSlice.actions;
+export const selectedCurLoading = (state) => state.auth.loading;
+export const { apiRequested, apiRequestFailed, setCredentials, logOut } =
+  authSlice.actions;
 export default authSlice.reducer;
+
+//action creators
+
+export const apiFetchCredential = (data) =>
+  apiCallBegin({
+    url: "/api/v1/auth/login",
+    method: "POST",
+    data,
+    onStart: apiRequested.type,
+    onSuccess: setCredentials.type,
+    onError: apiRequestFailed.type,
+  });

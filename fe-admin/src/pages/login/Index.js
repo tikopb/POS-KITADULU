@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import imageLogin from "../../images/login-image.png";
 import FormText from "../../components/FormText";
 import { useDispatch, useSelector } from "react-redux";
-import { loginHandlerSlice, selectedCurToken } from "../../store/authSlice";
+import {
+  selectedCurToken,
+  apiFetchCredential,
+  selectedCurLoading,
+} from "../../store/authSlice";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -13,8 +17,8 @@ const Index = () => {
   const [usernameState, setUsernameState] = useState("lisa");
   const [passwordState, setPasswordState] = useState("kiduPos");
   const [errorMsg, setErrorMsg] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const token = useSelector(selectedCurToken);
+  const isLoading = useSelector(selectedCurLoading);
 
   //const [login, { isLoading }] = useLoginMutation();
 
@@ -33,19 +37,20 @@ const Index = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
+    const data = { username: usernameState, password: passwordState };
     try {
-      setIsLoading(true);
+      // console.log(loginHandlerSlice);
       dispatch(
-        loginHandlerSlice({ username: usernameState, password: passwordState }),
-      ).then((response) => {
-        setUsernameState("");
-        setPasswordState("");
-        navigate("/");
-      });
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
+        apiFetchCredential({
+          url: "/api/v1/auth/login",
+          method: "POST",
+          data,
+          onStart: "auth/apiRequested",
+          onSuccess: "auth/setCredentials",
+          onError: "auth/apiRequestFailed",
+        }),
+      );
+    } catch (error) {}
   };
 
   const usernameHandler = (e) => setUsernameState(e.target.value);
