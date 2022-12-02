@@ -24,14 +24,10 @@ router.post(
 //organization and client end
 
 //product category start
-router.post(
-  "/api/v1/productCategory/create",
-  controllers.productCategories.Create,
-);
-router.post(
-  "/api/v1/productCategory/getAll",
-  controllers.productCategories.GetAll,
-);
+router.post("/api/v1/productCategory/create",controllers.productCategories.Create);
+router.post("/api/v1/productCategory/getAll",controllers.productCategories.GetAll);
+router.post("/api/v1/productCategory/update",controllers.productCategories.Update);
+router.post("/api/v1/productCategory/delete",controllers.productCategories.Delete);
 //product category end
 
 //Product start
