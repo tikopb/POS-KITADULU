@@ -40,7 +40,7 @@ module.exports = {
     Update: async(req,res) => {
         const {ProductCategories_id, name, description, isactive} = req.body
         let data = await ProductCategory.findByPk(ProductCategories_id)
-        data.Update({
+        data.set({
             name: name,
             description: description,
             isactive: isactive
