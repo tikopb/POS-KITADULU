@@ -24,26 +24,23 @@ router.post(
 //organization and client end
 
 //product category start
-router.post("/api/v1/productCategory/create",controllers.productCategories.Create);
-router.post("/api/v1/productCategory/getAll",controllers.productCategories.GetAll);
-router.post("/api/v1/productCategory/update",controllers.productCategories.Update);
-router.post("/api/v1/productCategory/delete",controllers.productCategories.Delete);
+router.post("/api/v1/productCategory/create", restrict, controllers.productCategories.Create);
+router.post("/api/v1/productCategory/getAll", restrict, controllers.productCategories.GetAll);
+router.post("/api/v1/productCategory/update", restrict, controllers.productCategories.Update);
+router.post("/api/v1/productCategory/delete", restrict, controllers.productCategories.Delete);
 //product category end
 
 //Product start
 router.post("/api/v1/product/createProduct", controllers.product.CreateProduct);
 router.post("/api/v1/product/updateProduct", controllers.product.UpdateProduct);
 router.post("/api/v1/product/deleteProduct", controllers.product.DeleteProduct);
-router.post(
-  "/api/v1/product/getAllProductForPOSJoin",
-  controllers.product.getAllProductForPOSJoin,
-);
+router.post("/api/v1/product/getAllProductForPOSJoin", controllers.product.getAllProductForPOSJoin);
 //Product end
 
 //uom start
-router.post("/api/v1/uom/getById", restrict, controllers.uom.Get);
+router.post("/api/v1/uom/get", restrict, controllers.uom.Get);
 router.post("/api/v1/uom/getAll", restrict, controllers.uom.GetAll);
-router.post("/api/v1/uom/create", controllers.uom.Create);
+router.post("/api/v1/uom/create", restrict, controllers.uom.Create);
 router.post("/api/v1/uom/update", restrict, controllers.uom.Update);
 router.post("/api/v1/uom/delete", restrict, controllers.uom.Delete);
 //uom end
