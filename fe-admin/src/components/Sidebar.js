@@ -118,19 +118,19 @@ const Sidebar = (props) => {
   ];
 
   return (
-    <div className="h-screen border-r border-slate-200">
-      <div className="px-5 py-5">
+    <div className='h-screen border-r border-slate-200'>
+      <div className='px-5 py-5'>
         <ul>
           {data.map((row, index) => {
             return (
               <>
                 <div
-                  className="my-1 font-bold text-[#3629B7] first-letter:uppercase"
+                  className='my-1 font-bold text-[#3629B7] first-letter:uppercase'
                   key={index}>
                   {row.section}
                 </div>
                 {row.item.map((row2, index2) => (
-                  <li className="flex my-1 px-2 flex-row gap-2 items-center">
+                  <li className='flex my-1 px-2 flex-row gap-2 items-center'>
                     <div>{row2.icon}</div>
                     <div>{row2.name}</div>
                   </li>

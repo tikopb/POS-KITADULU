@@ -31,6 +31,22 @@ const authSlice = createSlice({
     logOut: (state, action) => {
       state.user = null;
       state.token = null;
+      state.menu = [];
+      state.org = [];
+    },
+    showSubMenu: (state, action) => {
+      console.log("===asd==");
+      console.log(action.payload.isShowChildren);
+      const menu = state.menu.map((row) => {
+        if (row.menu_id === action.payload.id) {
+          return { ...row, isShowChildren: action.payload.isShowChildren };
+        } else {
+          const hasChild = row.children.length > 0;
+          return { ...row, isShowChildren: hasChild ? true : false };
+        }
+      });
+
+      state.menu = menu;
     },
   },
 });
@@ -38,8 +54,14 @@ const authSlice = createSlice({
 export const selectedCurUser = (state) => state.auth.user;
 export const selectedCurToken = (state) => state.auth.token;
 export const selectedCurLoading = (state) => state.auth.loading;
-export const { apiRequested, apiRequestFailed, setCredentials, logOut } =
-  authSlice.actions;
+export const selectedCurMenu = (state) => state.auth.menu;
+export const {
+  apiRequested,
+  apiRequestFailed,
+  setCredentials,
+  logOut,
+  showSubMenu,
+} = authSlice.actions;
 export default authSlice.reducer;
 
 //action creators
@@ -51,5 +73,13 @@ export const apiFetchCredential = (data) =>
     data,
     onStart: apiRequested.type,
     onSuccess: setCredentials.type,
+    onError: apiRequestFailed.type,
+  });
+
+export const apiDoLogout = () =>
+  apiCallBegin({
+    url: "/api/v1/auth/logout",
+    method: "POST",
+    onSuccess: logOut.type,
     onError: apiRequestFailed.type,
   });

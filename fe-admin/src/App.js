@@ -11,11 +11,13 @@ const LoginPage = React.lazy(() => import("./pages/login/Index"));
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route
+        path='/'
+        element={<Layout />}>
         <Route element={<PersistLogin />}>
           {/* public routes */}
           <Route
-            path="/login"
+            path='/login'
             element={
               <React.Suspense fallback={<LoaderIndicator />}>
                 <LoginPage />
@@ -23,19 +25,15 @@ function App() {
             }
           />
 
-          {/* protected routes */}
-
           <Route element={<ProtectedRoute />}>
             <Route
-              path="/"
+              path='/'
               element={
                 <React.Suspense fallback={<p>Please wait</p>}>
                   <HomePage />
                 </React.Suspense>
               }
             />
-
-            <Route path="userslist" element={<PersistLogin />} />
           </Route>
         </Route>
       </Route>

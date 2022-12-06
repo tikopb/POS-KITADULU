@@ -104,7 +104,7 @@ const handleRefreshToken = async (req, res) => {
         where: { User_id: decoded.user.userId },
       });
 
-      const menuAccess = await currUser.GetMenuAuth(currUser.roleId);
+      const menuAccess = await currUser.GetMenuAuth(currUser.role_id);
       const orgAccess = await currUser.GetUserOrgAccess(currUser.id);
 
       await refreshToken.destroy({
