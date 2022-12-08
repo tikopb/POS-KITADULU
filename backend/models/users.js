@@ -116,7 +116,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     GetMenuAuth = async function (role_id) {
       let list = await sequelize.query(
-        'select rm."Menu_id" , m."Name" , m."ParentMenu_id" , null as children from "RolesMenus" rm  join "Menus" m on rm."Menu_id"  = m.menu_id  where rm.role_id = ? order by sequence ',
+        'select rm."Menu_id" , m."Name" , m."ParentMenu_id",  m.url_path , null as children  from "RolesMenus" rm  join "Menus" m on rm."Menu_id"  = m.menu_id  where rm.role_id = ? order by sequence ',
         {
           replacements: [role_id],
           type: QueryTypes.SELECT,
