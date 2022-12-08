@@ -74,6 +74,7 @@ module.exports = {
             name: Users.name,
             orgId: Users.org_id,
             roleId: Users.role_id,
+            client_id: Users.client_id
           },
           menu: menuAccess,
           accessToken: token.accessToken,
