@@ -7,6 +7,7 @@ const uomConvertion = require("./UomConvertionController");
 const uom = require("./uomController");
 const OrgAccsessController = require("./OrgAccsessController");
 const refreshController = require("./refreshTokenController");
+const Businesspartner = require("./BusinessPartnerController");
 
 module.exports = {
   auth,
@@ -18,4 +19,5 @@ module.exports = {
   uom,
   OrgAccsessController,
   refreshController,
+  Businesspartner
 };

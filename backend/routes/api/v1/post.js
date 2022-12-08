@@ -69,26 +69,18 @@ router.post(
 //uom convertion end
 
 //OrgAccsessController start
-router.post(
-  "/api/v1/orgaccsess/create",
-  restrict,
-  controllers.OrgAccsessController.Generate,
-);
-router.post(
-  "/api/v1/orgaccsess/getAll",
-  restrict,
-  controllers.OrgAccsessController.GetAll,
-);
-router.post(
-  "/api/v1/orgaccsess/update",
-  restrict,
-  controllers.uomConvertion.Update,
-);
-router.post(
-  "/api/v1/orgaccsess/delete",
-  restrict,
-  controllers.uomConvertion.Delete,
-);
+router.post("/api/v1/orgaccsess/create",restrict,controllers.OrgAccsessController.Generate,);
+router.post("/api/v1/orgaccsess/getAll", restrict, controllers.OrgAccsessController.GetAll,);
+router.post( "/api/v1/orgaccsess/update", restrict, controllers.OrgAccsessController.Update,);
+router.post("/api/v1/orgaccsess/delete",restrict,controllers.OrgAccsessController.Delete,);
 //OrgAccsessController end
+
+//Businesspartner start
+router.post("/api/v1/businessPartner/get", restrict, controllers.Businesspartner.Get);
+router.post("/api/v1/businessPartner/getAll", restrict, controllers.Businesspartner.GetAll);
+router.post("/api/v1/businessPartner/create",restrict,controllers.Businesspartner.Create);
+router.post( "/api/v1/businessPartner/update", restrict, controllers.Businesspartner.Update);
+router.post("/api/v1/businessPartner/delete",restrict,controllers.Businesspartner.Delete);
+//Businesspartner end
 
 module.exports = router;
