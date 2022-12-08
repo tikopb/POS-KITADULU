@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Businesspartner.init({
-    ClientBusinesspartner_id: {
+    Businesspartner_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
@@ -22,8 +22,12 @@ module.exports = (sequelize, DataTypes) => {
     isactive: DataTypes.BOOLEAN,
     org_id:DataTypes.INTEGER,
     client_id: DataTypes.INTEGER,
-    value: DataTypes.TEXT,
-    description: DataTypes.TEXT
+    value: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    description: DataTypes.TEXT,
+    name: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'Businesspartner',

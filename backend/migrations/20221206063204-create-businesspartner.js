@@ -27,10 +27,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       value: {
-        type: Sequelize.INTEGER
+        type: Sequelize.TEXT
       },
       description: {
-        type: Sequelize.INTEGER
+        type: Sequelize.TEXT
+      }, 
+      name: {
+        type: Sequelize.TEXT
       }, 
     },
     {
