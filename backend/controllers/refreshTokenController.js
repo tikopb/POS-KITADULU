@@ -121,6 +121,7 @@ const handleRefreshToken = async (req, res) => {
           name: decoded.user.name,
           orgId: decoded.user.orgId,
           roleId: decoded.user.roleId,
+          clientId: decoded.user.clientId,
         },
         menu: menuAccess,
         org: orgAccess,
