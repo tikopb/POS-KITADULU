@@ -1,22 +1,13 @@
 import axios from "../api/axios";
 import { setCredentials } from "../store/authSlice";
 import { useDispatch } from "react-redux";
-import { useCallback } from "react";
+import { apiRefreshToken } from "../store/authSlice";
 
 const useRefreshToken = () => {
   const dispatch = useDispatch();
 
   const refresh = async () => {
-    const response = await axios.get("/api/v1/refresh-token", {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
-
-    if (response.status === 200) {
-      if (response?.data) {
-        dispatch(setCredentials(response.data));
-      }
-    }
+    await dispatch(apiRefreshToken());
   };
 
   return refresh;

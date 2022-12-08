@@ -35,8 +35,6 @@ const authSlice = createSlice({
       state.org = [];
     },
     showSubMenu: (state, action) => {
-      console.log("===asd==");
-      console.log(action.payload.isShowChildren);
       const menu = state.menu.map((row) => {
         if (row.menu_id === action.payload.id) {
           return { ...row, isShowChildren: action.payload.isShowChildren };
@@ -81,5 +79,13 @@ export const apiDoLogout = () =>
     url: "/api/v1/auth/logout",
     method: "POST",
     onSuccess: logOut.type,
+    onError: apiRequestFailed.type,
+  });
+
+export const apiRefreshToken = () =>
+  apiCallBegin({
+    url: "/api/v1/refresh-token",
+    method: "GET",
+    onSuccess: setCredentials.type,
     onError: apiRequestFailed.type,
   });

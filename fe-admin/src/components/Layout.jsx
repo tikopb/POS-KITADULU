@@ -15,7 +15,7 @@ const Layout = () => {
           <Menubar />
         </aside>
 
-        <div className='pt-20 lg:pl-80 pl-3'>
+        <div className='pt-20 lg:pl-80 pl-3 w-full'>
           <Outlet />
         </div>
       </React.Fragment>

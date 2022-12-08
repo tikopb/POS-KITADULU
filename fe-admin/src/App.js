@@ -7,6 +7,9 @@ import Layout from "./components/Layout";
 import LoaderIndicator from "./components/LoaderIndicator";
 const HomePage = React.lazy(() => import("./pages/home/Index"));
 const LoginPage = React.lazy(() => import("./pages/login/Index"));
+const ProductCategoryPage = React.lazy(() =>
+  import("./pages/productCategory/Index"),
+);
 
 function App() {
   return (
@@ -35,6 +38,14 @@ function App() {
               }
             />
           </Route>
+          <Route
+            path='/product-category'
+            element={
+              <React.Suspense fallback={<p>Please wait</p>}>
+                <ProductCategoryPage />
+              </React.Suspense>
+            }
+          />
         </Route>
       </Route>
     </Routes>
