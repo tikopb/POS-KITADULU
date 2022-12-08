@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
+import { useSelector } from "react-redux";
+import { selectedCurToken, selectedCurUser } from "../../store/authSlice";
 
 const Table = () => {
+  const token = useSelector(selectedCurToken);
+  const user = useSelector(selectedCurUser);
+  console.log(user, token);
   const columns = [
     {
       name: "Code",

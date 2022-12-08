@@ -44,6 +44,7 @@ const handleRefreshToken = async (req, res) => {
     refreshTokenData,
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decoded) => {
+      console.log(decoded);
       const payload = {
         user: {
           userId: decoded.user.userId,
@@ -52,6 +53,7 @@ const handleRefreshToken = async (req, res) => {
           name: decoded.user.name,
           orgId: decoded.user.orgId,
           roleId: decoded.user.roleId,
+          clientId: decoded.user.clientId,
         },
       };
 
