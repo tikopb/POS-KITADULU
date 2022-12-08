@@ -5,7 +5,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     return Promise.all([
-      queryInterface.addColumn(
+      await queryInterface.addColumn(
         'Products',
         'value',
         {
