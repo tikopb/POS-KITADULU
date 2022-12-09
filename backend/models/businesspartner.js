@@ -16,8 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   Businesspartner.init({
     Businesspartner_id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+      //autoIncrement: true,
+      primaryKey: true,
+      defaultValue: sequelize.Sequelize.literal("nextval('business_partner_id_seq')")
     },
     isactive: DataTypes.BOOLEAN,
     org_id:DataTypes.INTEGER,

@@ -16,8 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   RolesMenu.init({
     RolesMenu_id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+      //autoIncrement: true,
+      primaryKey: true,
+      defaultValue: sequelize.Sequelize.literal("nextval('business_partner_id_seq')")
     },
     org_id: DataTypes.INTEGER,
     client_id: DataTypes.INTEGER,

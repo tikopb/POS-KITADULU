@@ -163,8 +163,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       User_id: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
+        //autoIncrement: true,
         primaryKey: true,
+        defaultValue: sequelize.Sequelize.literal("nextval('user_id_seq')")
       },
       email: DataTypes.STRING,
       username: DataTypes.STRING,

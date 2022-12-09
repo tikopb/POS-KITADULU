@@ -16,8 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   OrgAccsess.init({
     OrgAccess_id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+      //autoIncrement: true,
+      primaryKey: true,
+      defaultValue: sequelize.Sequelize.literal("nextval('org_access_id_seq')")
     },
     isactive: DataTypes.BOOLEAN,
     org_id: DataTypes.INTEGER,
