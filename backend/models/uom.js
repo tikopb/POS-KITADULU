@@ -16,8 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   Uom.init({
     Uom_id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+      //autoIncrement: true,
+      primaryKey: true,
+      defaultValue: sequelize.Sequelize.literal("nextval('uom_id_seq')")
     },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,

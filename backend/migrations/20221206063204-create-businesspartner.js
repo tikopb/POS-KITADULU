@@ -2,10 +2,13 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    //define sequence first start from 1000 id 1- 1000 use for data seeder
+    await queryInterface.sequelize.query("CREATE SEQUENCE business_partner_id_seq start 1000 increment 1")
+    //create table dependency
     await queryInterface.createTable('Businesspartners', {
       Businesspartner_id: {
         allowNull: false,
-        autoIncrement: true,
+        //autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },

@@ -33,8 +33,9 @@ module.exports = (sequelize, DataTypes) => {
   Org.init({
     Org_id:{
       type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+      //autoIncrement: true,
+      primaryKey: true,
+      defaultValue: sequelize.Sequelize.literal("nextval('org_id_seq')")
     },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
