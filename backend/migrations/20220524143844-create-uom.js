@@ -35,8 +35,15 @@ module.exports = {
         allowNull:false,
         type:Sequelize.INTEGER
       }
-    })
-  
+    },
+    {
+      uniqueKeys: {
+          actions_unique: {
+              fields: ['name', 'client_id']
+          }
+      }
+    }
+    )
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Uoms');

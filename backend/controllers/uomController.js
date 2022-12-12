@@ -16,11 +16,11 @@ module.exports = {
      * @param {client_id} req 
      */
     GetAll: async(req,res) => {
-        const {client_id} = req.body
+        const UserCrd = req.user
         try {
             Uom.findAll({
                 where:{
-                    client_id: client_id,
+                    client_id: UserCrd.Client_id,
                     isactive: true
                 }
             }).then(function(data){
@@ -40,17 +40,28 @@ module.exports = {
      * @param {*} res 
      */
     Create: async(req,res) => {
-        const {client_id, name, description, org_id} = req.body
+        const {name, description} = req.body
+        const UserCrd = req.user
         Uom.create({
-            client_id: client_id,
-            org_id: org_id,
+            client_id: UserCrd.Client_id,
+            org_id: UserCrd.Org_id,
             name: name,
             description: description,
             isactive: true
         })
-        res.status(200).json({
-            msg: 'uom generated'
-        })
+        try {
+            res.status(200).json({
+                msg: 'uom generated'
+            })
+        } catch (err) {
+            if (err.name === 'SequelizeUniqueConstraintError') {
+                res.status(403)
+                res.send({ status: 'error', msg: `Uom with value ${name} already exists`});
+            } else {
+                res.status(500)
+                res.send({ status: 'error', msg: "Something went wrong"});
+            }
+        }
     },
     /**
      * updating data of uom data with uom_id as parameter mandatory
