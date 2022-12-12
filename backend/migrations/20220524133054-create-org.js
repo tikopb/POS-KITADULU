@@ -36,15 +36,7 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       }
-    },
-    {
-      uniqueKeys: {
-          actions_unique: {
-              fields: ['name', 'client_id']
-          }
-      }
-    }
-    );
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Orgs');

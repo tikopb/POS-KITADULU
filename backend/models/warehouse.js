@@ -16,9 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Warehouse.init({
     Warehouse_id: {
       type: DataTypes.INTEGER,
-      //autoIncrement: true,
-      primaryKey: true,
-      defaultValue: sequelize.Sequelize.literal("nextval('warehouse_id_seq')")
+      autoIncrement: true,
+      primaryKey: true
     },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,

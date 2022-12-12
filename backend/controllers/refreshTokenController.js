@@ -51,9 +51,9 @@ const handleRefreshToken = async (req, res) => {
           email: decoded.user.email,
           username: decoded.user.username,
           name: decoded.user.name,
-          Org_id: decoded.user.Org_id,
-          Role_id: decoded.user.Role_id,
-          Client_id: decoded.user.Client_id,
+          orgId: decoded.user.orgId,
+          roleId: decoded.user.roleId,
+          clientId: decoded.user.clientId,
         },
       };
 
@@ -119,8 +119,8 @@ const handleRefreshToken = async (req, res) => {
           email: decoded.user.email,
           username: decoded.user.username,
           name: decoded.user.name,
-          Org_id: decoded.user.Org_id,
-          Role_id: decoded.user.Role_id,
+          orgId: decoded.user.orgId,
+          roleId: decoded.user.roleId,
           clientId: decoded.user.clientId,
         },
         menu: menuAccess,

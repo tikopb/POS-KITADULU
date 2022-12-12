@@ -2,13 +2,12 @@ let { uomconvertion, Org, Client, Product } = require('../models')
 
 module.exports = {
     GetAllBasePropduct: async(req, res) => {
-        const {Product_id} = req.body
-        const {Client_id} = req.user.Client_id
-        const clientM = await Client.getClient(Client_id)
+        const {client_id, Product_id} = req.body
+        const clientM = await Client.getClient(client_id)
         uomconvertion.findAll({
             where: {
                 Product_id: Product_id, 
-                Client_id: clientM.Client_id,
+                client_id: clientM.client_id,
                 isactive: true
             }
         }).then(function(uomConvertionData) {
@@ -18,13 +17,12 @@ module.exports = {
         })
     },
     Create: async(req, res) => {
-        const {Product_id, uom_id, qtyConvertion} = req.body
-        const {Client_id} = req.user.Client_id
+        const { client_id, Product_id, uom_id, qtyConvertion} = req.body
         let product = await Product.findByPk(Product_id);
         uomconvertion.create({
             name: product.name,
             product_id: product.product_id,
-            client_id: Client_id,
+            client_id: client_id,
             uom_id: uom_id,
             qtyConvertion: qtyConvertion
         }).then(function (data){

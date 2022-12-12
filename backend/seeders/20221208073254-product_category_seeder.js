@@ -43,6 +43,7 @@ module.exports = {
       {ProductCategories_id :37, name: `Aksesoris Dapur`, createdAt: new Date(), updatedAt: new Date(), org_id:1, client_id: 1, isactive: true},
       {ProductCategories_id :38, name: `Alat Masak Khusus`, createdAt: new Date(), updatedAt: new Date(), org_id:1, client_id: 1, isactive: true},
       {ProductCategories_id :39, name: `Bekal`, createdAt: new Date(), updatedAt: new Date(), org_id:1, client_id: 1, isactive: true},
+      {ProductCategories_id :40, name: `Lain-Lain`, createdAt: new Date(), updatedAt: new Date(), org_id:1, client_id: 1, isactive: true},
       {ProductCategories_id :41, name: `Penyimpanan Makanan`, createdAt: new Date(), updatedAt: new Date(), org_id:1, client_id: 1, isactive: true},
       {ProductCategories_id :42, name: `Peralatan Baking`, createdAt: new Date(), updatedAt: new Date(), org_id:1, client_id: 1, isactive: true},
       {ProductCategories_id :43, name: `Peralatan Dapur`, createdAt: new Date(), updatedAt: new Date(), org_id:1, client_id: 1, isactive: true},

@@ -4,17 +4,15 @@ const { Op } = require("sequelize");
 module.exports = {
     Generate: async(req,res) => {
         const payload = req.body
-        const UserCrd = req.user
         try {
             Orgaccsess.create({
                 isactive: true,
                 org_id: payload.org_id,
-                client_id: UserCrd.Client_id,
+                client_id: payload.calient_id,
                 user_id: payload.user_id
             })
             res.status(200).json({
-                msg: 'Orgaccsess Generated',
-                status: 'succsess'
+                msg: 'Orgaccsess Generated'
             })
         } catch (err) {
             res.status(500).json({
@@ -36,7 +34,7 @@ module.exports = {
         }).then(function(data) {
             res.status(200).json({
                 data,
-                status: 'succsess'
+                msg: 'data get succsess'
             })
         })   
     },

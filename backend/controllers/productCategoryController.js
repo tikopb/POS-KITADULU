@@ -2,35 +2,27 @@ let { ProductCategory, Client, org } = require('../models');
 
 module.exports = {
     Create: async(req,res) => {
-        const {name, description , user_id} = req.body
-        const UserCrd = req.user
+        const {org_id, client_id, name, description , user_id} = req.body
         ProductCategory.create({
             name: name,
             description: description,
             isactive: true,
-            org_id: UserCrd.Org_id,
-            client_id: UserCrd.Client_id
+            org_id: org_id,
+            client_id: client_id
         }).then(function (data) {
-            if (err.name === 'SequelizeUniqueConstraintError') {
-                res.status(403)
-                res.send({ 
-                    status: 'error', 
-                    msg: `Product Category with value ${name} already exists`
-                });
-            } else {
-                res.status(500)
-                res.send({ 
-                    status: 'error', 
-                    msg: "Something went wrong"
-                });
-            }
+            res.status(200).json({
+                data,
+                msg: "Product Category Generated"
+            })
         })
     },
     GetAll: async(req,res) => {
-        const UserCrd = req.user
+        const {client_id} = req.body
+        const clientM = await Client.GetClient(client_id)
         ProductCategory.findAll({
             where: {
-                client_id: UserCrd.Client_id
+                client_id: clientM.Client_id,
+                isactive: true
             }
         }).then(function (productCategory) {
             if(productCategory.length > 0 ){
