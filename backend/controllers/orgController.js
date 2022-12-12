@@ -3,36 +3,28 @@ const { Op } = require("sequelize");
 
 module.exports = {
     GenerateOrganization: async(req, res) => {
-        const {name, description, address, client_id} = req.body;
-        org.findOne({
-            where:{
-                name: name,
-                client_id: client_id
-            }
-        })
-        .then(function (orgValue){
-            if(orgValue.length > 0 ){
-                console.log('Organization exist')
-                res.status(500).json({
-                    msg: 'Organization Exist'
-                })
-            }
-        })
+        const {name, description, address} = req.body;
+        const UserCrd = req.user
         try {
-            let orgSave = await org.create({
+            await Org.create({
                 name: name,
                 description: description,
                 isactive: true,
-                client_id: client_id,
+                client_id: UserCrd.Client_id,
                 address: address
             })
             res.status(200).json({
-                msg: 'Organization registered'
+                msg: 'Organization registered',
+                status: 'succsess'
             })
         } catch (err) {
-            res.status(500).json({
-                msg: err.message
-            })
+            if (err.name === 'SequelizeUniqueConstraintError') {
+                res.status(403)
+                res.send({ status: 'error', msg: `Organization with name ${name} already exists`});
+            } else {
+                res.status(500)
+                res.send({ status: 'error', msg: "Something went wrong"});
+            }
         }
     },
     UpdateOrganization: async(req,res) => {
@@ -50,9 +42,13 @@ module.exports = {
                 msg: 'organization updated'
             })
         } catch (err) {
-            res.status(401).json({
-                msg: err.message
-            })
+            if (err.name === 'SequelizeUniqueConstraintError') {
+                res.status(403)
+                res.send({ status: 'error', msg: `Organization with name ${name} already exists`});
+            } else {
+                res.status(500)
+                res.send({ status: 'error', msg: "Something went wrong"});
+            }
         }
     }
 }

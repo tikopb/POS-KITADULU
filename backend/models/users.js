@@ -49,9 +49,9 @@ module.exports = (sequelize, DataTypes) => {
           password: encryptedPassword,
           email: email,
           name: name,
-          client_id: client_id,
-          org_id: org_id,
-          role_id: role_id,
+          Client_id: client_id,
+          Org_id: org_id,
+          Role_id: role_id,
         }),
       );
     };
@@ -65,9 +65,9 @@ module.exports = (sequelize, DataTypes) => {
           email: userInformation.email,
           username: userInformation.username,
           name: userInformation.name,
-          orgId: userInformation.org_id,
-          roleId: userInformation.role_id,
-          clientId: userInformation.client_id,
+          Org_id: userInformation.org_id,
+          Role_id: userInformation.role_id,
+          Client_id: userInformation.client_id,
         },
       };
 
