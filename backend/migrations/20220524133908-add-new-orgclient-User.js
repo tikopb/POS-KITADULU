@@ -38,20 +38,12 @@ module.exports = {
           onDelete: 'cascade',
           onUpdate: 'cascade'
         }
-      ),
-      queryInterface.addConstraint(
-        'Users', {
-          fields: ['username', 'client_id'],
-          type: 'unique',
-          name: 'user_client_unique_value'
-        }
       )
     ])
   },
 
   async down (queryInterface, Sequelize) {
     return Promise.all([
-      queryInterface.removeConstraint('Users','user_client_unique_value'),
       queryInterface.removeConstraint('Users','usr_org_contraint'),
       queryInterface.removeConstraint('Users','usr_client_contraint'),
       queryInterface.removeColumn('Users', 'org_id'),

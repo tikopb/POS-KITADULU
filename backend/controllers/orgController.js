@@ -3,28 +3,36 @@ const { Op } = require("sequelize");
 
 module.exports = {
     GenerateOrganization: async(req, res) => {
-        const {name, description, address} = req.body;
-        const UserCrd = req.user
+        const {name, description, address, client_id} = req.body;
+        org.findOne({
+            where:{
+                name: name,
+                client_id: client_id
+            }
+        })
+        .then(function (orgValue){
+            if(orgValue.length > 0 ){
+                console.log('Organization exist')
+                res.status(500).json({
+                    msg: 'Organization Exist'
+                })
+            }
+        })
         try {
-            await Org.create({
+            let orgSave = await org.create({
                 name: name,
                 description: description,
                 isactive: true,
-                client_id: UserCrd.Client_id,
+                client_id: client_id,
                 address: address
             })
             res.status(200).json({
-                msg: 'Organization registered',
-                status: 'succsess'
+                msg: 'Organization registered'
             })
         } catch (err) {
-            if (err.name === 'SequelizeUniqueConstraintError') {
-                res.status(403)
-                res.send({ status: 'error', msg: `Organization with name ${name} already exists`});
-            } else {
-                res.status(500)
-                res.send({ status: 'error', msg: "Something went wrong"});
-            }
+            res.status(500).json({
+                msg: err.message
+            })
         }
     },
     UpdateOrganization: async(req,res) => {
@@ -42,13 +50,9 @@ module.exports = {
                 msg: 'organization updated'
             })
         } catch (err) {
-            if (err.name === 'SequelizeUniqueConstraintError') {
-                res.status(403)
-                res.send({ status: 'error', msg: `Organization with name ${name} already exists`});
-            } else {
-                res.status(500)
-                res.send({ status: 'error', msg: "Something went wrong"});
-            }
+            res.status(401).json({
+                msg: err.message
+            })
         }
     }
 }

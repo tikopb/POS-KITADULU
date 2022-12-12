@@ -21,7 +21,7 @@ async function GenerateValueGenerator(name, org_id){
 function GetAcronymn( str ) {
     return str.split( /\b(?=[a-z])/ig ) // split on word boundaries
       .map( token => token[0] )         // get first letter of each token
-      .join( '' ).toUpperCase()         // convert to uppercase string
+      .join( '' ).toUpperCase()         // convert to lowercase string
     ;
 }
 
@@ -42,11 +42,11 @@ module.exports = {
      * @param {client_id} req 
      */
     GetAll: async(req,res) => {
-        const UserCrd = req.user
+        const {client_id} = req.body
         try {
             Businesspartner.findAll({
                 where:{
-                    client_id: UserCrd.Client_id,
+                    client_id: client_id,
                     //isactive: true
                 }
             }).then(function(data){
@@ -68,8 +68,7 @@ module.exports = {
      * @param {*} res 
      */
     Create: async(req,res) => {
-        const {value, name, description} = req.body
-        const UserCrd = req.user
+        const {client_id, value, name, description, org_id} = req.body
         let valueP = value
         if(value == null || value === ""){
             valueP = await GenerateValueGenerator(name, org_id)
@@ -78,8 +77,8 @@ module.exports = {
         try {
             let data = await Businesspartner.create({
                 value: valueP,
-                client_id: UserCrd.Client_id,
-                org_id: UserCrd.Org_id,
+                client_id: client_id,
+                org_id: org_id,
                 name: name,
                 description: description,
                 isactive: true
