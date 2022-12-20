@@ -107,6 +107,10 @@ module.exports = {
     ;
   },
   async down(queryInterface, Sequelize) {
+    await queryInterface.removeConstraint('PaymentTypes','userUp_paymentType_const'),
+    await queryInterface.removeConstraint('PaymentTypes','userCr_paymentType_const'),
+    await queryInterface.removeConstraint('PaymentTypes','client_paymentType_const'),
+    await queryInterface.removeConstraint('PaymentTypes','org_paymentType_const'),
     await queryInterface.dropTable('PaymentTypes');
   }
 };
