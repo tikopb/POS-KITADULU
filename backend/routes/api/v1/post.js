@@ -12,16 +12,18 @@ router.post("/api/v1/auth/logout", controllers.auth.logout);
 //login and register end
 
 //organization and client
-router.post(
-  "/api/v1/client/CreateClientAndOrganization",
-  controllers.client.CreateClientAndOrganization,
-);
-router.post("/api/v1/client/UpdateClient", controllers.client.UpdateClient);
-router.post(
-  "/api/v1/organization/UpdateOrganization",
-  controllers.org.UpdateOrganization,
-);
+// router.post("/api/v1/client/CreateClientAndOrganization",controllers.client.CreateClientAndOrganization);
+// router.post("/api/v1/client/UpdateClient", controllers.client.UpdateClient);
+// router.post("/api/v1/organization/UpdateOrganization",controllers.org.UpdateOrganization,);
 //organization and client end
+
+//organization start
+router.post("/api/v1/org/get", restrict, controllers.org.Get);
+router.post("/api/v1/org/getAll", restrict, controllers.org.GetAll);
+router.post("/api/v1/org/create", restrict, controllers.org.Generate);
+router.post("/api/v1/org/update", restrict, controllers.org.Update);
+router.post("/api/v1/org/delete", restrict, controllers.org.Delete);
+//organization end
 
 //product category start
 router.post("/api/v1/productCategory/create", restrict, controllers.productCategories.Create);
@@ -46,26 +48,10 @@ router.post("/api/v1/uom/delete", restrict, controllers.uom.Delete);
 //uom end
 
 //uom convertion start
-router.post(
-  "/api/v1/uomconvertion/getAll",
-  restrict,
-  controllers.uomConvertion.GetAllBasePropduct,
-);
-router.post(
-  "/api/v1/uomconvertion/create",
-  restrict,
-  controllers.uomConvertion.Create,
-);
-router.post(
-  "/api/v1/uomconvertion/update",
-  restrict,
-  controllers.uomConvertion.Update,
-);
-router.post(
-  "/api/v1/uomconvertion/delete",
-  restrict,
-  controllers.uomConvertion.Delete,
-);
+router.post("/api/v1/uomconvertion/getAll", restrict, controllers.uomConvertion.GetAllBasePropduct,);
+router.post("/api/v1/uomconvertion/create", restrict, controllers.uomConvertion.Create,);
+router.post("/api/v1/uomconvertion/update", restrict, controllers.uomConvertion.Update,);
+router.post("/api/v1/uomconvertion/delete", restrict, controllers.uomConvertion.Delete,);
 //uom convertion end
 
 //OrgAccsessController start
