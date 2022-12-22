@@ -1,6 +1,12 @@
 let {Businesspartner, Client, Org} = require('../models') 
 const { Op } = require("sequelize");
 
+/**
+ * Generating value of businesspartner.value with getting the last count of combine name and org.
+ * @param {*} name 
+ * @param {*} org_id 
+ * @returns 
+ */
 async function GenerateValueGenerator(name, org_id){
     let value = GetAcronymn(name)
     let countBpList = await Businesspartner.findAll({
@@ -18,6 +24,10 @@ async function GenerateValueGenerator(name, org_id){
     return value.toUpperCase();
 }
 
+/**
+ * generating acrynoym on str variabel
+ * @param {*} str
+ */
 function GetAcronymn( str ) {
     return str.split( /\b(?=[a-z])/ig ) // split on word boundaries
       .map( token => token[0] )         // get first letter of each token
@@ -33,8 +43,9 @@ module.exports = {
     Get: async(req,res) => {
         let data = await Businesspartner.findByPk(req.body.businesspartner_id)
         res.status(200).json({
+            status: `success`,
+            msg: `get succsess`,
             data,
-            status: `success`
         })
     },
     /**
@@ -51,14 +62,15 @@ module.exports = {
                 }
             }).then(function(data){
                 res.status(200).json({
-                    data,
-                    status: `success`
+                    status: `success`,
+                    msg: `get succsess`,
+                    data
                 })
             })
         } catch (err) {
             res.status(500).json({
-                err: `${err.toString()}`,
-                status: `erorr`
+                status: `erorr`,
+                msg: `${err.toString()}`
             })
         }
     },
@@ -85,9 +97,9 @@ module.exports = {
                 isactive: true
             })
             res.status(200).json({
-                data,
+                status: `success`,
                 msg: 'Business Partner generated',
-                status: `success`
+                data
             })
         } catch (err) {
             if (err.name === 'SequelizeUniqueConstraintError') {
@@ -123,9 +135,9 @@ module.exports = {
         try {
             await data.save()
             res.status(200).json({
-                data,
+                status: `success`,
                 msg: 'data updated',
-                status: `success`
+                data
             })
         } catch (err) {
             if (err.name === 'SequelizeUniqueConstraintError') {
@@ -149,13 +161,13 @@ module.exports = {
         try {
             await data.destroy()
             res.status(200).json({
-                msg:`data ${name}  success deleted`,
-                status: `success`
+                status: `success`,
+                msg:`data ${name}  success deleted`
             })
         } catch (err) {
             res.status(401).json({
-                msg: err.message,
-                status: `erorr`
+                status: `erorr`,
+                msg: err.message
             })
         }
     }

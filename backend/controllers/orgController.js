@@ -6,6 +6,7 @@ module.exports = {
         let data = await Org.findByPk(req.body.Org_id)
         res.status(200).json({
             status: 'succsess',
+            msg: 'get succsess',
             data
         })
     },
@@ -20,6 +21,7 @@ module.exports = {
             }).then(function(data){
                 res.status(200).json({
                     status: 'succsess',
+                    msg: 'Get Succsess',
                     data
                 })
             })
@@ -42,8 +44,8 @@ module.exports = {
                 address: address
             })
             res.status(200).json({
-                msg: 'Organization registered',
                 status: 'succsess',
+                msg: 'Organization registered',
                 data
             })
         } catch (err) {
@@ -60,7 +62,7 @@ module.exports = {
         const {name, description, address, org_id, isactive} = req.body;
         let orgData = client.findByPk(org_id)
         try {
-            orgData.set({
+            let data = await orgData.set({
                 name: name,
                 description: description,
                 address: address,
@@ -68,7 +70,9 @@ module.exports = {
             })
             await orgData.save()
             res.status(200).json({
-                msg: 'organization updated'
+                status: 'succsess',
+                msg: 'organization updated',
+                data
             })
         } catch (err) {
             if (err.name === 'SequelizeUniqueConstraintError') {
@@ -86,10 +90,12 @@ module.exports = {
         try {
             await data.destroy()
             res.status(200).json({
+                status: 'succsess',
                 msg:'data deleted'
             })
         } catch (err) {
             res.status(401).json({
+                status: 'erorr',
                 msg: err.message
             })
         }

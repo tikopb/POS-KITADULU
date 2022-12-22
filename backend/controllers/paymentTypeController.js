@@ -8,6 +8,7 @@ module.exports = {
         let data = await Paymenttype.findByPk(req.body.PaymentType_id)
         res.status(200).json({
             status: 'succsess',
+            msg: 'get success',
             data
         })
     },
@@ -22,6 +23,7 @@ module.exports = {
             }).then(function(data){
                 res.status(200).json({
                     status: 'succsess',
+                    msg: 'get succsess',
                     data
                 })
             })
@@ -46,8 +48,8 @@ module.exports = {
                 updatedBy: UserCrd.userId
             })
             res.status(200).json({
-                msg: 'Paymenttype registered',
                 status: 'succsess',
+                msg: 'Paymenttype registered',
                 data
             })
         } catch (err) {
@@ -107,6 +109,7 @@ module.exports = {
             })
         } catch (err) {
             res.status(401).json({
+                status: 'erorr',
                 msg: err.message
             })
         }

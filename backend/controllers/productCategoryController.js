@@ -1,6 +1,11 @@
 let { ProductCategory, Client, org } = require('../models');
 
 module.exports = {
+    /**
+     * Creating the product data base on body for variabel
+     * @param {*} req 
+     * @param {*} res 
+     */
     Create: async(req,res) => {
         const {name, description , user_id} = req.body
         const UserCrd = req.user
@@ -26,25 +31,38 @@ module.exports = {
             }
         })
     },
+    /**
+     * Getting all data with client_id as data variabel
+     * @param {*} req 
+     * @param {*} res 
+     */
     GetAll: async(req,res) => {
         const UserCrd = req.user
         ProductCategory.findAll({
             where: {
                 client_id: UserCrd.Client_id
             }
-        }).then(function (productCategory) {
-            if(productCategory.length > 0 ){
+        }).then(function (data) {
+            if(data.length > 0 ){
                 res.status(200).json({
+                    status: 'succsess',
                     msg: 'data get succsess',
-                    productCategory 
+                    data 
                 })
             }else{
                 res.status(200).json({
-                    msg: "product category not exist"
+                    status: 'succsess',
+                    msg: "product category not exist",
+                    data
                 })
             }
         })
     }, 
+    /**
+     * updating data of product category with client data as variabel
+     * @param {*} req 
+     * @param {*} res 
+     */
     Update: async(req,res) => {
         const {ProductCategories_id, name, description, isactive} = req.body
         let data = await ProductCategory.findByPk(ProductCategories_id)
@@ -56,25 +74,34 @@ module.exports = {
         try {
             await data.save()
             res.status(200).json({
-                data, 
-                msg: 'data Updated'
+                status: 'succsess',
+                msg: 'data Updated',
+                data
             })
         } catch (err){
             res.status(401).json({
+                status: 'erorr',
                 msg: err.message
             })
         }
     },
+    /**
+     * deleting data of product category
+     * @param {*} req 
+     * @param {*} res 
+     */
     Delete: async(req,res) => {
         const{ProductCategories_id} = req.body
         let data = await ProductCategory.findByPk(ProductCategories_id)
         try {
             await data.destroy()
             res.status(200).json({
+                status: 'succsess',
                 msg: 'data deleted'
             })
         } catch(err){
             res.status(401).json({
+                status: 'erorr',
                 msg: err.message
             })
         }

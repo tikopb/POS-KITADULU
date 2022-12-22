@@ -25,12 +25,15 @@ module.exports = {
                 }
             }).then(function(data){
                 res.status(200).json({
+                    status: 'sucsess', 
+                    msg: `get data succsess`,
                     data
                 })
             })
         } catch (err) {
             res.status(500).json({
-                err: `${err.toString()}`,
+                status: 'erorr', 
+                msg: `${err.toString()}`,
             })
         }
     },
@@ -42,16 +45,18 @@ module.exports = {
     Create: async(req,res) => {
         const {name, description} = req.body
         const UserCrd = req.user
-        Uom.create({
-            client_id: UserCrd.Client_id,
-            org_id: UserCrd.Org_id,
-            name: name,
-            description: description,
-            isactive: true
-        })
         try {
+            let data = await Uom.create({
+                client_id: UserCrd.Client_id,
+                org_id: UserCrd.Org_id,
+                name: name,
+                description: description,
+                isactive: true
+            })
             res.status(200).json({
-                msg: 'uom generated'
+                status: 'sucsess', 
+                msg: `get data succsess`,
+                data
             })
         } catch (err) {
             if (err.name === 'SequelizeUniqueConstraintError') {
@@ -80,11 +85,13 @@ module.exports = {
         try {
             await data.save()
             res.status(200).json({
-                data,
-                msg: 'data updated'
+                status:'succsess',
+                msg: 'data updated',
+                data
             })
         } catch (err) {
             res.status(401).json({
+                status:'erorr',
                 msg: err.message
             })
         }
@@ -100,10 +107,12 @@ module.exports = {
         try {
             await data.destroy()
             res.status(200).json({
+                status:'succsess',
                 msg:'data deleted'
             })
         } catch (err) {
             res.status(401).json({
+                status:'erorr',
                 msg: err.message
             })
         }
