@@ -6,15 +6,16 @@ module.exports = {
         const payload = req.body
         const UserCrd = req.user
         try {
-            Orgaccsess.create({
+            let data = await Orgaccsess.create({
                 isactive: true,
                 org_id: payload.org_id,
                 client_id: UserCrd.Client_id,
                 user_id: payload.user_id
             })
             res.status(200).json({
+                status: 'succsess',
                 msg: 'Orgaccsess Generated',
-                status: 'succsess'
+                data
             })
         } catch (err) {
             res.status(500).json({
@@ -35,8 +36,9 @@ module.exports = {
             }
         }).then(function(data) {
             res.status(200).json({
-                data,
-                status: 'succsess'
+                status: 'succsess',
+                msg: `get succsess`,
+                data
             })
         })   
     },
@@ -60,11 +62,13 @@ module.exports = {
         try {
             await data.save()
             res.status(200).json({
-                data,
-                msg: 'data udpated'
+                status: 'succsess',
+                msg: 'data udpated',
+                data
             })
         } catch (err) {
             res.status(500).json({
+                status: 'erorr',
                 msg: err.message
             })
         }
@@ -75,10 +79,12 @@ module.exports = {
         try {
             data.destroy()
             res.status(200).json({
-                msg: 'data deleted'
+                status: 'succsess',
+                msg: 'data Deleted',
             })
         } catch(err){
             res.status(401).json({
+                status: 'erorr',
                 msg: err.message
             })
         }
