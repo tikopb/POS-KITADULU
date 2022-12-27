@@ -83,7 +83,7 @@ module.exports = {
         const UserCrd = req.user
         let valueP = value
         if(value == null || value === ""){
-            valueP = await GenerateValueGenerator(name, org_id)
+            valueP = await GenerateValueGenerator(name, UserCrd.Org_id)
             console.log("value = " + valueP)
         }
         try {
@@ -144,7 +144,7 @@ module.exports = {
                 res.send({ status: 'error', msg: `Business Partner with value ${value} already exists`});
             } else {
                 res.status(500)
-                res.send({ status: 'error', msg: "Something went wrong"});
+                res.send({ status: 'error', msg: `Something went wrong: ${err.toString()}`});
             }
         }
     },

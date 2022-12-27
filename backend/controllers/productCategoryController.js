@@ -50,13 +50,20 @@ module.exports = {
     Create: async(req,res) => {
         const {name, description , user_id} = req.body
         const UserCrd = req.user
-        ProductCategory.create({
-            name: name,
-            description: description,
-            isactive: true,
-            org_id: UserCrd.Org_id,
-            client_id: UserCrd.Client_id
-        }).then(function (data) {
+        try {
+            let data = await ProductCategory.create({
+                name: name,
+                description: description,
+                isactive: true,
+                org_id: UserCrd.Org_id,
+                client_id: UserCrd.Client_id
+            })
+            res.status(200).json({
+                status: 'succsess',
+                msg: 'get data succsess',
+                data
+            })
+        } catch (err) {
             if (err.name === 'SequelizeUniqueConstraintError') {
                 res.status(403)
                 res.send({ 
@@ -67,10 +74,10 @@ module.exports = {
                 res.status(500)
                 res.send({ 
                     status: 'error', 
-                    msg: "Something went wrong"
+                    msg: `Something went wrong ${err.toString()}`
                 });
             }
-        })
+        }
     },
     /**
      * updating data of product category with client data as variabel

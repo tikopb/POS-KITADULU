@@ -79,19 +79,20 @@ module.exports = {
      */
     Update: async(req,res) => {
         const {name, description, address, org_id, isactive} = req.body;
-        let orgData = client.findByPk(org_id)
+        let bodyV = req.body
+        let data = await Org.findByPk(bodyV.Org_id)
         try {
-            let data = await orgData.set({
-                name: name,
-                description: description,
-                address: address,
-                isactive: isactive
+            data.set({
+                name: bodyV.name,
+                description: bodyV.description,
+                address: bodyV.address,
+                isactive: bodyV.isactive
             })
-            await orgData.save()
+            await data.save()
             res.status(200).json({
                 status: 'succsess',
                 msg: 'organization updated',
-                data
+                data    
             })
         } catch (err) {
             if (err.name === 'SequelizeUniqueConstraintError') {
@@ -99,7 +100,7 @@ module.exports = {
                 res.send({ status: 'error', msg: `Organization with name ${name} already exists`});
             } else {
                 res.status(500)
-                res.send({ status: 'error', msg: "Something went wrong"});
+                res.send({ status: 'error', msg: `Something went wrong ${err.toString()}`});
             }
         }
     },
