@@ -2,6 +2,47 @@ let { ProductCategory, Client, org } = require('../models');
 
 module.exports = {
     /**
+     * Get data of product category with product categories_id as parameter
+     * @param {*} req 
+     * @param {*} res 
+     */
+    Get: async (req,res) => {
+        let bodyV = req.body
+        let data = await ProductCategory.findByPk(bodyV.ProductCategories_id)
+        res.status(200).json({
+            status: 'succsess',
+            msg: 'Get data Sucsess',
+            data
+         })
+    },
+    /**
+     * Getting all data with client_id as data variabel
+     * @param {*} req 
+     * @param {*} res 
+     */
+    GetAll: async(req,res) => {
+        const UserCrd = req.user
+        ProductCategory.findAll({
+            where: {
+                client_id: UserCrd.Client_id
+            }
+        }).then(function (data) {
+            if(data.length > 0 ){
+                res.status(200).json({
+                    status: 'succsess',
+                    msg: 'data get succsess',
+                    data 
+                })
+            }else{
+                res.status(200).json({
+                    status: 'succsess',
+                    msg: "product category not exist",
+                    data
+                })
+            }
+        })
+    }, 
+    /**
      * Creating the product data base on body for variabel
      * @param {*} req 
      * @param {*} res 
@@ -31,33 +72,6 @@ module.exports = {
             }
         })
     },
-    /**
-     * Getting all data with client_id as data variabel
-     * @param {*} req 
-     * @param {*} res 
-     */
-    GetAll: async(req,res) => {
-        const UserCrd = req.user
-        ProductCategory.findAll({
-            where: {
-                client_id: UserCrd.Client_id
-            }
-        }).then(function (data) {
-            if(data.length > 0 ){
-                res.status(200).json({
-                    status: 'succsess',
-                    msg: 'data get succsess',
-                    data 
-                })
-            }else{
-                res.status(200).json({
-                    status: 'succsess',
-                    msg: "product category not exist",
-                    data
-                })
-            }
-        })
-    }, 
     /**
      * updating data of product category with client data as variabel
      * @param {*} req 

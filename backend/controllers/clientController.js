@@ -2,11 +2,44 @@ let { Org, Client } = require('../models');
 const { Op, or } = require("sequelize");
 
 module.exports = {
-    CreateClientAndOrganization: async (req,res) => {
-        const {nameClient, description, adress} = req.body
+    /**
+     * Getting data by id with client_id as parameter
+     * @param {client_id} req 
+     * @param {*} res 
+     */
+    Get: async(req,res) => {
+        const bodyV = req.body
+        let data = await Client.findByPk(bodyV.client_id)
+        res.json(200).json({
+            status: 'succsess',
+            msg: 'data get succsess',
+            data
+        })
+    },
+    /**
+     * Getting all data of client without parameter
+     * @param {*} req 
+     * @param {*} res 
+     */
+    GetAll: async(req,res) => {
+        const bodyV = req.body
+        let data = await Client.findAll()
+        res.json(200).json({
+            status: 'succsess',
+            msg: 'data get succsess',
+            data
+        })
+    },
+    /**
+     * creating data of client and automacilly making data organization as defaults
+     * @param {*} req 
+     * @param {*} res 
+     */
+    Create: async (req,res) => {
+        let bodyV = req.body
         Client.findAll({
             where: {
-                name: nameClient 
+                name: bodyV.name 
             }
         }).then(function(ClientData){
             if(ClientData.length > 0){
@@ -15,8 +48,8 @@ module.exports = {
                 })
             }
             Client.create({
-                name: nameClient,
-                description: description,
+                name: bodyV.name ,
+                description: bodyV.description,
                 isactive: true
             }).then(function(ClientCreated){
                 Org.create({
@@ -35,13 +68,18 @@ module.exports = {
             })
         })
     },
-    UpdateClient: async (req,res) => {
-        const {clientid, name, description, isactive} = req.body
+    /**
+     * Updating data of client with data of 
+     * @param {*} req 
+     * @param {*} res 
+     */
+    Update: async (req,res) => {
+        let bodyV = req.body
         let ClientData = Client.findByPk(clientid)
         try {
             ClientData.set({
-                name: name,
-                description: description,
+                name: bodyV.name,
+                description: bodyV.description,
                 isactive: isactive
             })
             await ClientData.save()

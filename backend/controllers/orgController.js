@@ -2,6 +2,11 @@ let { Org } = require('../models');
 const { Op } = require("sequelize");
 
 module.exports = {
+    /**
+     * Getting data of organization with org_id as parameter
+     * @param {*} req 
+     * @param {*} res 
+     */
     Get: async(req,res) => {
         let data = await Org.findByPk(req.body.Org_id)
         res.status(200).json({
@@ -10,13 +15,17 @@ module.exports = {
             data
         })
     },
+    /**
+     * getting all data of org with client_id as paramter
+     * @param {*} req 
+     * @param {*} res 
+     */
     GetAll: async(req,res) => {
         let UserCrd = req.user
         try {
             Org.findAll({
                 where:{
                     client_id: UserCrd.Client_id,
-                    isactive: true
                 }
             }).then(function(data){
                 res.status(200).json({
@@ -32,6 +41,11 @@ module.exports = {
             })
         }
     },
+    /**
+     * Generate data of org with client_id as data variabel
+     * @param {*} req 
+     * @param {*} res 
+     */
     Generate: async(req, res) => {
         const {name, description, address} = req.body;
         const UserCrd = req.user
@@ -58,6 +72,11 @@ module.exports = {
             }
         }
     },
+    /**
+     * Updating data of org with org_id as parameter.
+     * @param {*} req 
+     * @param {*} res 
+     */
     Update: async(req,res) => {
         const {name, description, address, org_id, isactive} = req.body;
         let orgData = client.findByPk(org_id)
@@ -84,6 +103,11 @@ module.exports = {
             }
         }
     },
+    /**
+     * Deleting data of organization but this function can't use when data org_id already constraint to other table
+     * @param {*} req 
+     * @param {*} res 
+     */
     Delete: async(req,res) => {
         const {Org_id} = req.body
         let data = await Org.findByPk(Org_id)

@@ -1,6 +1,11 @@
 let { uomconvertion, Org, Client, Product } = require('../models')
 
 module.exports = {
+    /**
+     * Getting data of uom convertion with uomconvertion_id as parameter
+     * @param {*} req 
+     * @param {*} res 
+     */
     Get: async(req,res) => {
         const UomConvertion_id = req.body.UomConvertion_id
         const UserCrd = req.user
@@ -15,6 +20,11 @@ module.exports = {
             data
         })
     },
+    /**
+     * Getting all data of product uom convertion of product with concern product_id and client_id
+     * @param {*} req 
+     * @param {*} res 
+     */
     GetAllBasePropduct: async(req, res) => {
         const {Product_id} = req.body
         const {Client_id} = req.user.Client_id
@@ -33,6 +43,11 @@ module.exports = {
             })
         })
     },
+    /**
+     * Creating data of uom convertion with concern of product_id 
+     * @param {*} req 
+     * @param {*} res 
+     */
     Create: async(req, res) => {
         const {Product_id, uom_id, qtyConvertion} = req.body
         const {Client_id} = req.user.Client_id
@@ -58,6 +73,11 @@ module.exports = {
             })
         }
     },
+    /**
+     * update data of uom convertion with uomconvertion_id as parameter data
+     * @param {*} req 
+     * @param {*} res 
+     */
     Update: async(req,res) => {
         const {UomConvertion_id, uom_id, qtyConvertion } = req.body
         let data = await uomconvertion.findByPk(UomConvertion_id)
@@ -78,6 +98,11 @@ module.exports = {
             })
         }        
     },
+    /**
+     * Delete data of uomconvertion with uomconvertion_id as parameter 
+     * @param {*} req 
+     * @param {*} res 
+     */
     Delete: async(req,res) => {
         const {UomConvertion_id} = req.body
         let data = await uomconvertion.findByPk(UomConvertion_id)

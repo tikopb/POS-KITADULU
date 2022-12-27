@@ -26,8 +26,9 @@ router.post("/api/v1/org/delete", restrict, controllers.org.Delete);
 //organization end
 
 //product category start
-router.post("/api/v1/productCategory/create", restrict, controllers.productCategories.Create);
+router.post("/api/v1/productCategory/get", restrict, controllers.productCategories.Get);
 router.post("/api/v1/productCategory/getAll", restrict, controllers.productCategories.GetAll);
+router.post("/api/v1/productCategory/create", restrict, controllers.productCategories.Create);
 router.post("/api/v1/productCategory/update", restrict, controllers.productCategories.Update);
 router.post("/api/v1/productCategory/delete", restrict, controllers.productCategories.Delete);
 //product category end
@@ -55,8 +56,9 @@ router.post("/api/v1/uomconvertion/delete", restrict, controllers.uomConvertion.
 //uom convertion end
 
 //OrgAccsessController start
-router.post("/api/v1/orgaccsess/create",restrict,controllers.OrgAccsessController.Generate,);
+router.post("/api/v1/orgaccsess/get", restrict, controllers.OrgAccsessController.Get,);
 router.post("/api/v1/orgaccsess/getAll", restrict, controllers.OrgAccsessController.GetAll,);
+router.post("/api/v1/orgaccsess/create",restrict,controllers.OrgAccsessController.Generate,);
 router.post( "/api/v1/orgaccsess/update", restrict, controllers.OrgAccsessController.Update,);
 router.post("/api/v1/orgaccsess/delete",restrict,controllers.OrgAccsessController.Delete,);
 //OrgAccsessController end
