@@ -8,6 +8,8 @@ module.exports = {
     Get: async(req,res) => {
         let data = await Uom.findByPk(req.body.Uom_id)
         res.status(200).json({
+            status: 'succsess',
+            msg: 'get data succsess',
             data
         })
     },
