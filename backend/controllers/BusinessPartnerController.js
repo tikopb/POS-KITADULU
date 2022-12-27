@@ -58,7 +58,6 @@ module.exports = {
             Businesspartner.findAll({
                 where:{
                     client_id: UserCrd.Client_id,
-                    //isactive: true
                 }
             }).then(function(data){
                 res.status(200).json({

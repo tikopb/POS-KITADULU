@@ -4,6 +4,11 @@ const paymenttype = require('../models/paymenttype');
 
 
 module.exports = {
+    /**
+     * Getting data of or payment type with payment type_id as parameter
+     * @param {*} req 
+     * @param {*} res 
+     */
     Get: async(req,res) => {
         let data = await Paymenttype.findByPk(req.body.PaymentType_id)
         res.status(200).json({
@@ -12,13 +17,17 @@ module.exports = {
             data
         })
     },
+    /**
+     * Getting all data of payment type with client_id as parameter
+     * @param {*} req 
+     * @param {*} res 
+     */
     GetAll: async(req,res) => {
         let UserCrd = req.user
         try {
             Paymenttype.findAll({
                 where:{
-                    client_id: UserCrd.client_id,
-                    isactive: true
+                    client_id: UserCrd.client_id
                 }
             }).then(function(data){
                 res.status(200).json({
@@ -34,6 +43,11 @@ module.exports = {
             })
         }
     },
+    /**
+     * Generate data of payment type with client_id as parameter
+     * @param {*} req 
+     * @param {*} res 
+     */
     Generate: async(req,res) => {
         const {name, description, org_id} = req.body
         const UserCrd = req.user
@@ -62,6 +76,11 @@ module.exports = {
             }
         }
     },
+    /**
+     * Update payment type data with paymenttype_id as mandatory variabel
+     * @param {*} req 
+     * @param {*} res 
+     */
     Update: async(req,res) => {
         const {name, description, org_id, PaymentType_id} = req.body
         const UserCrd = req.user
@@ -98,6 +117,11 @@ module.exports = {
             }
         }
     },
+    /**
+     * delete data of paymenttype with paymenttype_id as paramter!
+     * @param {*} req 
+     * @param {*} res 
+     */
     Delete: async(req,res) => {
         const{PaymentType_id} = req.body
         let data = paymenttype.findByPk(PaymentType_id)
