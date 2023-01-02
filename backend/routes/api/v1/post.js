@@ -71,4 +71,20 @@ router.post( "/api/v1/businessPartner/update", restrict, controllers.Businesspar
 router.post("/api/v1/businessPartner/delete",restrict,controllers.Businesspartner.Delete);
 //Businesspartner end
 
+//warehouse start
+router.post("/api/v1/warehouse/get", restrict, controllers.Warehouse.Get);
+router.post("/api/v1/warehouse/getAll", restrict, controllers.Warehouse.GetAll);
+router.post("/api/v1/warehouse/create",restrict,controllers.Warehouse.Create);
+router.post( "/api/v1/warehouse/update", restrict, controllers.Warehouse.Update);
+router.post("/api/v1/warehouse/delete",restrict,controllers.Warehouse.Delete);
+//warehouse end
+
+//locator start
+router.post("/api/v1/locator/get", restrict, controllers.Locator.Get);
+router.post("/api/v1/locator/getAll", restrict, controllers.Locator.GetAll);
+router.post("/api/v1/locator/create",restrict,controllers.Locator.Create);
+router.post( "/api/v1/locator/update", restrict, controllers.Locator.Update);
+router.post("/api/v1/locator/delete",restrict,controllers.Locator.Delete);
+//locator end
+
 module.exports = router;

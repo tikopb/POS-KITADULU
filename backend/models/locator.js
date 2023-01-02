@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Locator.init({
-    locator_id: {
+    Locator_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
