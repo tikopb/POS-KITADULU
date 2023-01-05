@@ -9,6 +9,7 @@ const OrgAccsessController = require("./OrgAccsessController");
 const refreshController = require("./refreshTokenController");
 const Businesspartner = require("./BusinessPartnerController");
 const Warehouse = require("./warehouseController");
+const Locator = require("./locatorController")
 
 module.exports = {
   auth,
@@ -21,5 +22,6 @@ module.exports = {
   OrgAccsessController,
   refreshController,
   Businesspartner,
-  Warehouse
+  Warehouse,
+  Locator
 };
