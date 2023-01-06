@@ -20,11 +20,7 @@ module.exports = {
     */
    GetAll: async(req,res) => {
     let param = req.body
-    let data = await Locator.findAll({
-        where:{
-            Locator_id: param.Locator_id
-        }
-    })
+    let data = await Locator.findAll({})
     res.status(200).json({
         status: `succsess`, 
         msg: `get data succsess`,
