@@ -11,12 +11,6 @@ router.post("/api/v1/auth/whoami", restrict, controllers.auth.whoami);
 router.post("/api/v1/auth/logout", controllers.auth.logout);
 //login and register end
 
-//organization and client
-// router.post("/api/v1/client/CreateClientAndOrganization",controllers.client.CreateClientAndOrganization);
-// router.post("/api/v1/client/UpdateClient", controllers.client.UpdateClient);
-// router.post("/api/v1/organization/UpdateOrganization",controllers.org.UpdateOrganization,);
-//organization and client end
-
 //organization start
 router.post("/api/v1/org/get", restrict, controllers.org.Get);
 router.post("/api/v1/org/getAll", restrict, controllers.org.GetAll);
@@ -34,10 +28,11 @@ router.post("/api/v1/productCategory/delete", restrict, controllers.productCateg
 //product category end
 
 //Product start
-router.post("/api/v1/product/createProduct", controllers.product.CreateProduct);
-router.post("/api/v1/product/updateProduct", controllers.product.UpdateProduct);
-router.post("/api/v1/product/deleteProduct", controllers.product.DeleteProduct);
-router.post("/api/v1/product/getAllProductForPOSJoin", controllers.product.getAllProductForPOSJoin);
+router.get ("/api/v1/product/",restrict,controllers.product.Get);
+router.get("api/v1/product/:id", restrict, controllers.product.Show);
+router.post("/api/v1/product/",restrict, controllers.product.Create);
+router.put("/api/v1/product/:id", restrict, controllers.product.Update);
+router.delete("api/v1/product/:id", restrict, controllers.product.DeleteProduct);
 //Product end
 
 //uom start
