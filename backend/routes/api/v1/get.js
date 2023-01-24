@@ -20,7 +20,7 @@ router.get(
 //product category end
 
 //produt controller start
-router.get("/api/v1/product/GetProduct", restrict, controllers.product.Get);
+
 //produt controller end
 
 module.exports = router;
