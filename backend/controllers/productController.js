@@ -31,18 +31,32 @@ async function GenerateValue() {
 
 module.exports = {
     /**
+     * Getting all data off product with req.user.client_id login as parameter
+     * @param {*} req 
+     * @param {*} res 
+     */
+    Index: async(req,res) =>{
+        let userCrd = req.user
+        const data = await Product.findAll({
+            client_id: userCrd.client_id
+        })
+        res.status(200).json({
+            status: `succsess`,
+            msg: `get data succsess`,
+            data 
+        })
+    },
+    /**
      * show data with product_id as default parameter return will be get data of product 
      * @param {id} req 
      * @param {*} res 
      */
     Show: async(req,res) => {
         const product_id = req.params.id;
-        const data = await Product.findByPk({
-            product_id
-        }) 
+        const data = await Product.findByPk(product_id) 
         res.status(200).json({
             status: `succsess`,
-            msg: `get data succsess`,
+            msg: `get data with id succsess`,
             data
         })
     },
@@ -58,7 +72,7 @@ module.exports = {
             valueP = await GenerateValue();
         }
         try {
-            const data = Product.create({
+            const data = await Product.create({
                 name: name,
                 description: description,
                 isactive: true,
@@ -97,19 +111,22 @@ module.exports = {
      */
     Update: async (req,res) => {
         const product_id = req.params.id;
-        const {name, uom_id, productCategories_id} = req.body
-        let product = await Product.findByPk(product_id);
-        product.set({
-            name: name,
-            uom_id: uom_id,
-            productCategories_id: productCategories_id,
-            uom_id: uom_id
-        });
+        const {name, uom_id, productCategories_id, description} = req.body
+        let data = await Product.findByPk(product_id);
         try {
-            product.save();
+            if(data == null){
+                throw new Error('data no found');
+            };
+            data.set({
+                name: name,
+                uom_id: uom_id,
+                productCategories_id: productCategories_id,
+                description: description
+            });
+            await data.save();
             res.status(200).json({
                 status: `succsess`,
-                msg: `Product generated`,
+                msg: `Product Updated`,
                 data
             })
         } catch (err) {
@@ -123,7 +140,7 @@ module.exports = {
                 res.status(500)
                 res.send({ 
                     status: 'error', 
-                    msg: "Something went wrong"
+                    msg: `Something went wrong ${err}`
                 });
             }
         }

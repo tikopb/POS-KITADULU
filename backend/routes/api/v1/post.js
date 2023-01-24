@@ -28,11 +28,11 @@ router.post("/api/v1/productCategory/delete", restrict, controllers.productCateg
 //product category end
 
 //Product start
-router.get ("/api/v1/product/",restrict,controllers.product.Get);
-router.get("api/v1/product/:id", restrict, controllers.product.Show);
+router.get ("/api/v1/product/",restrict,controllers.product.Index);
+router.get("/api/v1/product/:id", restrict, controllers.product.Show);
 router.post("/api/v1/product/",restrict, controllers.product.Create);
 router.put("/api/v1/product/:id", restrict, controllers.product.Update);
-router.delete("api/v1/product/:id", restrict, controllers.product.DeleteProduct);
+router.delete("/api/v1/product/:id", restrict, controllers.product.Delete);
 //Product end
 
 //uom start
