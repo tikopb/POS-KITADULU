@@ -20,11 +20,11 @@ router.post("/api/v1/org/delete", restrict, controllers.org.Delete);
 //organization end
 
 //product category start
-router.post("/api/v1/productCategory/get", restrict, controllers.productCategories.Get);
-router.post("/api/v1/productCategory/getAll", restrict, controllers.productCategories.GetAll);
-router.post("/api/v1/productCategory/create", restrict, controllers.productCategories.Create);
-router.post("/api/v1/productCategory/update", restrict, controllers.productCategories.Update);
-router.post("/api/v1/productCategory/delete", restrict, controllers.productCategories.Delete);
+router.get("/api/v1/productCategory/", restrict, controllers.productCategories.Index);
+router.get("/api/v1/productCategory/:id", restrict, controllers.productCategories.Show);
+router.post("/api/v1/productCategory/", restrict, controllers.productCategories.Create);
+router.put("/api/v1/productCategory/:id", restrict, controllers.productCategories.Update);
+router.delete("/api/v1/productCategory/:id", restrict, controllers.productCategories.Delete);
 //product category end
 
 //Product start
