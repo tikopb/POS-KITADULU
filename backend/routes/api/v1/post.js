@@ -36,11 +36,11 @@ router.delete("/api/v1/product/:id", restrict, controllers.product.Delete);
 //Product end
 
 //uom start
-router.post("/api/v1/uom/get", restrict, controllers.uom.Get);
-router.post("/api/v1/uom/getAll", restrict, controllers.uom.GetAll);
-router.post("/api/v1/uom/create", restrict, controllers.uom.Create);
-router.post("/api/v1/uom/update", restrict, controllers.uom.Update);
-router.post("/api/v1/uom/delete", restrict, controllers.uom.Delete);
+router.get("/api/v1/uom/", restrict, controllers.uom.Index);
+router.get("/api/v1/uom/:id", restrict, controllers.uom.Show);
+router.post("/api/v1/uom/", restrict, controllers.uom.Create);
+router.put("/api/v1/uom/:id", restrict, controllers.uom.Update);
+router.delete("/api/v1/uom/:id", restrict, controllers.uom.Delete);
 //uom end
 
 //uom convertion start
