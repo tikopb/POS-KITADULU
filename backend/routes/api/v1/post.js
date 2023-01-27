@@ -59,11 +59,11 @@ router.post("/api/v1/orgaccsess/delete",restrict,controllers.OrgAccsessControlle
 //OrgAccsessController end
 
 //Businesspartner start
-router.post("/api/v1/businessPartner/get", restrict, controllers.Businesspartner.Get);
-router.post("/api/v1/businessPartner/getAll", restrict, controllers.Businesspartner.GetAll);
-router.post("/api/v1/businessPartner/create",restrict,controllers.Businesspartner.Create);
-router.post( "/api/v1/businessPartner/update", restrict, controllers.Businesspartner.Update);
-router.post("/api/v1/businessPartner/delete",restrict,controllers.Businesspartner.Delete);
+router.get("/api/v1/businessPartner/", restrict, controllers.Businesspartner.Index);
+router.get("/api/v1/businessPartner/:id", restrict, controllers.Businesspartner.Show);
+router.post("/api/v1/businessPartner/",restrict,controllers.Businesspartner.Create);
+router.put("/api/v1/businessPartner/:id", restrict, controllers.Businesspartner.Update);
+router.delete("/api/v1/businessPartner/:id", restrict, controllers.Businesspartner.Delete);
 //Businesspartner end
 
 //warehouse start

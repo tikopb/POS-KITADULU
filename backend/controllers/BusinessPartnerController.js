@@ -37,22 +37,10 @@ function GetAcronymn( str ) {
 
 module.exports = {
     /**
-     * Getting data uom with ID
-     * @param {businesspartner_id} req  
-     */
-    Get: async(req,res) => {
-        let data = await Businesspartner.findByPk(req.body.businesspartner_id)
-        res.status(200).json({
-            status: `success`,
-            msg: `get succsess`,
-            data,
-        })
-    },
-    /**
      * Getting all data base on client id is active return data to list of uom
-     * @param {client_id} req 
+     * @param {*} req.user
      */
-    GetAll: async(req,res) => {
+    Index: async(req,res) => {
         const UserCrd = req.user
         try {
             Businesspartner.findAll({
@@ -72,6 +60,19 @@ module.exports = {
                 msg: `${err.toString()}`
             })
         }
+    },
+    /**
+     * Getting data uom with ID
+     * @param {businesspartner_id} req  
+     */
+    Show: async(req,res) => {
+        const businesspartner_id = req.params.id
+        let data = await Businesspartner.findByPk(businesspartner_id)
+        res.status(200).json({
+            status: `success`,
+            msg: `get succsess`,
+            data,
+        })
     },
     /**
      * Creating data of uom
@@ -122,16 +123,23 @@ module.exports = {
      * @param {msg, data} res 
      */
     Update: async(req,res) => {
-        const {Businesspartner_id, value, name, description, isactive} = req.body
+        const Businesspartner_id = req.params.id;
+        const {value, name, description, isactive} = req.body
         let data = await Businesspartner.findByPk(Businesspartner_id)
-        console.log('uom' + data)
-        data.set({
-            value: value,
-            name: name,
-            description: description,
-            isactive: isactive
-        })
         try {
+            if(data == null){
+                throw new Error('data no found');
+            }
+            let valueP = value;
+            if(valueP == null) {
+                valueP= data.value // <- if value null than get from data table
+            }
+            data.set({
+                value: valueP,
+                name: name,
+                description: description,
+                isactive: isactive
+            })
             await data.save()
             res.status(200).json({
                 status: `success`,
@@ -144,7 +152,7 @@ module.exports = {
                 res.send({ status: 'error', msg: `Business Partner with value ${value} already exists`});
             } else {
                 res.status(500)
-                res.send({ status: 'error', msg: `Something went wrong: ${err.toString()}`});
+                res.send({ status: 'error', msg: `Something went wrong: ${err.message}`});
             }
         }
     },
@@ -154,7 +162,7 @@ module.exports = {
      * @param {*} res 
      */
     Delete: async(req,res) => {
-        const{Businesspartner_id} = req.body
+        const Businesspartner_id = req.params.id;
         let data = await Businesspartner.findByPk(Businesspartner_id)
         let name = data.name
         try {
