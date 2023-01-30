@@ -67,11 +67,11 @@ router.delete("/api/v1/businessPartner/:id", restrict, controllers.Businesspartn
 //Businesspartner end
 
 //warehouse start
-router.post("/api/v1/warehouse/get", restrict, controllers.Warehouse.Get);
-router.post("/api/v1/warehouse/getAll", restrict, controllers.Warehouse.GetAll);
-router.post("/api/v1/warehouse/create",restrict,controllers.Warehouse.Create);
-router.post( "/api/v1/warehouse/update", restrict, controllers.Warehouse.Update);
-router.post("/api/v1/warehouse/delete",restrict,controllers.Warehouse.Delete);
+router.get("/api/v1/warehouse/", restrict, controllers.Warehouse.Index);
+router.get("/api/v1/warehouse/:id", restrict, controllers.Warehouse.Show);
+router.post("/api/v1/warehouse/",restrict,controllers.Warehouse.Create);
+router.put( "/api/v1/warehouse/:id", restrict, controllers.Warehouse.Update);
+router.delete("/api/v1/warehouse/:id",restrict,controllers.Warehouse.Delete);
 //warehouse end
 
 //locator start
