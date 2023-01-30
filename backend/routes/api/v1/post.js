@@ -51,11 +51,11 @@ router.post("/api/v1/uomconvertion/delete", restrict, controllers.uomConvertion.
 //uom convertion end
 
 //OrgAccsessController start
-router.post("/api/v1/orgaccsess/get", restrict, controllers.OrgAccsessController.Get,);
-router.post("/api/v1/orgaccsess/getAll", restrict, controllers.OrgAccsessController.GetAll,);
-router.post("/api/v1/orgaccsess/create",restrict,controllers.OrgAccsessController.Generate,);
-router.post( "/api/v1/orgaccsess/update", restrict, controllers.OrgAccsessController.Update,);
-router.post("/api/v1/orgaccsess/delete",restrict,controllers.OrgAccsessController.Delete,);
+router.post("/api/v1/orgaccsess/get", restrict, controllers.OrgAccsessController.Get);
+router.post("/api/v1/orgaccsess/getAll", restrict, controllers.OrgAccsessController.GetAll);
+router.post("/api/v1/orgaccsess/create",restrict,controllers.OrgAccsessController.Generate);
+router.post( "/api/v1/orgaccsess/update", restrict, controllers.OrgAccsessController.Update);
+router.post("/api/v1/orgaccsess/delete",restrict,controllers.OrgAccsessController.Delete);
 //OrgAccsessController end
 
 //Businesspartner start
@@ -75,11 +75,11 @@ router.delete("/api/v1/warehouse/:id",restrict,controllers.Warehouse.Delete);
 //warehouse end
 
 //locator start
-router.post("/api/v1/locator/get", restrict, controllers.Locator.Get);
-router.post("/api/v1/locator/getAll", restrict, controllers.Locator.GetAll);
-router.post("/api/v1/locator/create",restrict,controllers.Locator.Create);
-router.post( "/api/v1/locator/update", restrict, controllers.Locator.Update);
-router.post("/api/v1/locator/delete",restrict,controllers.Locator.Delete);
+router.get("/api/v1/locator/", restrict, controllers.Locator.Index);
+router.get("/api/v1/locator/:id", restrict, controllers.Locator.Show);
+router.post("/api/v1/locator/",restrict,controllers.Locator.Create);
+router.put("/api/v1/locator/:id", restrict, controllers.Locator.Update);
+router.delete("/api/v1/locator/:id",restrict,controllers.Locator.Delete);
 //locator end
 
 module.exports = router;
