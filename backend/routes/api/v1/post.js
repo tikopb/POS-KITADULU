@@ -11,12 +11,6 @@ router.post("/api/v1/auth/whoami", restrict, controllers.auth.whoami);
 router.post("/api/v1/auth/logout", controllers.auth.logout);
 //login and register end
 
-//organization and client
-// router.post("/api/v1/client/CreateClientAndOrganization",controllers.client.CreateClientAndOrganization);
-// router.post("/api/v1/client/UpdateClient", controllers.client.UpdateClient);
-// router.post("/api/v1/organization/UpdateOrganization",controllers.org.UpdateOrganization,);
-//organization and client end
-
 //organization start
 router.post("/api/v1/org/get", restrict, controllers.org.Get);
 router.post("/api/v1/org/getAll", restrict, controllers.org.GetAll);
@@ -26,26 +20,27 @@ router.post("/api/v1/org/delete", restrict, controllers.org.Delete);
 //organization end
 
 //product category start
-router.post("/api/v1/productCategory/get", restrict, controllers.productCategories.Get);
-router.post("/api/v1/productCategory/getAll", restrict, controllers.productCategories.GetAll);
-router.post("/api/v1/productCategory/create", restrict, controllers.productCategories.Create);
-router.post("/api/v1/productCategory/update", restrict, controllers.productCategories.Update);
-router.post("/api/v1/productCategory/delete", restrict, controllers.productCategories.Delete);
+router.get("/api/v1/productCategory/", restrict, controllers.productCategories.Index);
+router.get("/api/v1/productCategory/:id", restrict, controllers.productCategories.Show);
+router.post("/api/v1/productCategory/", restrict, controllers.productCategories.Create);
+router.put("/api/v1/productCategory/:id", restrict, controllers.productCategories.Update);
+router.delete("/api/v1/productCategory/:id", restrict, controllers.productCategories.Delete);
 //product category end
 
 //Product start
-router.post("/api/v1/product/createProduct", controllers.product.CreateProduct);
-router.post("/api/v1/product/updateProduct", controllers.product.UpdateProduct);
-router.post("/api/v1/product/deleteProduct", controllers.product.DeleteProduct);
-router.post("/api/v1/product/getAllProductForPOSJoin", controllers.product.getAllProductForPOSJoin);
+router.get ("/api/v1/product/",restrict,controllers.product.Index);
+router.get("/api/v1/product/:id", restrict, controllers.product.Show);
+router.post("/api/v1/product/",restrict, controllers.product.Create);
+router.put("/api/v1/product/:id", restrict, controllers.product.Update);
+router.delete("/api/v1/product/:id", restrict, controllers.product.Delete);
 //Product end
 
 //uom start
-router.post("/api/v1/uom/get", restrict, controllers.uom.Get);
-router.post("/api/v1/uom/getAll", restrict, controllers.uom.GetAll);
-router.post("/api/v1/uom/create", restrict, controllers.uom.Create);
-router.post("/api/v1/uom/update", restrict, controllers.uom.Update);
-router.post("/api/v1/uom/delete", restrict, controllers.uom.Delete);
+router.get("/api/v1/uom/", restrict, controllers.uom.Index);
+router.get("/api/v1/uom/:id", restrict, controllers.uom.Show);
+router.post("/api/v1/uom/", restrict, controllers.uom.Create);
+router.put("/api/v1/uom/:id", restrict, controllers.uom.Update);
+router.delete("/api/v1/uom/:id", restrict, controllers.uom.Delete);
 //uom end
 
 //uom convertion start
@@ -64,19 +59,19 @@ router.post("/api/v1/orgaccsess/delete",restrict,controllers.OrgAccsessControlle
 //OrgAccsessController end
 
 //Businesspartner start
-router.post("/api/v1/businessPartner/get", restrict, controllers.Businesspartner.Get);
-router.post("/api/v1/businessPartner/getAll", restrict, controllers.Businesspartner.GetAll);
-router.post("/api/v1/businessPartner/create",restrict,controllers.Businesspartner.Create);
-router.post( "/api/v1/businessPartner/update", restrict, controllers.Businesspartner.Update);
-router.post("/api/v1/businessPartner/delete",restrict,controllers.Businesspartner.Delete);
+router.get("/api/v1/businessPartner/", restrict, controllers.Businesspartner.Index);
+router.get("/api/v1/businessPartner/:id", restrict, controllers.Businesspartner.Show);
+router.post("/api/v1/businessPartner/",restrict,controllers.Businesspartner.Create);
+router.put("/api/v1/businessPartner/:id", restrict, controllers.Businesspartner.Update);
+router.delete("/api/v1/businessPartner/:id", restrict, controllers.Businesspartner.Delete);
 //Businesspartner end
 
 //warehouse start
-router.post("/api/v1/warehouse/get", restrict, controllers.Warehouse.Get);
-router.post("/api/v1/warehouse/getAll", restrict, controllers.Warehouse.GetAll);
-router.post("/api/v1/warehouse/create",restrict,controllers.Warehouse.Create);
-router.post( "/api/v1/warehouse/update", restrict, controllers.Warehouse.Update);
-router.post("/api/v1/warehouse/delete",restrict,controllers.Warehouse.Delete);
+router.get("/api/v1/warehouse/", restrict, controllers.Warehouse.Index);
+router.get("/api/v1/warehouse/:id", restrict, controllers.Warehouse.Show);
+router.post("/api/v1/warehouse/",restrict,controllers.Warehouse.Create);
+router.put( "/api/v1/warehouse/:id", restrict, controllers.Warehouse.Update);
+router.delete("/api/v1/warehouse/:id",restrict,controllers.Warehouse.Delete);
 //warehouse end
 
 //locator start

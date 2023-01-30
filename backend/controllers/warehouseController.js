@@ -2,30 +2,34 @@ let {Warehouse} = require("../models");
 
 module.exports = {
     /**
-     * Getting data with warehouse_id as parameter
-     * @param {*} req 
-     * @param {*} res 
-     */
-   Get: async(req,res) => {
-    const Warehouse_id = req.body.warehouse_id
-    let data = await Warehouse.findByPk(Warehouse_id)
-    res.status(200).json({
-        status: 'succsess',
-        msg: 'get data succsess',
-        data
-    })
-   },
-   /**
     * Getting all data from warehouse
     * @param {*} req 
     * @param {*} res 
     */
-   GetAll: async(req,res) => {
-    let param = req.body
-    let data = await Warehouse.findAll({})
+   Index: async(req,res) => {
+    const UserCrd = req.user
+    let data = await Warehouse.findAll({
+        where:{
+            client_id: UserCrd.Client_id,
+        }
+    })
     res.status(200).json({
         status: `succsess`, 
         msg: `get data succsess`,
+        data
+    })
+   },
+    /**
+     * Getting data with warehouse_id as parameter
+     * @param {*} req 
+     * @param {*} res 
+     */
+   Show: async(req,res) => {
+    const warehouse_id = req.params.id
+    let data = await Warehouse.findByPk(warehouse_id)
+    res.status(200).json({
+        status: 'succsess',
+        msg: 'get data succsess',
         data
     })
    },
@@ -38,12 +42,12 @@ module.exports = {
         let bodyV = req.body
         let userCrd = req.user
         try {
-            let data = await Warehouse.Create({
+            let data = await Warehouse.create({
                 name: bodyV.name,
                 description: bodyV.description,
                 isactive: true,
-                org_id: bodyV.org_id,
-                client_id: userCrd.client_id
+                org_id: userCrd.Org_id,
+                client_id: userCrd.Client_id
             })
             res.status(200).json({
                 status: 'succsess',
@@ -61,7 +65,7 @@ module.exports = {
                 res.status(500)
                 res.send({ 
                     status: 'error', 
-                    msg: "Something went wrong"
+                    msg: `Something went wrong ${err.message}`
                 });
             }
         }
@@ -74,8 +78,9 @@ module.exports = {
     Update: async(req,res) => {
         let bodyV = req.body
         let userCrd = req.user
+        const warehouse_id = req.params.id
         try {
-            let data = await Warehouse.findByPk(bodyV.warehouse_id)
+            let data = await Warehouse.findByPk(warehouse_id)
             data.set({
                 name: bodyV.name,
                 description: bodyV.description,
@@ -106,8 +111,8 @@ module.exports = {
         }
     },
     Delete: async(req,res) =>{
-        const{Warehouse_id} = req.body
-        let data = await Warehouse.findByPk(Warehouse_id)
+        const warehouse_id = req.params.id
+        let data = await Warehouse.findByPk(warehouse_id)
         let name = data.name
         try {
             await data.destroy()

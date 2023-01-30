@@ -24,101 +24,134 @@ function GetProduct(nama, barcode, org_id, client_id) {
     return product
 }
 
+async function GenerateValue() {
+    const value = await sequelize.Sequelize.literal("nextval('product_id_seq')");
+    return value;
+}
+
 module.exports = {
     /**
-     * Getting some of product with name as param search or barcode (SKU)
-     * @param {name, barcode, org, client} req - mandatory
-     * @param {productInformation, msg} res - respon to frontend
+     * Getting all data off product with req.user.client_id login as parameter
+     * @param {*} req 
+     * @param {*} res 
      */
-    Get: async (req,res) => {
-        const {name, barcode, org, client} = req.body
-        const product = await GetProduct(name, barcode, org, client)
-        if(product == null || product.length === 0 ){
-            res.status(500).json({
-                msg: 'Product Not Found'
-            })
-        }else{
-            res.status(200).json({
-                productInformation: JSON.stringify(product),
-                msg: 'succsess get product'
-            })
+    Index: async(req,res) =>{
+        let userCrd = req.user
+        const data = await Product.findAll({
+            client_id: userCrd.client_id
+        })
+        res.status(200).json({
+            status: `succsess`,
+            msg: `get data succsess`,
+            data 
+        })
+    },
+    /**
+     * show data with product_id as default parameter return will be get data of product 
+     * @param {id} req 
+     * @param {*} res 
+     */
+    Show: async(req,res) => {
+        const product_id = req.params.id;
+        const data = await Product.findByPk(product_id) 
+        res.status(200).json({
+            status: `succsess`,
+            msg: `get data with id succsess`,
+            data
+        })
+    },
+    /**
+     * Creating product data 
+     * @param {name, description, org_id, client_id, uom_id, productCategories_id, value} req 
+     * @param {*} res 
+     */
+    Create: async (req,res) => {
+        const {name, description, org_id, client_id, uom_id, productCategories_id, value} = req.body
+        const valueP = value;
+        if(valueP === null ){
+            valueP = await GenerateValue();
         }
-    },
-    /**
-     * Getting name of product first if null then creating product with description from req.body. this process will generate product and product.uomconvertion as default UOM
-     * @param {name, description, org_id, client_id, uom_id, productCategories_id} req - mandtory
-     * @param {prd, msg} res - respon return
-     */
-    CreateProduct: async (req,res) => {
-        const {name, description, org_id, client_id, uom_id, productCategories_id} = req.body
-        Product.findAll({
-            where: {
-                name: name,
-                client_id: client_id
-            }
-        })
-        .then(function (productExist) {
-            if(productExist.length > 0){
-                res.status(500).json({
-                    msg: 'Product Already Exist!'
-                })
-            }else{
-                try {
-                    const prd = Product.create({
-                        name: name,
-                        description: description,
-                        isactive: true,
-                        org_id: org_id,
-                        client_id: client_id,
-                        uom_id: uom_id,
-                        ProductCategories_id: productCategories_id
-                    })
-                    res.status(200).json({
-                        msg:'Product Registered!'
-                    })
-                } catch (err) {
-                    res.status(401).json({
-                        msg: err.message
-                    })
-                }
-            }            
-        })
-    },
-    /**
-     * Updating product with name product as parameter with concidert of client of data. 
-     * @param { nama, org, client, uom_id, productCategories_id} req - mandatory field
-     * @param {msg} res
-     */
-    UpdateProduct: async (req,res) => {
-        const {name, org, client, uom_id, productCategories_id} = req.body
-        let valueProduct = await GetProduct(name, barcode, org, client)
-        valueProduct.set({
-            name: name,
-            uom_id: uom_id,
-            productCategories_id: productCategories_id
-        })
         try {
-            await valueProduct.save()
+            const data = await Product.create({
+                name: name,
+                description: description,
+                isactive: true,
+                org_id: org_id,
+                client_id: client_id,
+                uom_id: uom_id,
+                ProductCategories_id: productCategories_id,
+                value: valueP
+            })
             res.status(200).json({
-                msg: 'product updated'
+                status: `succsess`,
+                msg: `Product generated`,
+                data
             })
         } catch (err) {
-            res.status(401).json({
-                msg: err.message
-            })
+            if (err.name === 'SequelizeUniqueConstraintError') {
+                res.status(403)
+                res.send({ 
+                    status: 'error', 
+                    msg: `Product with value ${valueP} already exists`
+                });
+            } else {
+                res.status(500)
+                res.send({ 
+                    status: 'error', 
+                    msg: "Something went wrong"
+                });
+            }
         }
+            
     },
     /**
-     * Deleting product with name product as parameter with consider of client id data. 
-     * @param { nama, barcode, org, client, uom_id, productCategories_id} req - mandatory field
-     * @param {msg} res
+     * Updating product with value
+     * @param {*} req 
+     * @param {*} res 
      */
-    DeleteProduct: async (req,res) => {
-        const {name, barcode, org, client} = req.body
-        const valueProduct = await GetProduct(name, barcode, org, client)
+    Update: async (req,res) => {
+        const product_id = req.params.id;
+        const {name, uom_id, productCategories_id, description} = req.body
+        let data = await Product.findByPk(product_id);
         try {
-            await valueProduct.destroy()
+            if(data == null){
+                throw new Error('data no found');
+            };
+            data.set({
+                name: name,
+                uom_id: uom_id,
+                productCategories_id: productCategories_id,
+                description: description
+            });
+            await data.save();
             res.status(200).json({
+                status: `succsess`,
+                msg: `Product Updated`,
+                data
+            })
+        } catch (err) {
+            if (err.name === 'SequelizeUniqueConstraintError') {
+                res.status(403)
+                res.send({ 
+                    status: 'error', 
+                    msg: `Product with value ${valueP} already exists`
+                });
+            } else {
+                res.status(500)
+                res.send({ 
+                    status: 'error', 
+                    msg: `Something went wrong ${err}`
+                });
+            }
+        }
+    },
+    Delete: async(req,res) => {
+        const product_id = req.params.id;
+        try {
+            const data = await Product.findByPk(product_id)
+            await data.destroy()
+            res.status(200).json({
+                status: 'succsess', 
                 msg: 'product deleted'
             })
         } catch (err) {

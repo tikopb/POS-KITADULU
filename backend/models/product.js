@@ -16,16 +16,42 @@ module.exports = (sequelize, DataTypes) => {
   Product.init({
     Product_id:{
       type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+      //autoIncrement: true,
+      primaryKey: true,
+      defaultValue:  sequelize.Sequelize.literal("nextval('product_id_seq')")
     },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     isactive: DataTypes.BOOLEAN,
-    org_id:DataTypes.INTEGER,
-    client_id: DataTypes.INTEGER,
-    uom_id: DataTypes.INTEGER,
-    ProductCategories_id: DataTypes.INTEGER
+    org_id:{
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'org',
+        key: 'Org_id'
+      } 
+    },
+    client_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'client',
+        key: 'Client_id'
+      } 
+    },
+    uom_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'uom',
+        key: 'Uom_id'
+      } 
+    },
+    ProductCategories_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'productcategory',
+        key: 'ProductCategories_id'
+      } 
+    },
+    value: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Product',
