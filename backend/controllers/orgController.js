@@ -3,24 +3,11 @@ const { Op } = require("sequelize");
 
 module.exports = {
     /**
-     * Getting data of organization with org_id as parameter
-     * @param {*} req 
-     * @param {*} res 
-     */
-    Get: async(req,res) => {
-        let data = await Org.findByPk(req.body.Org_id)
-        res.status(200).json({
-            status: 'succsess',
-            msg: 'get succsess',
-            data
-        })
-    },
-    /**
      * getting all data of org with client_id as paramter
      * @param {*} req 
      * @param {*} res 
      */
-    GetAll: async(req,res) => {
+    Index: async(req,res) => {
         let UserCrd = req.user
         try {
             Org.findAll({
@@ -40,6 +27,20 @@ module.exports = {
                 err: `${err.toString()}`,
             })
         }
+    },
+     /**
+     * Getting data of organization with org_id as parameter
+     * @param {*} req 
+     * @param {*} res 
+     */
+     Show: async(req,res) => {
+        const org_id = req.params.id;
+        let data = await Org.findByPk(org_id)
+        res.status(200).json({
+            status: 'succsess',
+            msg: 'get succsess',
+            data
+        })
     },
     /**
      * Generate data of org with client_id as data variabel
@@ -78,14 +79,17 @@ module.exports = {
      * @param {*} res 
      */
     Update: async(req,res) => {
-        const {name, description, address, org_id, isactive} = req.body;
+        const org_id = req.params.id;
         let bodyV = req.body
-        let data = await Org.findByPk(bodyV.Org_id)
+        let data = await Org.findByPk(org_id)
         try {
+            if(data == null){
+                throw new Error('data no found');
+            }
             data.set({
                 name: bodyV.name,
                 description: bodyV.description,
-                address: bodyV.address,
+                adress: bodyV.adress,
                 isactive: bodyV.isactive
             })
             await data.save()
@@ -97,10 +101,10 @@ module.exports = {
         } catch (err) {
             if (err.name === 'SequelizeUniqueConstraintError') {
                 res.status(403)
-                res.send({ status: 'error', msg: `Organization with name ${name} already exists`});
+                res.send({ status: 'error', msg: `Organization with name ${bodyV.name} already exists`});
             } else {
                 res.status(500)
-                res.send({ status: 'error', msg: `Something went wrong ${err.toString()}`});
+                res.send({ status: 'error', msg: `Something went wrong ${err.message}`});
             }
         }
     },
@@ -110,9 +114,12 @@ module.exports = {
      * @param {*} res 
      */
     Delete: async(req,res) => {
-        const {Org_id} = req.body
-        let data = await Org.findByPk(Org_id)
+        const org_id = req.params.id;
+        let data = await Org.findByPk(org_id)
         try {
+            if(data == null){
+                throw new Error('data no found');
+            }
             await data.destroy()
             res.status(200).json({
                 status: 'succsess',
