@@ -12,11 +12,11 @@ router.post("/api/v1/auth/logout", controllers.auth.logout);
 //login and register end
 
 //organization start
-router.post("/api/v1/org/get", restrict, controllers.org.Get);
-router.post("/api/v1/org/getAll", restrict, controllers.org.GetAll);
-router.post("/api/v1/org/create", restrict, controllers.org.Generate);
-router.post("/api/v1/org/update", restrict, controllers.org.Update);
-router.post("/api/v1/org/delete", restrict, controllers.org.Delete);
+router.get("/api/v1/org/", restrict, controllers.org.Index);
+router.get("/api/v1/org/:id", restrict, controllers.org.Show);
+router.post("/api/v1/org/", restrict, controllers.org.Generate);
+router.put("/api/v1/org/:id", restrict, controllers.org.Update);
+router.delete("/api/v1/org/:id", restrict, controllers.org.Delete);
 //organization end
 
 //product category start
