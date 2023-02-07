@@ -82,4 +82,12 @@ router.put("/api/v1/locator/:id", restrict, controllers.Locator.Update);
 router.delete("/api/v1/locator/:id",restrict,controllers.Locator.Delete);
 //locator end
 
+//Role start
+router.get("/api/v1/role/", restrict, controllers.Role.Index);
+router.get("/api/v1/role/:id", restrict, controllers.Role.Show);
+router.post("/api/v1/role",restrict,controllers.Role.Create);
+router.put("/api/v1/role/:id", restrict, controllers.Role.Update);
+router.delete("/api/v1/role/:id",restrict,controllers.Role.Delete);
+//locator end
+
 module.exports = router;

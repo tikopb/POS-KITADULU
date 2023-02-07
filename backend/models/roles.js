@@ -14,22 +14,32 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Roles.init({
-    Role_id: {
+    role_id: {
       type: DataTypes.INTEGER,
       //autoIncrement: true,
       primaryKey: true,
       defaultValue: sequelize.Sequelize.literal("nextval('roles_id_seq')")
     },
-    org_id: DataTypes.INTEGER,
-    client_id: DataTypes.INTEGER,
+    org_id: {   
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    client_id: {   
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,    
     description: DataTypes.TEXT,
     isactive: DataTypes.BOOLEAN,
-    isadmin: DataTypes.BOOLEAN
+    isadmin: DataTypes.BOOLEAN,
+    name: {   
+      type: DataTypes.TEXT,
+      allowNull: false
+    }
   }, {
     sequelize,
-    modelName: 'Roles',
+    modelName: 'Role',
   });
   return Roles;
 };
