@@ -11,6 +11,7 @@ const Businesspartner = require("./BusinessPartnerController");
 const Warehouse = require("./warehouseController");
 const Locator = require("./locatorController");
 const Role = require("./RoleController");
+const Karyawan = require("./karyawanController");
 
 module.exports = {
   auth,
@@ -25,5 +26,6 @@ module.exports = {
   Businesspartner,
   Warehouse,
   Locator,
-  Role
+  Role,
+  Karyawan
 };
