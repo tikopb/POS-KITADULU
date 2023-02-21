@@ -9,7 +9,9 @@ const OrgAccsessController = require("./OrgAccsessController");
 const refreshController = require("./refreshTokenController");
 const Businesspartner = require("./BusinessPartnerController");
 const Warehouse = require("./warehouseController");
-const Locator = require("./locatorController")
+const Locator = require("./locatorController");
+const Role = require("./RoleController");
+const Karyawan = require("./karyawanController");
 
 module.exports = {
   auth,
@@ -23,5 +25,7 @@ module.exports = {
   refreshController,
   Businesspartner,
   Warehouse,
-  Locator
+  Locator,
+  Role,
+  Karyawan
 };

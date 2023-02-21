@@ -16,8 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   Locator.init({
     Locator_id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+      //autoIncrement: true,
+      primaryKey: true,
+      defaultValue: sequelize.Sequelize.literal("nextval('locator_id_seq')")
     },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,

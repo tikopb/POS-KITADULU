@@ -1,4 +1,4 @@
-let { Org } = require('../models');
+let { Role } = require('../models');
 const { Op } = require("sequelize");
 
 module.exports = {
@@ -10,16 +10,15 @@ module.exports = {
     Index: async(req,res) => {
         let UserCrd = req.user
         try {
-            Org.findAll({
+           let data = await Role.findAll({
                 where:{
                     client_id: UserCrd.Client_id,
                 }
-            }).then(function(data){
-                res.status(200).json({
-                    status: 'succsess',
-                    msg: 'Get Succsess',
-                    data
-                })
+            })
+            res.status(200).json({
+                status: 'succsess',
+                msg: 'Get Succsess',
+                data
             })
         } catch (err) {
             res.status(500).json({
@@ -28,14 +27,14 @@ module.exports = {
             })
         }
     },
-     /**
-     * Getting data of organization with org_id as parameter
-     * @param {*} req 
-     * @param {*} res 
-     */
-     Show: async(req,res) => {
-        const org_id = req.params.id;
-        let data = await Org.findByPk(org_id)
+    /**
+    * Getting data of Roles with Role_id as parameter
+    * @param {*} req 
+    * @param {*} res 
+    */
+    Show: async(req,res) => {
+        const role_id = req.params.id;
+        let data = await Role.findByPk(role_id)
         res.status(200).json({
             status: 'succsess',
             msg: 'get succsess',
@@ -47,61 +46,63 @@ module.exports = {
      * @param {*} req 
      * @param {*} res 
      */
-    Generate: async(req, res) => {
-        const {name, description, address} = req.body;
+    Create: async(req, res) => {
+        const param = req.body;
         const UserCrd = req.user
         try {
-            let data = await Org.create({
-                name: name,
-                description: description,
+            console.log(param)
+            let data = await Role.create({
+                name: param.name,
+                description: param.description,
                 isactive: true,
                 client_id: UserCrd.Client_id,
-                address: address
+                org_id: param.Org_id,
+                isadmin: param.isadmin
             })
             res.status(200).json({
                 status: 'succsess',
-                msg: 'Organization registered',
+                msg: 'Roles registered',
                 data
             })
         } catch (err) {
             if (err.name === 'SequelizeUniqueConstraintError') {
                 res.status(403)
-                res.send({ status: 'error', msg: `Organization with name ${name} already exists`});
+                res.send({ status: 'error', msg: `Roles with name ${param.name} already exists`});
             } else {
                 res.status(500)
-                res.send({ status: 'error', msg: "Something went wrong"});
+                res.send({ status: 'error', msg: `Something went wrong: ${err.message}`});
             }
         }
     },
     /**
-     * Updating data of org with org_id as parameter.
+     * Updating data of org with Role_id as parameter.
      * @param {*} req 
      * @param {*} res 
      */
     Update: async(req,res) => {
-        const org_id = req.params.id;
-        let bodyV = req.body
-        let data = await Org.findByPk(org_id)
+        const Role_id = req.params.id;
+        let param = req.body
+        let data = await Role.findByPk(Role_id)
         try {
             if(data == null){
                 throw new Error('data no found');
             }
             data.set({
-                name: bodyV.name,
-                description: bodyV.description,
-                adress: bodyV.adress,
-                isactive: bodyV.isactive
+                name: param.name,
+                description: param.description,
+                isactive: param.isactive,
+                isadmin: param.isadmin
             })
             await data.save()
             res.status(200).json({
                 status: 'succsess',
-                msg: 'organization updated',
+                msg: 'Roles updated',
                 data    
             })
         } catch (err) {
             if (err.name === 'SequelizeUniqueConstraintError') {
                 res.status(403)
-                res.send({ status: 'error', msg: `Organization with name ${bodyV.name} already exists`});
+                res.send({ status: 'error', msg: `Roles with name ${param.name} already exists`});
             } else {
                 res.status(500)
                 res.send({ status: 'error', msg: `Something went wrong ${err.message}`});
@@ -109,13 +110,13 @@ module.exports = {
         }
     },
     /**
-     * Deleting data of organization but this function can't use when data org_id already constraint to other table
+     * Deleting data of Roles but this function can't use when data Role_id already constraint to other table
      * @param {*} req 
      * @param {*} res 
      */
     Delete: async(req,res) => {
-        const org_id = req.params.id;
-        let data = await Org.findByPk(org_id)
+        const Role_id = req.params.id;
+        let data = await Role.findByPk (Role_id);
         try {
             if(data == null){
                 throw new Error('data no found');
