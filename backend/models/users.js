@@ -27,13 +27,7 @@ module.exports = (sequelize, DataTypes) => {
      * @returns Create the users
      */
     static register = async ({
-      username,
-      password,
-      email,
-      name,
-      client_id,
-      org_id,
-      role_id,
+      username,password,email,name,client_id,org_id,role_id,karyawan_id
     }) => {
       const encryptedPassword = this.#encrypt(password);
 
@@ -42,16 +36,17 @@ module.exports = (sequelize, DataTypes) => {
       if (user != null) {
         return Promise.reject("user is exist");
       }
-
+      
       return Promise.resolve(
         this.create({
           username: username,
           password: encryptedPassword,
           email: email,
           name: name,
-          Client_id: client_id,
-          Org_id: org_id,
-          Role_id: role_id,
+          client_id: client_id,
+          org_id: org_id,
+          role_id: role_id,
+          karyawan_id: karyawan_id
         }),
       );
     };
@@ -65,9 +60,9 @@ module.exports = (sequelize, DataTypes) => {
           email: userInformation.email,
           username: userInformation.username,
           name: userInformation.name,
-          Org_id: userInformation.org_id,
-          Role_id: userInformation.role_id,
-          Client_id: userInformation.client_id,
+          org_id: userInformation.org_id,
+          role_id: userInformation.role_id,
+          client_id: userInformation.client_id,
         },
       };
 
@@ -171,12 +166,11 @@ module.exports = (sequelize, DataTypes) => {
       username: DataTypes.STRING,
       name: DataTypes.STRING,
       password: DataTypes.STRING,
-      isactive: DataTypes.STRING,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
+      isactive: DataTypes.BOOLEAN,
       client_id: DataTypes.INTEGER,
       org_id: DataTypes.INTEGER,
       role_id: DataTypes.INTEGER,
+      karyawan_id: DataTypes.INTEGER
     },
     {
       sequelize,
