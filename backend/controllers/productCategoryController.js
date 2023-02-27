@@ -7,10 +7,10 @@ module.exports = {
      * @param {*} res 
      */
     Index: async(req,res) => {
-        const UserCrd = req.user
+        const UserCrd = req.user;
         ProductCategory.findAll({
             where: {
-                client_id: UserCrd.Client_id
+                client_id: UserCrd.client_id
             }
         }).then(function (data) {
             if(data.length > 0 ){
@@ -56,7 +56,7 @@ module.exports = {
                 description: description,
                 isactive: true,
                 org_id: UserCrd.Org_id,
-                client_id: UserCrd.Client_id
+                client_id: UserCrd.client_id
             })
             res.status(201).json({
                 status: 'succsess',
