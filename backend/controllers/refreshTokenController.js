@@ -44,19 +44,6 @@ const handleRefreshToken = async (req, res) => {
     refreshTokenData,
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decoded) => {
-      console.log(decoded);
-      const payload = {
-        user: {
-          userId: decoded.user.userId,
-          email: decoded.user.email,
-          username: decoded.user.username,
-          name: decoded.user.name,
-          org_id: decoded.user.org_id,
-          role_id: decoded.user.role_id,
-          client_id: decoded.user.client_id,
-        },
-      };
-
       if (err) {
         // expired refresh token
         await refreshToken.destroy({
@@ -67,65 +54,55 @@ const handleRefreshToken = async (req, res) => {
         });
       }
 
-      if (err || userFound?.userId !== decoded.user.userId) {
+      if (err || userFound.userId !== decoded.user.userId) {
         return res.status(403).json({
           message: "token / user not same",
           code: "403",
         });
       }
 
-      const newAccessToken = jwt.sign(
-        payload,
-        process.env.ACCESS_TOKEN_SECRET,
-        {
-          expiresIn: "60s",
-        },
-      );
-
-      const newRefreshToken = jwt.sign(
-        payload,
-        process.env.REFRESH_TOKEN_SECRET,
-        {
-          expiresIn: "1d",
-        },
-      );
+      const currUser = await Users.findOne({
+        where: { User_id: userFound.userId },
+      });
+      const token = currUser.generateToken(currUser);
 
       await refreshToken.create({
-        userId: decoded.user.userId,
-        refreshToken: newRefreshToken,
+        userId: userFound.userId,
+        refreshToken: token.refreshToken,
       });
 
-      res.cookie("jwt", newRefreshToken, {
+      res.cookie("jwt", token.refreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000,
       });
 
-      const currUser = await Users.findOne({
-        where: { User_id: decoded.user.userId },
-      });
-
       const menuAccess = await currUser.GetMenuAuth(currUser.role_id);
       const orgAccess = await currUser.GetUserOrgAccess(currUser.id);
 
       await refreshToken.destroy({
-        where: { userId: decoded.user.userId, refreshToken: refreshTokenData },
+        where: { userId: currUser.User_id, refreshToken: refreshTokenData },
       });
+
+      console.log("token.refreshToken");
+      console.log(token.refreshToken);
+      console.log("token.accessToken");
+      console.log(token.accessToken);
 
       res.json({
         user: {
-          userId: decoded.user.userId,
-          email: decoded.user.email,
-          username: decoded.user.username,
-          name: decoded.user.name,
-          org_id: decoded.user.org_id,
-          role_id: decoded.user.role_id,
-          client_id: decoded.user.client_id,
+          userId: currUser.User_id,
+          email: currUser.email,
+          username: currUser.username,
+          name: currUser.name,
+          org_id: currUser.org_id,
+          role_id: currUser.role_id,
+          client_id: currUser.client_id,
         },
         menu: menuAccess,
         org: orgAccess,
-        accessToken: newAccessToken,
+        accessToken: token.accessToken,
       });
     },
   );
