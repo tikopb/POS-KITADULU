@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   OrgAccsess.init({
-    OrgAccess_id: {
+    org_access_id: {
       type: DataTypes.INTEGER,
       //autoIncrement: true,
       primaryKey: true,
@@ -26,7 +26,9 @@ module.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'OrgAccsess',
+    modelName: 'org_access',
+    underscored: true,
+    freezeTableName: true
   });
   return OrgAccsess;
 };

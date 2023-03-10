@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   PaymentType.init({
-    PaymentType_id: {
+    payment_type_id: {
       type: DataTypes.INTEGER,
       //autoIncrement: true,
       primaryKey: true,
@@ -29,7 +29,9 @@ module.exports = (sequelize, DataTypes) => {
     updatedBy: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'PaymentType',
+    modelName: 'payment_type',
+    freezeTableName: true,
+    underscored: true
   });
   return PaymentType;
 };

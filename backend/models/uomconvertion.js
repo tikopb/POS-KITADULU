@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     qtyConvertion:DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'UomConvertion',
+    modelName: 'uomconvertion',
+    freezeTableName: true
   });
   return UomConvertion;
 };

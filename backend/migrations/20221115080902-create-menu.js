@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Menus', {
+    await queryInterface.createTable('menu', {
       menu_id: {
         allowNull: false,
         autoIncrement: true,
@@ -30,12 +30,12 @@ module.exports = {
       url_path: {
         type: Sequelize.TEXT
       },
-      ParentMenu_id: {
+      parentmenu_id: {
         type: Sequelize.INTEGER
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Menus');
+    await queryInterface.dropTable('menu');
   }
 };

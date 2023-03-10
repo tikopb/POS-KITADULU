@@ -44,7 +44,8 @@ module.exports = (sequelize, DataTypes) => {
     adress: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Org',
+    modelName: 'org',
+    freezeTableName: true
   });
   return Org;
 };

@@ -4,8 +4,8 @@ module.exports = {
     //define sequence first start from 1000 id 1- 1000 use for data seeder
     await queryInterface.sequelize.query("CREATE SEQUENCE product_category_id_seq start 1001 increment 1")
     //create table dependency
-    await queryInterface.createTable('ProductCategories', {
-      ProductCategories_id: {
+    await queryInterface.createTable('productcategory', {
+      productCategory_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -45,6 +45,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ProductCategories');
+    await queryInterface.sequelize.query("drop sequence product_category_id_seq;")
+    await queryInterface.dropTable('productcategory');
   }
 };

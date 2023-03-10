@@ -4,7 +4,10 @@
     "password": "postgres",
     "database": "poskita",
     "host": "localhost",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "define": { 
+      "freezeTableName": true 
+    }
   },
   "test": {
     "username": "root",

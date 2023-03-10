@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     warehouse_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Locator',
+    modelName: 'locator',
+    freezeTableName: true
   });
   return Locator;
 };

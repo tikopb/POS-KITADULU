@@ -8,10 +8,14 @@ module.exports = {
      */
     Index: async(req,res) => {
         const UserCrd = req.user;
+        let limit = req.query.page_size || 10
+        let offset =  req.query.page
         ProductCategory.findAll({
             where: {
                 client_id: UserCrd.client_id
-            }
+            },
+            limit: limit,
+            offset: offset
         }).then(function (data) {
             if(data.length > 0 ){
                 res.status(200).json({

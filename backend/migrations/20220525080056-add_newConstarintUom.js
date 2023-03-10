@@ -4,26 +4,26 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     return Promise.all([
       queryInterface.addConstraint(
-        'Uoms',{
+        'uom',{
           fields: ['org_id'],
           type: 'foreign key',
           name: 'uom_org_contraint',
           references: { //Required field
-            table: 'Orgs',
-            field: 'Org_id'
+            table: 'org',
+            field: 'org_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
         }
       ),
       queryInterface.addConstraint(
-        'Uoms',{
+        'uom',{
           fields: ['client_id'],
           type: 'foreign key',
           name: 'uom_client_contraint',
           references: { //Required field
-            table: 'Clients',
-            field: 'Client_id'
+            table: 'client',
+            field: 'client_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    queryInterface.removeConstraint('Uoms','uom_org_contraint'),
-    queryInterface.removeConstraint('Uoms','uom_client_contraint')
+    queryInterface.removeConstraint('uom','uom_org_contraint'),
+    queryInterface.removeConstraint('uom','uom_client_contraint')
   }
 };

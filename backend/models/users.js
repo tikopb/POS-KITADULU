@@ -145,7 +145,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     GetUserOrgAccess = async function (user_id) {
       let accsess = await sequelize.query(
-        'select o."Org_id" ,o."name" as orgName from "OrgAccsesses" oa join "Orgs" o on oa.org_id = o."Org_id" where user_id = ?',
+        'select o."Org_id" ,o."name" as orgName from "org_access" oa join "Orgs" o on oa.org_id = o."Org_id" where user_id = ?',
         {
           replacements: [user_id],
           type: QueryTypes.SELECT,

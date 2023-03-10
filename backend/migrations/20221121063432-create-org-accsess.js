@@ -6,8 +6,8 @@ module.exports = {
     await queryInterface.sequelize.query("CREATE SEQUENCE org_access_id_seq start 1001 increment 1")
     //create table dependency
     return Promise.all([
-      await queryInterface.createTable('OrgAccsesses', {
-        OrgAccess_id: {
+      await queryInterface.createTable('org_access', {
+        org_access_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
@@ -38,6 +38,7 @@ module.exports = {
     ])
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('OrgAccsesses');
+    await queryInterface.sequelize.query("drop sequence org_access_id_seq;")
+    await queryInterface.dropTable('org_access');
   }
 };

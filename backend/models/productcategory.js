@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ProductCategory.init({
-    ProductCategories_id: {
+    productCategory_id: {
       type: DataTypes.INTEGER,
       //autoIncrement: true,
       primaryKey: true,
@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'ProductCategory',
+    freezeTableName: true,
   });
   return ProductCategory;
 };

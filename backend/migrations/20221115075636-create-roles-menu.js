@@ -5,10 +5,9 @@ module.exports = {
     //define sequence first start from 1000 id 1- 1000 use for data seeder
     await queryInterface.sequelize.query("CREATE SEQUENCE roles_menu_id_seq start 1000 increment 1")
     //create table dependency
-    await queryInterface.createTable('RolesMenus', {
-      RolesMenu_id: {
+    await queryInterface.createTable('rolesmenu', {
+      rolesmenu_id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
@@ -26,7 +25,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      Menu_id: {
+      menu_id: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
@@ -36,12 +35,13 @@ module.exports = {
       role_id: {
         type: Sequelize.INTEGER
       },
-      Menu_id: {
+      menu_id: {
         type: Sequelize.INTEGER
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('RolesMenus');
+    await queryInterface.sequelize.query("drop sequence roles_menu_id_seq;")
+    await queryInterface.dropTable('rolesmenu');
   }
 };

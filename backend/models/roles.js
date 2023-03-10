@@ -39,7 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Role',
+    modelName: 'role',
+    freezeTableName: true
   });
   return Roles;
 };

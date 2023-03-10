@@ -1,8 +1,8 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('UomConvertions', {
-      UomConvertion_id: {
+    await queryInterface.createTable('uomconvertion', {
+      uomconvertion_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -32,7 +32,7 @@ module.exports = {
         allowNull:false,
         type:Sequelize.INTEGER
       },
-      Product_id:{
+      product_id:{
         allowNull: false,
         type:Sequelize.INTEGER
       },
@@ -47,6 +47,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('UomConvertions');
+    await queryInterface.dropTable('uomconvertion');
   }
 };
