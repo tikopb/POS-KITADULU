@@ -4,17 +4,17 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.addColumn(
       'product',
-      'productCategory_id',
+      'productcategory_id',
       Sequelize.INTEGER
     ),
     await queryInterface.addConstraint(
       'product',{
-        fields: ['productCategory_id'],
+        fields: ['productcategory_id'],
         type: 'foreign key',
         name: 'prd_prdct_contraint',
         references: { //Required field
           table: 'productcategory',
-          field: 'productCategory_id'
+          field: 'productcategory_id'
         },
         onDelete: 'cascade',
         onUpdate: 'cascade'

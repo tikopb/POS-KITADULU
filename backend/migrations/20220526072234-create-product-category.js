@@ -5,7 +5,7 @@ module.exports = {
     await queryInterface.sequelize.query("CREATE SEQUENCE product_category_id_seq start 1001 increment 1")
     //create table dependency
     await queryInterface.createTable('productcategory', {
-      productCategory_id: {
+      productcategory_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,

@@ -1,13 +1,13 @@
-let { Users, refreshToken, Menu } = require("../models");
+let { user, refreshToken, Menu } = require("../models");
 const bcrypt = require("bcrypt");
 const { QueryTypes } = require("sequelize");
 const db = require("../models");
 
 module.exports = {
   register: (req, res, next) => {
-    Users.register(req.body)
-      .then((Users) => {
-        res.status(200).json(format(Users));
+    user.register(req.body)
+      .then((user) => {
+        res.status(200).json(format(user));
       })
       .catch((err) =>
         next(
@@ -19,10 +19,10 @@ module.exports = {
   },
   login: (req, res, next) => {
     const cookies = req.cookies;
-    Users.authenticate(req.body)
-      .then(async (Users) => {
-        const { User_id, username } = Users;
-        const token = Users.generateToken(Users);
+    user.authenticate(req.body)
+      .then(async (user) => {
+        const { user_id, username } = user;
+        const token = user.generateToken(user);
 
         if (cookies?.jwt) {
           /* 
@@ -53,7 +53,7 @@ module.exports = {
         }
 
         await refreshToken.create({
-          userId: User_id,
+          userId: user_id,
           refreshToken: token.refreshToken,
         });
 
@@ -64,17 +64,17 @@ module.exports = {
           maxAge: 24 * 60 * 60 * 1000, // ini jadinya 1 hari,
         });
 
-        const menuAccess = await Users.GetMenuAuth(Users.role_id);
-        const orgAccess = await Users.GetUserOrgAccess(Users.User_id);
+        const menuAccess = await user.GetMenuAuth(user.role_id);
+        const orgAccess = await user.GetUserOrgAccess(user.user_id);
         res.json({
           user: {
-            userId: Users.User_id,
-            email: Users.email,
-            username: Users.username,
-            name: Users.name,
-            Org_id: Users.org_id,
-            Role_id: Users.role_id,
-            Client_id: Users.client_id,
+            userId: user.user_id,
+            email: user.email,
+            username: user.username,
+            name: user.name,
+            Org_id: user.org_id,
+            Role_id: user.role_id,
+            Client_id: user.client_id,
           },
           menu: menuAccess,
           accessToken: token.accessToken,
