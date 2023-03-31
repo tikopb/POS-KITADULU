@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     generateToken = (userInformation) => {
       const payload = {
         user: {
-          userId: userInformation.User_id,
+          userId: userInformation.user_id,
           email: userInformation.email,
           username: userInformation.username,
           name: userInformation.name,
@@ -111,26 +111,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     GetMenuAuth = async function (role_id) {
       let list = await sequelize.query(
-        'select rm."Menu_id" , m."Name" , m."ParentMenu_id",  m.url_path , null as children  from "RolesMenus" rm  join "Menus" m on rm."Menu_id"  = m.menu_id  where rm.role_id = ? order by sequence ',
+        'select rm.menu_id, m."Name", m.parentmenu_id, m.url_path, null as children from "rolesmenu" rm  join menu m  on rm.menu_id  = m.menu_id  where rm.role_id = ? order by sequence',
         {
           replacements: [role_id],
           type: QueryTypes.SELECT,
         },
       );
+     
       var map = {},
         node,
         roots = [],
         i;
       for (i = 0; i < list.length; i += 1) {
-        map[list[i].Menu_id] = i; // initialize the map
+        map[list[i].menu_id] = i; // initialize the map
         list[i].children = []; // initialize the children
       }
 
       for (i = 0; i < list.length; i += 1) {
         node = list[i];
-        if (node.ParentMenu_id !== "0" && node.ParentMenu_id !== null) {
+        if (node.parentmenu_id !== "0" && node.parentmenu_id !== null) {
           // if you have dangling branches check that map[node.parentId] exists
-          list[map[node.ParentMenu_id]].children.push(node);
+          list[map[node.parentmenu_id]].children.push(node);
         } else {
           roots.push(node);
         }
@@ -145,7 +146,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     GetUserOrgAccess = async function (user_id) {
       let accsess = await sequelize.query(
-        'select o."Org_id" ,o."name" as orgName from "OrgAccsesses" oa join "Orgs" o on oa.org_id = o."Org_id" where user_id = ?',
+        'select o.org_id ,o."name" as orgName from "org_access" oa join org o on oa.org_id = o.org_id  where user_id = ?',
         {
           replacements: [user_id],
           type: QueryTypes.SELECT,
@@ -156,7 +157,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Users.init(
     {
-      User_id: {
+      user_id: {
         type: DataTypes.INTEGER,
         //autoIncrement: true,
         primaryKey: true,
@@ -174,7 +175,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Users",
+      modelName: "user",
+      tableName: "user",
+      freezeTableName: true
     },
   );
   return Users;

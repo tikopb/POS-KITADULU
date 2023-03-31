@@ -5,39 +5,39 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     return Promise.all([
       await queryInterface.addConstraint(
-        'OrgAccsesses',{
+        'org_access',{
           fields: ['org_id'],
           type: 'foreign key',
           name: 'org_OrgAcc_const',
           references: { //Required field
-            table: 'Orgs',
-            field: 'Org_id'
+            table: 'org',
+            field: 'org_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
         },
       ),
       await queryInterface.addConstraint(
-        'OrgAccsesses',{
+        'org_access',{
           fields: ['client_id'],
           type: 'foreign key',
           name: 'client_OrgAcc_const',
           references: { //Required field
-            table: 'Clients',
-            field: 'Client_id'
+            table: 'client',
+            field: 'client_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
         },
       ),
       await queryInterface.addConstraint(
-        'OrgAccsesses',{
+        'org_access',{
           fields: ['user_id'],
           type: 'foreign key',
           name: 'org_OrgAccsesse_const',
           references: { //Required field
-            table: 'Users',
-            field: 'User_id'
+            table: 'user',
+            field: 'user_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
@@ -46,8 +46,8 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeConstraint('OrgAccsesses','org_OrgAcc_const'),
-    await queryInterface.removeConstraint('OrgAccsesses','client_OrgAcc_const'),
-    await queryInterface.removeConstraint('OrgAccsesses','org_OrgAccsesse_const')
+    await queryInterface.removeConstraint('org_access','org_OrgAcc_const'),
+    await queryInterface.removeConstraint('org_access','client_OrgAcc_const'),
+    await queryInterface.removeConstraint('org_access','org_OrgAccsesse_const')
   }
 };

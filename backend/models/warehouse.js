@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Warehouse.init({
-    Warehouse_id: {
+    warehouse_id: {
       type: DataTypes.INTEGER,
       //autoIncrement: true,
       primaryKey: true,
@@ -27,7 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     client_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Warehouse',
+    modelName: 'warehouse',
+    tableName: 'warehouse',
+    freezeTableName: true
   });
   return Warehouse;
 };

@@ -4,8 +4,8 @@ module.exports = {
     //define sequence first start from 1000 id 1- 1000 use for data seeder
     await queryInterface.sequelize.query("CREATE SEQUENCE uom_id_seq start 101 increment 1")
     //create table dependency
-    await queryInterface.createTable('Uoms', {
-      Uom_id: {
+    await queryInterface.createTable('uom', {
+      uom_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -46,6 +46,7 @@ module.exports = {
     )
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Uoms');
+    await queryInterface.sequelize.query("drop sequence uom_id_seq;")
+    await queryInterface.dropTable('uom');
   }
 };

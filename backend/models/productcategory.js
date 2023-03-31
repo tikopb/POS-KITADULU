@@ -12,9 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+    static GetMaterilizedPg(){
+      return "productcategory_Pg";
+    }
   }
   ProductCategory.init({
-    ProductCategories_id: {
+    productcategory_id: {
       type: DataTypes.INTEGER,
       //autoIncrement: true,
       primaryKey: true,
@@ -27,7 +30,9 @@ module.exports = (sequelize, DataTypes) => {
     client_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'ProductCategory',
+    modelName: 'productcategory',
+    tableName: 'productcategory',
+    freezeTableName: true,
   });
   return ProductCategory;
 };

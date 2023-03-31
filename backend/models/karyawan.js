@@ -48,7 +48,9 @@ module.exports = (sequelize, DataTypes) => {
     isactive: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'Karyawan',
+    modelName: 'karyawan',
+    tableName: 'karyawan',
+    freezeTableName: true
   });
   return Karyawan;
 };

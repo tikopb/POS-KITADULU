@@ -5,13 +5,13 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     return Promise.all([
       await queryInterface.addColumn(
-        'UomConvertions',
+        'uomconvertion',
         'sku',
         {
           type: Sequelize.STRING
         }
       ),
-      await queryInterface.addConstraint('UomConvertions', {
+      await queryInterface.addConstraint('uomconvertion', {
         fields: ['sku'],
         type: 'unique',
         name: 'unique_value_sku_uom'
@@ -20,7 +20,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    queryInterface.removeConstraint('UomConvertion','unique_value_sku_uom'),
-    queryInterface.removeColumn('UomConvertion','sku')
+    queryInterface.removeConstraint('uomconvertion','unique_value_sku_uom'),
+    queryInterface.removeColumn('uomconvertion','sku')
   }
 };

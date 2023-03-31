@@ -4,52 +4,52 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return Promise.all([
       queryInterface.addConstraint(
-        'UomConvertions',{
+        'uomconvertion',{
           fields: ['org_id'],
           type: 'foreign key',
           name: 'UomCon_org_contraint',
           references: { //Required field
-            table: 'Orgs',
-            field: 'Org_id'
+            table: 'org',
+            field: 'org_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
         }
       ),
       queryInterface.addConstraint(
-        'UomConvertions',{
+        'uomconvertion',{
           fields: ['client_id'],
           type: 'foreign key',
           name: 'UomCon_client_contraint',
           references: { //Required field
-            table: 'Clients',
-            field: 'Client_id'
+            table: 'client',
+            field: 'client_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
         }
       ),
       queryInterface.addConstraint(
-        'UomConvertions',{
-          fields: ['Product_id'],
+        'uomconvertion',{
+          fields: ['product_id'],
           type: 'foreign key',
           name: 'UomCon_product_contraint',
           references: { //Required field
-            table: 'Products',
-            field: 'Product_id'
+            table: 'product',
+            field: 'product_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
         }
       ),
       queryInterface.addConstraint(
-        'UomConvertions',{
+        'uomconvertion',{
           fields: ['uom_id'],
           type: 'foreign key',
           name: 'UomCon_uom_contraint',
           references: { //Required field
-            table: 'Uoms',
-            field: 'Uom_id'
+            table: 'uom',
+            field: 'uom_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
@@ -59,9 +59,9 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    queryInterface.removeConstraint('UomConvertions','UomCon_org_contraint')
-    queryInterface.removeConstraint('UomConvertions','UomCon_client_contraint')
-    queryInterface.removeConstraint('UomConvertions','UomCon_product_contraint')
-    queryInterface.removeConstraint('UomConvertions','UomCon_uom_contraint')
+    queryInterface.removeConstraint('uomconvertion','UomCon_org_contraint')
+    queryInterface.removeConstraint('uomconvertion','UomCon_client_contraint')
+    queryInterface.removeConstraint('uomconvertion','UomCon_product_contraint')
+    queryInterface.removeConstraint('uomconvertion','UomCon_uom_contraint')
   }
 };
