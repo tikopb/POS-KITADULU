@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'org_access',
+    tableName: 'org_access',
     underscored: true,
     freezeTableName: true
   });

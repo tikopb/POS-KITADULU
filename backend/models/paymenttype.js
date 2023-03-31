@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'payment_type',
+    tableName: 'payment_type',
     freezeTableName: true,
     underscored: true
   });

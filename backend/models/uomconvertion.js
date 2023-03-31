@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'uomconvertion',
+    tableName: 'uomconvertion',
     freezeTableName: true
   });
   return UomConvertion;

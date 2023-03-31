@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'business_partner',
+    tableName: 'business_partner',
     freezeTableName: true,
     underscored: true,
   });
