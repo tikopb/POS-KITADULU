@@ -12,8 +12,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         onDelete: "CASCADE",
         references: {
-          model: "Users",
-          key: "User_id",
+          model: "user",
+          key: "user_id",
         },
       },
       refreshToken: {

@@ -5,10 +5,9 @@ module.exports = {
     //define sequence first start from 1000 id 1- 1000 use for data seeder
     await queryInterface.sequelize.query("CREATE SEQUENCE PaymentType_id_seq start 11 increment 1")
      //create table dependency
-    await queryInterface.createTable('PaymentTypes', {
-      PaymentType_id: {
+    await queryInterface.createTable('payment_type', {
+      payment_type_id: {
         allowNull: false,
-        //autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
@@ -52,52 +51,52 @@ module.exports = {
     )
     //adding constaint
     await queryInterface.addConstraint(
-      'PaymentTypes',{
+      'payment_type',{
         fields: ['org_id'],
         type: 'foreign key',
         name: 'org_paymentType_const',
         references: { //Required field
-          table: 'Orgs',
-          field: 'Org_id'
+          table: 'org',
+          field: 'org_id'
         },
         onDelete: 'cascade',
         onUpdate: 'cascade'
       },
     )
     await queryInterface.addConstraint(
-      'PaymentTypes',{
+      'payment_type',{
         fields: ['client_id'],
         type: 'foreign key',
         name: 'client_paymentType_const',
         references: { //Required field
-          table: 'Clients',
-          field: 'Client_id'
+          table: 'client',
+          field: 'client_id'
         },
         onDelete: 'cascade',
         onUpdate: 'cascade'
       },
     )
     await queryInterface.addConstraint(
-      'PaymentTypes',{
+      'payment_type',{
         fields: ['createdBy'],
         type: 'foreign key',
         name: 'userCr_paymentType_const',
         references: { //Required field
-          table: 'Users',
-          field: 'User_id'
+          table: 'user',
+          field: 'user_id'
         },
         onDelete: 'cascade',
         onUpdate: 'cascade'
       },
     )
     await queryInterface.addConstraint(
-      'PaymentTypes',{
+      'payment_type',{
         fields: ['updatedBy'],
         type: 'foreign key',
         name: 'userUp_paymentType_const',
         references: { //Required field
-          table: 'Users',
-          field: 'User_id'
+          table: 'user',
+          field: 'user_id'
         },
         onDelete: 'cascade',
         onUpdate: 'cascade'
@@ -107,10 +106,11 @@ module.exports = {
     ;
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeConstraint('PaymentTypes','userUp_paymentType_const'),
-    await queryInterface.removeConstraint('PaymentTypes','userCr_paymentType_const'),
-    await queryInterface.removeConstraint('PaymentTypes','client_paymentType_const'),
-    await queryInterface.removeConstraint('PaymentTypes','org_paymentType_const'),
-    await queryInterface.dropTable('PaymentTypes');
+    await queryInterface.removeConstraint('payment_type','userUp_paymentType_const'),
+    await queryInterface.removeConstraint('payment_type','userCr_paymentType_const'),
+    await queryInterface.removeConstraint('payment_type','client_paymentType_const'),
+    await queryInterface.removeConstraint('payment_type','org_paymentType_const'),
+    await queryInterface.sequelize.query("drop sequence paymenttype_id_seq;")
+    await queryInterface.dropTable('payment_type');
   }
 };

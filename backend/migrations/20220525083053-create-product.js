@@ -1,8 +1,10 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Products', {
-      Product_id: {
+    //define sequence first start from 1000 id 1- 1000 use for data seeder
+    await queryInterface.sequelize.query("CREATE SEQUENCE product_id_seq start 1000 increment 1");
+    await queryInterface.createTable('product', {
+      product_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -39,6 +41,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Products');
+    await queryInterface.sequelize.query("DROP SEQUENCE product_id_seq");
+    await queryInterface.dropTable('product');
   }
 };

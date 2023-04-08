@@ -2,7 +2,7 @@ let {Businesspartner, Client, Org} = require('../models')
 const { Op } = require("sequelize");
 
 /**
- * Generating value of businesspartner.value with getting the last count of combine name and org.
+ * Generating value of business_partner.value with getting the last count of combine name and org.
  * @param {*} name 
  * @param {*} org_id 
  * @returns 
@@ -37,16 +37,20 @@ function GetAcronymn( str ) {
 
 module.exports = {
     /**
-     * Getting all data base on client id is active return data to list of uom
+     * Getting all data base on client id is active return data to list of uom. this function will have 10 limit as default 
      * @param {*} req.user
      */
     Index: async(req,res) => {
         const UserCrd = req.user
+        let limit = req.query.page_size || 10
+        let offset =  req.query.page
         try {
             Businesspartner.findAll({
                 where:{
                     client_id: UserCrd.Client_id,
-                }
+                },
+                limit: limit,
+                offset: offset
             }).then(function(data){
                 res.status(200).json({
                     status: `success`,
@@ -119,13 +123,13 @@ module.exports = {
     },
     /**
      * updating data of uom data with uom_id as parameter mandatory
-     * @param {Businesspartner_id, name, description, isactive} req 
+     * @param {business_partner_id, name, description, isactive} req 
      * @param {msg, data} res 
      */
     Update: async(req,res) => {
-        const Businesspartner_id = req.params.id;
+        const business_partner_id = req.params.id;
         const {value, name, description, isactive} = req.body
-        let data = await Businesspartner.findByPk(Businesspartner_id)
+        let data = await Businesspartner.findByPk(business_partner_id)
         try {
             if(data == null){
                 throw new Error('data no found');
@@ -162,8 +166,8 @@ module.exports = {
      * @param {*} res 
      */
     Delete: async(req,res) => {
-        const Businesspartner_id = req.params.id;
-        let data = await Businesspartner.findByPk(Businesspartner_id)
+        const business_partner_id = req.params.id;
+        let data = await Businesspartner.findByPk(business_partner_id)
         let name = data.name
         try {
             await data.destroy()

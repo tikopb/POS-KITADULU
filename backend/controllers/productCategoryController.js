@@ -1,4 +1,6 @@
-let { ProductCategory, Client, org } = require('../models');
+let { productcategory, Client, org } = require('../models');
+let Pagination = require('./pagination/pagination');
+const { Op } = require("sequelize");
 
 module.exports = {
     /**
@@ -7,17 +9,21 @@ module.exports = {
      * @param {*} res 
      */
     Index: async(req,res) => {
-        const UserCrd = req.user;
-        ProductCategory.findAll({
-            where: {
-                client_id: UserCrd.client_id
-            }
-        }).then(function (data) {
+        const pagination = new Pagination(); //class decalare
+        const metadata = await pagination.PaginationGet(req,productcategory.tableName);
+        const whereMap = await pagination.GetWhereMapOrm(req); 
+
+        productcategory.findAll({
+            where: whereMap,
+            limit: metadata.limit,
+            offset: metadata.offset
+        }).then(function (data) { 
             if(data.length > 0 ){
                 res.status(200).json({
                     status: 'succsess',
                     msg: 'data get succsess',
-                    data 
+                    metadata: metadata,
+                    data
                 })
             }else{
                 res.status(200).json({
@@ -35,7 +41,7 @@ module.exports = {
      */
     Show: async (req,res) => {
         const ProductCategories_id = req.params.id;
-        let data = await ProductCategory.findByPk(ProductCategories_id)
+        let data = await productcategory.findByPk(ProductCategories_id)
         res.status(200).json({
             status: 'succsess',
             msg: 'Get data Sucsess',
@@ -51,7 +57,7 @@ module.exports = {
         const {name, description} = req.body
         const UserCrd = req.user
         try {
-            let data = await ProductCategory.create({
+            let data = await productcategory.create({
                 name: name,
                 description: description,
                 isactive: true,
@@ -87,7 +93,7 @@ module.exports = {
     Update: async(req,res) => {
         const ProductCategories_id = req.params.id;
         const { name, description, isactive} = req.body
-        let data = await ProductCategory.findByPk(ProductCategories_id)
+        let data = await productcategory.findByPk(ProductCategories_id)
         try {
             if(data == null){
                 throw new Error('data no found');
@@ -126,7 +132,7 @@ module.exports = {
      */
     Delete: async(req,res) => {
         const ProductCategories_id = req.params.id;
-        let data = await ProductCategory.findByPk(ProductCategories_id)
+        let data = await productcategory.findByPk(ProductCategories_id)
         try {
             if(data == null){
                 throw new Error('data no found');

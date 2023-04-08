@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Uom.init({
-    Uom_id: {
+    uom_id: {
       type: DataTypes.INTEGER,
       //autoIncrement: true,
       primaryKey: true,
@@ -27,7 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     client_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Uom',
+    modelName: 'uom',
+    tableName: 'uom',
+    freezeTableName: true
   });
   return Uom;
 };

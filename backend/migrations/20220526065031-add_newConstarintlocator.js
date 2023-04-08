@@ -4,39 +4,39 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     return Promise.all([
       queryInterface.addConstraint(
-        'Locators',{
+        'locator',{
           fields: ['org_id'],
           type: 'foreign key',
           name: 'lct_org_contraint',
           references: { //Required field
-            table: 'Orgs',
-            field: 'Org_id'
+            table: 'org',
+            field: 'org_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
         }
       ),
       queryInterface.addConstraint(
-        'Locators',{
+        'locator',{
           fields: ['client_id'],
           type: 'foreign key',
           name: 'lct_client_contraint',
           references: { //Required field
-            table: 'Clients',
-            field: 'Client_id'
+            table: 'client',
+            field: 'client_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
         }
       ),
       queryInterface.addConstraint(
-        'Locators',{
+        'locator',{
           fields: ['warehouse_id'],
           type: 'foreign key',
           name: 'lct_whr_contraint',
           references: { //Required field
-            table: 'Warehouses',
-            field: 'Warehouse_id'
+            table: 'warehouse',
+            field: 'warehouse_id'
           },
           onDelete: 'cascade',
           onUpdate: 'cascade'
@@ -46,8 +46,8 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    queryInterface.removeConstraint('Locators','lct_org_contraint'),
-    queryInterface.removeConstraint('Locators','lct_client_contraint'),
-    queryInterface.removeConstraint('Locators','lct_whr_contraint')
+    queryInterface.removeConstraint('locator','lct_org_contraint'),
+    queryInterface.removeConstraint('locator','lct_client_contraint'),
+    queryInterface.removeConstraint('locator','lct_whr_contraint')
   }
 };

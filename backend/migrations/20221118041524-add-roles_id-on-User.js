@@ -5,19 +5,19 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     return Promise.all([
       queryInterface.addColumn(
-        'Users',
+        'user',
         'role_id',
         {
           type: Sequelize.INTEGER
         }
       ),
       await queryInterface.addConstraint(
-        'Users',{
+        'user',{
           fields: ['role_id'],
           type: 'foreign key',
           name: 'user_roles_const',
           references: { //Required field
-            table: 'Roles',
+            table: 'role',
             field: 'role_id'
           },
           onDelete: 'cascade',
@@ -28,6 +28,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    queryInterface.removeConstraint('Users','user_roles_const')
+    queryInterface.removeConstraint('user','user_roles_const')
   }
 };
