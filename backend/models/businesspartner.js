@@ -35,7 +35,6 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'business_partner',
     tableName: 'business_partner',
     freezeTableName: true,
-    underscored: true,
   });
   
   return Businesspartner;
