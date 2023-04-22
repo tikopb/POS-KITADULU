@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 module.exports = {
     /**
      * Getting all data with client_id as data variabel
-     * @param {*} req 
+     * @param {*} req  
      * @param {*} res 
      */
     Index: async(req,res) => {

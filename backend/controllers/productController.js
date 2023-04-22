@@ -1,6 +1,6 @@
 let { Product, Org, Client, UomConvertion } = require('../models');
 const { Op } = require("sequelize");
-
+let Pagination = require('./pagination/pagination');    
 
 function GetProduct(nama, barcode, org_id, client_id) {
     const clientM = Client.GetClient(client_id)
@@ -36,9 +36,14 @@ module.exports = {
      * @param {*} res 
      */
     Index: async(req,res) =>{
-        let userCrd = req.user
+        const pagination = new Pagination(); //class decalare
+        const metadata = await pagination.PaginationGet(req,productcategory.tableName);
+        const whereMap = await pagination.GetWhereMapOrm(req); 
+
         const data = await Product.findAll({
-            client_id: userCrd.client_id
+            where: whereMap,
+            limit: metadata.limit,
+            offset: metadata.offset
         })
         res.status(200).json({
             status: `succsess`,

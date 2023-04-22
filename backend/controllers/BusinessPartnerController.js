@@ -1,4 +1,5 @@
-let {Businesspartner, Client, Org} = require('../models') 
+let {business_partner, Client, Org} = require('../models');
+let Pagination = require('./pagination/pagination');
 const { Op } = require("sequelize");
 
 /**
@@ -9,7 +10,7 @@ const { Op } = require("sequelize");
  */
 async function GenerateValueGenerator(name, org_id){
     let value = GetAcronymn(name)
-    let countBpList = await Businesspartner.findAll({
+    let countBpList = await business_partner.findAll({
         where: {
             value: {
                 [Op.like]: value + '%'
@@ -41,22 +42,31 @@ module.exports = {
      * @param {*} req.user
      */
     Index: async(req,res) => {
-        const UserCrd = req.user
-        let limit = req.query.page_size || 10
-        let offset =  req.query.page
+        const pagination = new Pagination(); //class decalare
+        const metadata = await pagination.PaginationGet(req,business_partner.tableName);
+        const whereMap = await pagination.GetWhereMapOrm(req); 
+       
         try {
-            Businesspartner.findAll({
-                where:{
-                    client_id: UserCrd.Client_id,
-                },
-                limit: limit,
-                offset: offset
+            business_partner.findAll({
+                where:whereMap,
+                limit: metadata.limit,
+                offset: metadata.offset
             }).then(function(data){
-                res.status(200).json({
-                    status: `success`,
-                    msg: `get succsess`,
-                    data
-                })
+                if(data.length > 0){
+                    res.status(200).json({
+                        status: `success`,
+                        msg: `get succsess`,
+                        metadata:metadata,
+                        data
+                    })
+                }
+                else{
+                    res.status(200).json({
+                        status: 'succsess',
+                        msg: "business partner not exist",
+                        data
+                    })
+                }
             })
         } catch (err) {
             res.status(500).json({
@@ -67,18 +77,18 @@ module.exports = {
     },
     /**
      * Getting data uom with ID
-     * @param {businesspartner_id} req  
+     * @param {business_partner_id} req  
      */
     Show: async(req,res) => {
-        const businesspartner_id = req.params.id
-        let data = await Businesspartner.findByPk(businesspartner_id)
+        const business_partner_id = req.params.id
+        let data = await business_partner.findByPk(business_partner_id)
         res.status(200).json({
             status: `success`,
             msg: `get succsess`,
             data,
         })
     },
-    /**
+    /**¡
      * Creating data of uom
      * @param {client_id, name, description, org_id, client_id} client_id 
      * @param {*} res 
@@ -92,7 +102,7 @@ module.exports = {
             console.log("value = " + valueP)
         }
         try {
-            let data = await Businesspartner.create({
+            let data = await business_partner.create({
                 value: valueP,
                 client_id: UserCrd.Client_id,
                 org_id: UserCrd.Org_id,
@@ -129,7 +139,7 @@ module.exports = {
     Update: async(req,res) => {
         const business_partner_id = req.params.id;
         const {value, name, description, isactive} = req.body
-        let data = await Businesspartner.findByPk(business_partner_id)
+        let data = await business_partner.findByPk(business_partner_id)
         try {
             if(data == null){
                 throw new Error('data no found');
@@ -167,7 +177,7 @@ module.exports = {
      */
     Delete: async(req,res) => {
         const business_partner_id = req.params.id;
-        let data = await Businesspartner.findByPk(business_partner_id)
+        let data = await business_partner.findByPk(business_partner_id)
         let name = data.name
         try {
             await data.destroy()

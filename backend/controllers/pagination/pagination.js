@@ -54,7 +54,11 @@ class Pagination{
         const value = searchParams[param];
         if (param !== 'page') {
           if(param !== 'page_size'){
-            whereClause[param] = { [Op.iLike]: `%${value}%` };
+            if (value === 'true' || value === 'false' ) {
+              whereClause[param] = value;
+            } else{
+              whereClause[param] = { [Op.iLike]: `%${value}%` };
+            }
           }
         }
       }
@@ -62,6 +66,11 @@ class Pagination{
     return whereClause;
   }
 
+  /**
+   * Getting sql for condition with function search more than one condition
+   * @param {*} req 
+   * @returns 
+   */
   GetWhereSql = async (req) => {
     const searchParams = req.query;
     let sql ='';
@@ -79,7 +88,7 @@ class Pagination{
   }
 
   /**
-   * getting data from materlized view use when not use where as parameter
+   * getting data pagination with materlized view
    * @param {*} tableName 
    */
   CountDataWithMaterialized = async (tableName, client_id) => {
@@ -90,7 +99,7 @@ class Pagination{
           type: QueryTypes.SELECT,
         },
       );
-    return parseInt(count[0].count);;
+    return parseInt(count[0].count);
   }
 
   /**
