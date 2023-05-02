@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "password1",
+    "password": "postgres",
     "database": "poskita",
     "host": "localhost",
     "dialect": "postgres",
@@ -18,7 +18,7 @@
   },
   "production": {
     "username": "root",
-    "password": null,
+    "password": null, 
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "psql"
