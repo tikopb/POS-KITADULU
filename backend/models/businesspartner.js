@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Businesspartner extends Model {
     /**
@@ -35,5 +36,6 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'business_partner',
     freezeTableName: true,
   });
+  
   return Businesspartner;
 };

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { refreshToken, Users } = require("../models");
+const { refreshToken, user } = require("../models");
 require("dotenv").config();
 
 const handleRefreshToken = async (req, res) => {
@@ -61,9 +61,11 @@ const handleRefreshToken = async (req, res) => {
         });
       }
 
-      const currUser = await Users.findOne({
-        where: { User_id: userFound.userId },
+      const currUser = await user.findOne({
+        where: { user_id: userFound.userId },
       });
+
+      console.log("currUser", currUser);
       const token = currUser.generateToken(currUser);
 
       await refreshToken.create({
@@ -82,17 +84,12 @@ const handleRefreshToken = async (req, res) => {
       const orgAccess = await currUser.GetUserOrgAccess(currUser.id);
 
       await refreshToken.destroy({
-        where: { userId: currUser.User_id, refreshToken: refreshTokenData },
+        where: { userId: currUser.user_id, refreshToken: refreshTokenData },
       });
-
-      console.log("token.refreshToken");
-      console.log(token.refreshToken);
-      console.log("token.accessToken");
-      console.log(token.accessToken);
 
       res.json({
         user: {
-          userId: currUser.User_id,
+          userId: currUser.user_id,
           email: currUser.email,
           username: currUser.username,
           name: currUser.name,

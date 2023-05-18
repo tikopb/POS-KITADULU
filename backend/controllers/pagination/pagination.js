@@ -92,7 +92,7 @@ class Pagination{
    * @param {*} tableName 
    */
   CountDataWithMaterialized = async (tableName, client_id) => {
-    let sql = `select count("${tableName}_id") as count from ${tableName} where client_id = ${client_id}`;
+    let sql = `select coalesce(count("${tableName}_id"),0) as count from ${tableName} where client_id = ${client_id}`;
     console.log(sql)
     let count = await sequelize.query(sql,
         {
@@ -108,7 +108,7 @@ class Pagination{
    */
   CountDataWithWhereParameter = async (tableName, client_id, paramSql) => {
 
-    let sql = `select count("${tableName}_id") as count from ${tableName} where client_id = ${client_id} ${paramSql}` 
+    let sql = `select coalesce(count("${tableName}_id"),0) as count from ${tableName} where client_id = ${client_id} ${paramSql}` 
     let count = await sequelize.query(sql,
       {
         type: QueryTypes.SELECT,
