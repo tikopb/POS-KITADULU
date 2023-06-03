@@ -11,8 +11,8 @@ module.exports = {
     Index: async(req,res) => {
         const pagination = new Pagination(); //class decalare
         const metadata = await pagination.PaginationGet(req,productcategory.tableName);
-        const whereMap = await pagination.GetWhereMapOrm(req); 
-
+        const whereMap = await pagination.GetWhereMapOrm(req,productcategory.tableName, res); 
+        
         productcategory.findAll({
             where: whereMap,
             limit: metadata.limit,
@@ -61,7 +61,7 @@ module.exports = {
                 name: name,
                 description: description,
                 isactive: true,
-                org_id: UserCrd.Org_id,
+                org_id: UserCrd.org_id,
                 client_id: UserCrd.client_id
             })
             res.status(201).json({
