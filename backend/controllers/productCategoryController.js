@@ -5,6 +5,7 @@ const { Op } = require("sequelize");
 module.exports = {
     /**
      * Getting all data with client_id as data variabel
+     * order by name as default
      * @param {*} req  
      * @param {*} res 
      */
@@ -16,7 +17,8 @@ module.exports = {
         productcategory.findAll({
             where: whereMap,
             limit: metadata.limit,
-            offset: metadata.offset
+            offset: metadata.offset,
+            order: [['name']]
         }).then(function (data) { 
             if(data.length > 0 ){
                 res.status(200).json({

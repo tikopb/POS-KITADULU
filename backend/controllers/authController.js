@@ -66,7 +66,9 @@ module.exports = {
 
         const menuAccess = await user.GetMenuAuth(user.role_id);
         const orgAccess = await user.GetUserOrgAccess(user.user_id);
-        res.json({
+        res.status(200).json({
+          status: 'Auth succsess',
+          msg: 'Login success',
           user: {
             userId: user.user_id,
             email: user.email,
@@ -83,7 +85,8 @@ module.exports = {
       })
       .catch((err) => {
         res.status(500).json({
-          err: `${err.toString()}`,
+          status: 'Auth failed',
+          msg: `${err.toString()}`
         });
       });
   },
