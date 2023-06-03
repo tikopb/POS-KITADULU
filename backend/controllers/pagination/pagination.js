@@ -1,8 +1,7 @@
 const sequelize = require('../../config/db');
 const { QueryTypes } = require("sequelize");
-
+const PaginationTableMaterial = require('./paginationTableMaterial');
 const { Op } = require("sequelize");
-
 
 class Pagination{
   /**
@@ -12,7 +11,7 @@ class Pagination{
    * @param {*} tableName 
    */
   PaginationGet = async(req,tableName) => {
-    const WhereMap = await this.GetWhereMapOrm(req);
+    const WhereMap = await this.GetWhereMapOrm(req, tableName);
     let total_data = 0;
     let limit = req.query.page_size || 20
     const page = req.query.page || 1;
@@ -43,28 +42,39 @@ class Pagination{
    * function making map for where decalare on function
    * @returns whereParameter
    */
-  GetWhereMapOrm = async (req) => {
-    const searchParams = req.query;
+  GetWhereMapOrm = async (req, tableName, res) => {
+    const paginationTableMaterial = new PaginationTableMaterial(); //class decalare
+    let searchParams = req.query;
+    if ('q' in searchParams) {
+      searchParams = await paginationTableMaterial.GetColumnmaterialSearch(tableName, req.query.q, res);
+    }
+
     const whereClause = {
       client_id: req.user.client_id
     };
-
+  
+    const orCondition = [];
+  
     for (const param in searchParams) {
       if (searchParams.hasOwnProperty(param)) {
         const value = searchParams[param];
-        if (param !== 'page') {
-          if(param !== 'page_size'){
-            if (value === 'true' || value === 'false' ) {
-              whereClause[param] = value;
-            } else{
-              whereClause[param] = { [Op.iLike]: `%${value}%` };
-            }
+        if (param !== 'page' && param !== 'page_size') {
+          if (value === 'true' || value === 'false') {
+            whereClause[param] = value || true;
+          } else {
+            orCondition.push({ [param]: { [Op.iLike]: `%${value}%` } });
           }
         }
       }
     }
+  
+    if (orCondition.length > 0) {
+      whereClause[Op.or] = orCondition;
+    }
+  
     return whereClause;
-  }
+  };
+  
 
   /**
    * Getting sql for condition with function search more than one condition
