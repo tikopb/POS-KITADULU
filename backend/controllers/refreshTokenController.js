@@ -54,6 +54,26 @@ const handleRefreshToken = async (req, res) => {
         });
       }
 
+      if (!userFound) {
+        await refreshToken.destroy({
+          where: {
+            userId: decoded.user.userId,
+            refreshToken: refreshTokenData,
+          },
+        });
+
+        res.clearCookie("jwt", {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+        });
+
+        return res.status(401).json({
+          message: "token expired",
+          code: "403",
+        });
+      }
+
       if (err || userFound.userId !== decoded.user.userId) {
         return res.status(403).json({
           message: "token / user not same",
@@ -65,7 +85,6 @@ const handleRefreshToken = async (req, res) => {
         where: { user_id: userFound.userId },
       });
 
-      console.log("currUser", currUser);
       const token = currUser.generateToken(currUser);
 
       await refreshToken.create({
