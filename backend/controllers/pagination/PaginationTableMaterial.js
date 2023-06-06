@@ -1,4 +1,7 @@
 
+/**
+ * this class use for mapping all table when need searching feature 
+ */
 class PaginationTableMaterial{
     GetColumnmaterialSearch(tableName, qValue){
         let whereColumnName =[];
