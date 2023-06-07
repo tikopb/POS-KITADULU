@@ -12,19 +12,20 @@ class Pagination{
    */
   PaginationGet = async(req,tableName) => {
     const WhereMap = await this.GetWhereMapOrm(req, tableName);
+    let validationWhereMap = await this.WhereMapMoreThenOneParameterValidate(WhereMap);
     let total_data = 0;
     let limit = req.query.page_size || 20
-    const page = req.query.page || 1;
+    const page = parseInt(req.query.page) || 1;
     let offset = limit * (page - 1);
-    
-    if(Object.keys(WhereMap).length > 1){
-      const sql = await this.GetWhereSql(req)
+
+    if(validationWhereMap){
+      const sql = await this.GetWhereSql(req, tableName);
       total_data = await this.CountDataWithWhereParameter(tableName, req.user.client_id, sql);
-      offset = 0;
     }else{
       total_data = await this.CountDataWithMaterialized(tableName, req.user.client_id);
     }
     let  total_page = Math.ceil(total_data / limit);
+    console.log(`total_data: ${total_data} && limit ${limit}`)
     if(total_page == 0){
       total_page = 1
     }
@@ -75,14 +76,31 @@ class Pagination{
     return whereClause;
   };
   
+   /**
+   * getting data pagination with materlized view
+   * @param {*} tableName 
+   */
+   WhereMapMoreThenOneParameterValidate = async (WhereMap) => {
+    let validationValue = false;
+    delete WhereMap.client_id;
+
+    if(Object.keys(WhereMap).length > 0){
+      validationValue = true
+    }
+    return Object.keys(WhereMap).length
+  };
 
   /**
    * Getting sql for condition with function search more than one condition
    * @param {*} req 
    * @returns 
    */
-  GetWhereSql = async (req) => {
-    const searchParams = req.query;
+  GetWhereSql = async (req, tableName) => {
+    const paginationTableMaterial = new PaginationTableMaterial(); //class decalare
+    let searchParams = req.query;
+    if ('q' in searchParams) {
+      searchParams = await paginationTableMaterial.GetColumnmaterialSearch(tableName, req.query.q);
+    }
     let sql ='';
     let i = 0;
 
@@ -90,13 +108,18 @@ class Pagination{
       if(key !== 'page'){
         if(key !=='page_size'){
           const value = searchParams[key].toLowerCase();
-          sql += ` and lower ('${key}') like '%${value}%' `
+          if (i === 0) {
+            sql += ` lower (${key}) like '%${value}%' `;
+          } else {
+            sql += ` or lower (${key}) like '%${value}%' `;
+          }
+          i++;
         }
       }
     }
     return sql;
   }
-
+  
   /**
    * getting data pagination with materlized view
    * @param {*} tableName 
@@ -118,7 +141,8 @@ class Pagination{
    */
   CountDataWithWhereParameter = async (tableName, client_id, paramSql) => {
 
-    let sql = `select coalesce(count("${tableName}_id"),0) as count from ${tableName} where client_id = ${client_id} ${paramSql}` 
+    let sql = `select coalesce(count("${tableName}_id"),0) as count from ${tableName} where client_id = ${client_id} and ( ${paramSql} )` 
+    console.log(`dounting data ==== ${sql}`)
     let count = await sequelize.query(sql,
       {
         type: QueryTypes.SELECT,

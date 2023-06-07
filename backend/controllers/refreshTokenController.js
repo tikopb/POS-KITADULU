@@ -24,6 +24,13 @@ const handleRefreshToken = async (req, res) => {
   });
 
   if (!userFound) {
+    console.log(`masuk if ============== ${userFound}`)
+    return res.status(403).json({
+      status: 'Session end',
+      msg: "session end please login again",
+      message: "unauthorized",
+      code: "401",
+    });
     jwt.verify(
       refreshTokenData,
       process.env.REFRESH_TOKEN_SECRET,
@@ -31,7 +38,7 @@ const handleRefreshToken = async (req, res) => {
         if (err)
           return res.status(403).json({
             message: "unauthorized",
-            code: "403",
+            code: "401",
           });
 
         // delete all refresh token store on db
