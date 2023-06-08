@@ -28,7 +28,7 @@ module.exports = {
                     data
                 })
             }else{
-                res.status(200).json({
+                res.status(404).json({
                     status: 'succsess',
                     msg: "product category not exist",
                     data
