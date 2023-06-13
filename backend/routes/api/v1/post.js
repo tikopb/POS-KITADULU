@@ -3,8 +3,8 @@ const multer = require("multer");
 
 const controllers = require("../../../controllers");
 const restrict = require("../../middlewares/restrict");
-var uploud = multer({dest: "../../../services/bulkImport/uplouds/"}); 
-var bulk = require("../../../services/BulkImport/ImportCoreProcess");
+var uploud = multer({dest: "./services/bulkImport/uplouds/"}); 
+var ImportCoreProcess = require("../../../services/BulkImport/ImportCoreProcess");
 const apiV = "v1";
 
 //login and register
@@ -103,7 +103,7 @@ router.delete("/api/v1/karyawan/:id",restrict,controllers.Karyawan.Delete);
 
 
 // bulk import start
-router.post("/api/v1/bulk/productCategory/", restrict, uploud.single('file'), bulk.ParsingExcelToJson);
+router.post("/api/v1/bulk/productCategory/", uploud.single('file'), controllers.productCategories.Bulk);
 
 
 // bulk import end

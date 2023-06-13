@@ -29,8 +29,11 @@ class ImportCoreProcess{
                 });
     
                 fs.remove(filePath)
-                console.log(excelData)
-                res.status(200).json(excelData);
+                res.status(200).json({
+                    status: 'succsess',
+                    msg: 'data get succsess',
+                    excelData
+                });
             }
         } catch (err) {
             res.status(500).json({
