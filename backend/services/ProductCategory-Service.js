@@ -154,13 +154,21 @@ class ProductCategoriesService {
      * @param {*} filename 
      * @returns 
      */
-    Bulk = async (filename) => {
+    Bulk = async (filename, mimetype) => {
         const coreImport = new ImportCoreProcess();
-        let processImport = await coreImport.ParsingExcelToJson(filename);
+        let processImport = await coreImport.ParsingExcelToJson(filename, mimetype);
         let counting = 0;
         let returnObj = [];
         let dataCreated = [];
         try {
+            if(processImport.status === "erorr"){
+                return ({
+                    status: 'erorr',
+                    msg: processImport.msg,
+                    urlEncoding: 500,
+                    data: dataCreated
+                })
+            }
             for (const item of processImport.data.upload) {
                 // Access the properties of each item in the loop
                 const name = item.name;
@@ -181,10 +189,9 @@ class ProductCategoriesService {
             return ({
                 status: 'erorr',
                 msg: `Something went wrong ${err.message}`,
-                urlEncoding: 200,
+                urlEncoding: 500,
                 data: dataCreated
             })
-
         }
         return returnObj;
     }

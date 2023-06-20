@@ -3,10 +3,6 @@ let Pagination = require('./pagination/pagination');
 const { Op } = require("sequelize");
 const path = require('path');
 
-
-
-const excelToJson = require("convert-excel-to-json");
-const fs = require("fs-extra");
 let ProductCategoriesService = require("../services/ProductCategory-Service");
 
 module.exports = {
@@ -117,15 +113,28 @@ module.exports = {
         }
     },
 
+    /**
+     * Saving 
+     * @param {*} req 
+     * @param {*} res 
+     */
     BulkUploud: async(req,res) => {
+        if(req.file === null || req.file === undefined){
+            res.status(400).json({
+                status: 'erorr',
+                msg: "File NOT FOUND"
+            })
+        }
         const service = new ProductCategoriesService(req);
-        const filename = req.file.filename;
-        const todo = await service.Bulk(req.file.filename);
+        const todo = await service.Bulk(req.file.filename, req.file.mimetype);
 
         res.status(todo.urlEncoding).json({
-            todo
+            status: todo.status,
+            msg: todo.msg,
+            data: todo.data
         });
     },
+
 
     DownloadTemplate: async (req, res) => {
         // filePath

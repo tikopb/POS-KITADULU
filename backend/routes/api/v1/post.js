@@ -4,8 +4,6 @@ const multer = require("multer");
 const controllers = require("../../../controllers");
 const restrict = require("../../middlewares/restrict");
 var uploud = multer({dest: "./services/BulkImport/upload"}); 
-var ImportCoreProcess = require("../../../services/BulkImport/ImportCoreProcess");
-const apiV = "v1";
 
 //login and register
 router.post("/api/v1/auth/register", controllers.auth.register);
@@ -103,7 +101,7 @@ router.delete("/api/v1/karyawan/:id",restrict,controllers.Karyawan.Delete);
 
 
 // bulk import start
-router.post("/api/v1/bulk/productCategory/", restrict, uploud.single('file'), controllers.productCategories.BulkUploud);
+router.post("/api/v1/bulk/productCategory/", uploud.single('file'), controllers.productCategories.BulkUploud);
 router.get("/api/v1/download/productCategory/", restrict , controllers.productCategories.DownloadTemplate);
 
 

@@ -3,27 +3,27 @@ const excelToJson = require("convert-excel-to-json");
 const fs = require("fs-extra");
 const path = require('path');
 
-var uploud = multer({dest: "./services/BulkImport/uplouds"});
 
 class ImportCoreProcess{
 
     /**
      * execute excel file and parsing into object return into object parsing
-     * system just execute file on uplouds sheet
+     * system just execute file on upload sheet
      * @returns 
      */
-    ParsingExcelToJson = async(filename) => {
+    ParsingExcelToJson = async(filename, mimetype) => {
+        //validation file must be on XLSX FORMAT!
+        var filePath = "./services/BulkImport/upload/" + filename;            
+        if(mimetype !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+            fs.remove(filePath) //deletin file after failed
+            return ({
+                status: 'erorr',
+                msg: 'FILE NOT IN XLSX FORMAT!',
+                data: []
+            })
+        }
         try {
-            //system will return failed when file is not found
-            if (filename === null || filename === 'undefined') {
-                return ({
-                    status: 'erorr',
-                    msg: 'file not exist',
-                    data: []
-                })
-            }
-            //filePath will filied with obejct excel parsing from user
-            var filePath = "./services/BulkImport/upload/" + filename;            
+            //filePath will filied with object excel parsing from user
             const excelData = await excelToJson({
                 sourceFile: filePath,
                 header :{
@@ -52,7 +52,7 @@ class ImportCoreProcess{
     }
 
     GetTemplateFile = async (tableName) => {
-        const filePath = path.join('./services/BulkImport/uplouds/', tableName+'.xlsx');
+        const filePath = path.join('./services/BulkImport/download/', tableName+'.xlsx');
         return filePath;
     }
 }
