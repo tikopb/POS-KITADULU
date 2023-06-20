@@ -103,7 +103,8 @@ router.delete("/api/v1/karyawan/:id",restrict,controllers.Karyawan.Delete);
 
 
 // bulk import start
-router.post("/api/v1/bulk/productCategory/", restrict, uploud.single('file'), controllers.productCategories.Bulk);
+router.post("/api/v1/bulk/productCategory/", restrict, uploud.single('file'), controllers.productCategories.BulkUploud);
+router.get("/api/v1/download/productCategory/", restrict , controllers.productCategories.DownloadTemplate);
 
 
 // bulk import end

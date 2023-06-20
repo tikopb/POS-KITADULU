@@ -1,9 +1,6 @@
 const { productcategory } = require('../models');
-const excelToJson = require("convert-excel-to-json");
-const fs = require("fs-extra");
 const ImportCoreProcess = require("./BulkImport/ImportCoreProcess");
 let Pagination = require('./pagination/pagination');
-
 
 class ProductCategoriesService {
     constructor(req) {
@@ -190,6 +187,12 @@ class ProductCategoriesService {
 
         }
         return returnObj;
+    }
+
+    DownloadTemplate = async() => {
+        const coreImport = new ImportCoreProcess();
+        let filePath = await coreImport.GetTemplateFile(productcategory.tableName);
+        return filePath;
     }
 }
 

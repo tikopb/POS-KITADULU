@@ -1,6 +1,7 @@
 const multer = require("multer");
 const excelToJson = require("convert-excel-to-json");
 const fs = require("fs-extra");
+const path = require('path');
 
 var uploud = multer({dest: "./services/BulkImport/uplouds"});
 
@@ -13,8 +14,6 @@ class ImportCoreProcess{
      */
     ParsingExcelToJson = async(filename) => {
         try {
-                    console.log(`file name ${filename}`)
-
             //system will return failed when file is not found
             if (filename === null || filename === 'undefined') {
                 return ({
@@ -50,6 +49,11 @@ class ImportCoreProcess{
             })
             
         }
+    }
+
+    GetTemplateFile = async (tableName) => {
+        const filePath = path.join('./services/BulkImport/uplouds/', tableName+'.xlsx');
+        return filePath;
     }
 }
 

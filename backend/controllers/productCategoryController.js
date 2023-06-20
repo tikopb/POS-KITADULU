@@ -1,6 +1,8 @@
 let { productcategory, Client, org } = require('../models');
 let Pagination = require('./pagination/pagination');
 const { Op } = require("sequelize");
+const path = require('path');
+
 
 
 const excelToJson = require("convert-excel-to-json");
@@ -114,13 +116,32 @@ module.exports = {
             })
         }
     },
-    Bulk: async(req,res) => {
+
+    BulkUploud: async(req,res) => {
         const service = new ProductCategoriesService(req);
         const filename = req.file.filename;
         const todo = await service.Bulk(req.file.filename);
 
-        return res.status(todo.urlEncoding).json({
+        res.status(todo.urlEncoding).json({
             todo
         });
     },
+
+    DownloadTemplate: async (req, res) => {
+        // filePath
+        const filePath = path.join(
+          './services/BulkImport/download/',
+          productcategory.tableName + 'template.xlsx'
+        );
+      
+        const isAvailable = fs.existsSync(filePath);
+        if(!isAvailable){
+            res.status(500).json({
+                status: 'error',
+                msg: `Something went wrong: FILE NOT FOUND!`,
+            });
+        }
+
+        res.download(filePath, (err) => {})
+    } 
 }
