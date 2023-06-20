@@ -1,8 +1,9 @@
 const router = require("express").Router();
+const multer = require("multer");
 
 const controllers = require("../../../controllers");
 const restrict = require("../../middlewares/restrict");
-const apiV = "v1";
+var uploud = multer({dest: "./services/BulkImport/upload"}); 
 
 //login and register
 router.post("/api/v1/auth/register", controllers.auth.register);
@@ -97,5 +98,13 @@ router.post("/api/v1/karyawan/",restrict,controllers.Karyawan.Create);
 router.put("/api/v1/karyawan/:id", restrict, controllers.Karyawan.Update);
 router.delete("/api/v1/karyawan/:id",restrict,controllers.Karyawan.Delete);
 //locator end
+
+
+// bulk import start
+router.post("/api/v1/bulk/productCategory/", restrict, uploud.single('file'), controllers.productCategories.BulkUploud);
+router.get("/api/v1/download/productCategory/", restrict , controllers.productCategories.DownloadTemplate);
+
+
+// bulk import end
 
 module.exports = router;

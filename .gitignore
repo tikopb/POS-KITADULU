@@ -130,3 +130,7 @@ dist
 .pnp.*
 
 backend/config/config.json
+
+backend/package-lock.json
+
+backend/yarn.lock
