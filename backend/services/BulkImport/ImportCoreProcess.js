@@ -34,7 +34,6 @@ class ImportCoreProcess{
                     "*": "{{columnHeader}}",
                 },
             });
-            console.log(filePath)
             fs.remove(filePath) //deleteing file after execute
             return ({
                 status: 'sucsess',

@@ -173,18 +173,23 @@ class ProductCategoriesService {
                 // Access the properties of each item in the loop
                 const name = item.name;
                 const description = item.description;
-                
+
+                //validate if data existed then continue;
+                const data = await productcategory.findOne({ where: { name: name} });
+                if(data!==null ){
+                    continue;
+                }
+
                 let created = await this.Store(name,description);
                 counting++;
                 dataCreated.push(created.data)
-
-                returnObj = ({
-                    status: 'sucsess',
-                    msg: `${counting} data succsess imported`,
-                    urlEncoding: 200,
-                    data: dataCreated
-                })
             }
+            returnObj = ({
+                status: 'sucsess',
+                msg: `${counting} data succsess imported`,
+                urlEncoding: 200,
+                data: dataCreated
+            })
         } catch (err) {
             return ({
                 status: 'erorr',
