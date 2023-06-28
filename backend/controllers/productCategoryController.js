@@ -95,22 +95,14 @@ module.exports = {
      */
     Delete: async(req,res) => {
         const ProductCategories_id = req.params.id;
-        let data = await productcategory.findByPk(ProductCategories_id)
-        try {
-            if(data == null){
-                throw new Error('data no found');
-            };
-            await data.destroy()
-            res.status(200).json({
-                status: 'succsess',
-                msg: 'data deleted'
-            })
-        } catch(err){
-            res.status(401).json({
-                status: 'erorr',
-                msg: err.message
-            })
-        }
+        const service = new ProductCategoriesService(req);
+        const todo = await service.Delete(ProductCategories_id);
+
+        return res.status(todo.urlEncoding).json({
+            status: todo.status,
+            msg: todo.msg,
+            data: todo.data
+        });     
     },
 
     /**
