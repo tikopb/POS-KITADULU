@@ -25,6 +25,7 @@ class BusinessPartnerService {
             where: whereMap,
             limit: metadata.limit,
             offset: metadata.offset,
+
             order: [['name']]
         });
         console.log(`data == ${data}`)
@@ -55,19 +56,17 @@ class BusinessPartnerService {
      * @returns 
      */
     Store =  async() => {
-        const {name, description} = this.req.body
-        let {value} = req.body;
+        const {name, description} = this.body
+        let {value} = this.body;
         let returnObj=[]
-        if(this.req.value === null || this.req.value === ""){
-            value = await GenerateValueGenerator(name, this.user.Org_id)
-        }else{
-            value = this.req.value;
+        if(value === null || value === ""){
+            value = await this.GenerateValueGenerator(name, this.user.org_id)
         }
         try {
             let data = await business_partner.create({
                 value: value,
-                client_id: this.user.Client_id,
-                org_id: this.user.Org_id,
+                client_id: this.user.client_id,
+                org_id: this.user.org_id,
                 name: name,
                 description: description,
                 isactive: true
@@ -82,7 +81,7 @@ class BusinessPartnerService {
             if (err.name === 'SequelizeUniqueConstraintError') {
                 return({
                     status: 'error',
-                    msg: `Business Partner with value ${name} already exists`,
+                    msg: `Business Partner with value ${value}, name ${name} already exists`,
                     urlEncoding: 403,
                     data: []
                 })
@@ -103,7 +102,7 @@ class BusinessPartnerService {
      * @param {*} business_partner_id 
      */
     Update = async(business_partner_id) => {
-        const {value, name, description, isactive} = req.body;
+        const {value, name, description, isactive} = this.body;
         let data = await business_partner.findByPk(business_partner_id)
         try {
             if(data == null){
@@ -153,24 +152,23 @@ class BusinessPartnerService {
      */
     Delete = async(business_partner_id)=> {
         let data = await business_partner.findByPk(business_partner_id)
-        let name = data.name
         try {
+            if(data == null){
+                throw new Error('data no found');
+            }
+            let name = data.name
             await data.destroy()
-            this.returnObj({
+            this.returnObj = ({
                 status: `success`,
                 msg:`data ${name}  success deleted`,
                 urlEncoding: 403,
                 data: []
             })
         } catch (err) {
-            res.status(401).json({
-                status: `erorr`,
-                msg: err.message
-            })
-            this.returnObj({
+            this.returnObj = ({
                 status: 'erorr',
                 msg: `Something went wrong: ${err.message}`,
-                urlEncoding: 403,
+                urlEncoding: 500,
                 data: []
             })
         }
@@ -186,7 +184,7 @@ class BusinessPartnerService {
      * @returns 
      */
     GenerateValueGenerator = async (name, org_id) => {
-        let value = GetAcronymn(name)
+        let value = this.GetAcronymn(name)
         let countBpList = await business_partner.findAll({
             where: {
                 value: {

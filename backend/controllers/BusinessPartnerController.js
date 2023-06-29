@@ -4,40 +4,6 @@ const { Op } = require("sequelize");
 
 let BusinessPartnerService = require("../services/BusinessPartner-Service");
 
-/**
- * Generating value of business_partner.value with getting the last count of combine name and org.
- * @param {*} name 
- * @param {*} org_id 
- * @returns 
- */
-async function GenerateValueGenerator(name, org_id){
-    let value = GetAcronymn(name)
-    let countBpList = await business_partner.findAll({
-        where: {
-            value: {
-                [Op.like]: value + '%'
-            },
-            org_id: org_id
-        }
-    })
-    if(countBpList.length > 0 ){
-        let lastNumber = countBpList.length+1
-        value = value + '-' + lastNumber
-    }
-    return value.toUpperCase();
-}
-
-/**
- * generating acrynoym on str variabel
- * @param {*} str
- */
-function GetAcronymn( str ) {
-    return str.split( /\b(?=[a-z])/ig ) // split on word boundaries
-      .map( token => token[0] )         // get first letter of each token
-      .join( '' ).toUpperCase()         // convert to uppercase string
-    ;
-}
-
 module.exports = {
     /**
     * Getting all data base on client id is active return data to list of uom. this function will have 10 limit as default 
@@ -80,7 +46,7 @@ module.exports = {
     Show: async(req,res) => {
         const business_partner_id = req.params.id
         const service = new BusinessPartnerService(req);
-        const todo = await service.getOne(business_partner_id);
+        const todo = await service.GetOne(business_partner_id);
 
         return res.status(todo.urlEncoding).json({
             status: todo.status,
