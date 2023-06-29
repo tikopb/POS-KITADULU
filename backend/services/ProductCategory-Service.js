@@ -14,7 +14,7 @@ class ProductCategoriesService {
      * get all data base on user.client_id credential
      * 
      */
-    getAll = async () => {
+    GetAll = async () => {
         const pagination = new Pagination(); //class decalare
         const metadata = await pagination.PaginationGet(req,productcategory.tableName);
         const whereMap = await pagination.GetWhereMapOrm(req,productcategory.tableName, res); 
@@ -144,6 +144,31 @@ class ProductCategoriesService {
                     data: []
                 })
             }
+        }
+        return returnObj;
+    }
+
+    Delete = async(ProductCategories_id) => {
+        let data = await productcategory.findByPk(ProductCategories_id)
+        let returnObj = [];
+        try {
+            if(data == null){
+                throw new Error('data no found');
+            };
+            await data.destroy()
+            returnObj = ({
+                status: 'succsess',
+                msg: `data deleted`,
+                urlEncoding: 200,
+                data: []
+            })
+        } catch(err){
+            returnObj = ({
+                status: 'succsess',
+                msg: err.message,
+                urlEncoding: 200,
+                data: []
+            })
         }
         return returnObj;
     }

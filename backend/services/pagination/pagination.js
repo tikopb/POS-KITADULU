@@ -4,25 +4,30 @@ const PaginationTableMaterial = require('./paginationTableMaterial');
 const { Op } = require("sequelize");
 
 class Pagination{
+  constructor(user, query){
+    this.user = user
+    this.query = query
+  }
+
   /**
    * getting pagination data if where just client id than get with materilized view
    * @param {*} offset 
    * @param {*} limit 
    * @param {*} tableName 
    */
-  PaginationGet = async(req,tableName) => {
-    const WhereMap = await this.GetWhereMapOrm(req, tableName);
+  PaginationGet = async(tableName) => {
+    const WhereMap = await this.GetWhereMapOrm(tableName);
     let validationWhereMap = await this.WhereMapMoreThenOneParameterValidate(WhereMap);
     let total_data = 0;
-    let limit = req.query.page_size || 20
-    const page = parseInt(req.query.page) || 1;
+    let limit = this.query.page_size || 20
+    const page = parseInt(this.query.page) || 1;
     let offset = limit * (page - 1);
 
     if(validationWhereMap){
-      const sql = await this.GetWhereSql(req, tableName);
-      total_data = await this.CountDataWithWhereParameter(tableName, req.user.client_id, sql);
+      const sql = await this.GetWhereSql(tableName);
+      total_data = await this.CountDataWithWhereParameter(tableName, this.user.client_id, sql);
     }else{
-      total_data = await this.CountDataWithMaterialized(tableName, req.user.client_id);
+      total_data = await this.CountDataWithMaterialized(tableName, this.user.client_id);
     }
     let  total_page = Math.ceil(total_data / limit);
     console.log(`total_data: ${total_data} && limit ${limit}`)
@@ -43,15 +48,15 @@ class Pagination{
    * function making map for where decalare on function
    * @returns whereParameter
    */
-  GetWhereMapOrm = async (req, tableName, res) => {
+  GetWhereMapOrm = async (tableName) => {
     const paginationTableMaterial = new PaginationTableMaterial(); //class decalare
-    let searchParams = req.query;
+    let searchParams = this.query;
     if ('q' in searchParams) {
-      searchParams = await paginationTableMaterial.GetColumnmaterialSearch(tableName, req.query.q, res);
+      searchParams = await paginationTableMaterial.GetColumnmaterialSearch(tableName, this.query.q);
     }
 
     const whereClause = {
-      client_id: req.user.client_id
+      client_id: this.user.client_id
     };
   
     const orCondition = [];
@@ -92,14 +97,13 @@ class Pagination{
 
   /**
    * Getting sql for condition with function search more than one condition
-   * @param {*} req 
    * @returns 
    */
-  GetWhereSql = async (req, tableName) => {
+  GetWhereSql = async (tableName) => {
     const paginationTableMaterial = new PaginationTableMaterial(); //class decalare
-    let searchParams = req.query;
+    let searchParams = thisquery;
     if ('q' in searchParams) {
-      searchParams = await paginationTableMaterial.GetColumnmaterialSearch(tableName, req.query.q);
+      searchParams = await paginationTableMaterial.GetColumnmaterialSearch(tableName, query.q);
     }
     let sql ='';
     let i = 0;
