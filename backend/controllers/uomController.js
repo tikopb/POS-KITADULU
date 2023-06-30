@@ -1,29 +1,38 @@
-let {Uom, Client, Org} = require('../models') 
+let {Uom} = require('../models');
+let UomService = require("../services/uom-service");
 
 module.exports = {
     /**
      * Getting all data base on client id is active return data to list of uom
-     * @param {client_id} req 
+     * @param {*} req 
+     * @param {*} res 
      */
     Index: async(req,res) => {
-        const UserCrd = req.user
+        const service = new UomService(req);
         try {
-            Uom.findAll({
-                where:{
-                    client_id: UserCrd.Client_id,
-                    isactive: true
-                }
-            }).then(function(data){
+            const todo = await service.GetAll();
+            if(todo.data.length > 0){
                 res.status(200).json({
-                    status: 'sucsess', 
-                    msg: `get data succsess`,
-                    data
+                    status: `success`,
+                    msg: `get succsess`,
+                    metadata: todo.metadata,
+                    data: todo.data
                 })
-            })
+            }
+            else{
+                res.status(200).json({
+                    status: 'succsess',
+                    msg: "uom not exist",
+                    metadata: [],
+                    data: []
+                })
+            }
         } catch (err) {
             res.status(500).json({
-                status: 'erorr', 
+                status: `erorr`,
                 msg: `${err.toString()}`,
+                metadata: [],
+                data: []
             })
         }
     },
@@ -33,12 +42,14 @@ module.exports = {
      */
     Show: async(req,res) => {
         const uom_id = req.params.id;
-        let data = await Uom.findByPk(uom_id)
-        res.status(200).json({
-            status: 'succsess',
-            msg: 'get data succsess',
-            data
-        })
+        const service = new UomService(req);
+        const todo = await service.GetOne(uom_id);
+
+        return res.status(todo.urlEncoding).json({
+            status: todo.status,
+            msg: todo.msg,
+            data: todo.data
+        });  
     },
     /**
      * Creating data of uom
@@ -47,29 +58,14 @@ module.exports = {
      */
     Create: async(req,res) => {
         const {name, description} = req.body
-        const UserCrd = req.user
-        try {
-            let data = await Uom.create({
-                client_id: UserCrd.Client_id,
-                org_id: UserCrd.Org_id,
-                name: name,
-                description: description,
-                isactive: true
-            })
-            res.status(201).json({
-                status: 'sucsess', 
-                msg: `Create data succsess`,
-                data
-            })
-        } catch (err) {
-            if (err.name === 'SequelizeUniqueConstraintError') {
-                res.status(403)
-                res.send({ status: 'error', msg: `Uom with value ${name} already exists`});
-            } else {
-                res.status(500)
-                res.send({ status: 'error', msg: `Something went wrong ${err}`});
-            }
-        }
+        const service = new UomService(req);
+        const todo = await service.Store(name, description);
+
+        return res.status(todo.urlEncoding).json({
+            status: todo.status,
+            msg: todo.msg,
+            data: todo.data
+        });  
     },
     /**
      * updating data of uom data with uom_id as parameter mandatory
@@ -77,33 +73,15 @@ module.exports = {
      * @param {msg, data} res 
      */
     Update: async(req,res) => {
-        const {name, description, isactive} = req.body
         const uom_id = req.params.id;
-        let data = await Uom.findByPk(uom_id)
-        try {
-            if(data == null){
-                throw new Error('data no found');
-            };
-            data.set({
-                name: name,
-                description: description,
-                isactive: isactive
-            })   
-            await data.save()
-            res.status(200).json({
-                status:'succsess',
-                msg: 'data updated',
-                data
-            })
-        } catch (err) {
-            if (err.name === 'SequelizeUniqueConstraintError') {
-                res.status(403)
-                res.send({ status: 'error', msg: `Uom with value ${name} already exists`});
-            } else {
-                res.status(500)
-                res.send({ status: 'error', msg: `Something went wrong ${err}`});
-            }
-        }
+        const service = new UomService(req);
+        const todo = await service.Update(uom_id);
+
+        return res.status(todo.urlEncoding).json({
+            status: todo.status,
+            msg: todo.msg,
+            data: todo.data
+        });  
     },
     /**
      * Deleting data base on uom_id
@@ -112,21 +90,13 @@ module.exports = {
      */
     Delete: async(req,res) => {
         const uom_id = req.params.id;
-        let data = await Uom.findByPk(uom_id)
-        try {
-            if(data == null){
-                throw new Error('data no found');
-            };
-            await data.destroy()
-            res.status(200).json({
-                status:'succsess',
-                msg:'data deleted'
-            })
-        } catch (err) {
-            res.status(401).json({
-                status:'erorr',
-                msg: err.message
-            })
-        }
+        const service = new UomService(req);
+        const todo = await service.Delete(uom_id);
+
+        return res.status(todo.urlEncoding).json({
+            status: todo.status,
+            msg: todo.msg,
+            data: todo.data
+        });  
     }
 }
