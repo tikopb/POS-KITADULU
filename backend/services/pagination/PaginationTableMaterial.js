@@ -16,10 +16,14 @@ class PaginationTableMaterial{
                 'name': qValue,
                 'description': qValue
             };
-            break;
             case 'business_partner':
             whereColumnName = {
                 'value': qValue,
+                'name': qValue,
+                'description': qValue
+            };
+            case 'uom':
+            whereColumnName = {
                 'name': qValue,
                 'description': qValue
             };
