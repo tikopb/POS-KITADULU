@@ -4,6 +4,7 @@ const { Op } = require("sequelize");
 const path = require('path');
 
 let ProductCategoriesService = require("../services/ProductCategory-Service");
+const fs = require('fs');
 
 module.exports = {
     /**
